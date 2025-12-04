@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accueil – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- <link rel="stylesheet" href="style.css" /> -->
+
+  <!-- CSS global + page + chatbot -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #0f172a;
+      background: #0b1120;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.96);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+      align-items: center;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* pas de menu burger pour le TP */
+      }
+    }
+
+    /* ---------- BOUTONS / ELEMENTS GÉNÉRAUX ---------- */
+    .btn-primary,
+    .btn-secondary,
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.15rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease,
+                  background 0.15s ease, color 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.65);
+    }
+
+    .btn-secondary {
+      background: #0b1120;
+      color: #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.6);
+    }
+
+    .text-link {
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      color: #f97316;
+      font-weight: 500;
+      box-shadow: none;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ---------- SECTIONS GLOBALES ---------- */
+    .section {
+      padding: 3.25rem 0;
+      background: #020617;
+      color: #e5e7eb;
+    }
+
+    .section.alt {
+      background: #020617;
+      background: radial-gradient(circle at top, #0b1120 0, #020617 55%, #020617 100%);
+    }
+
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      margin-top: 0.3rem;
+      margin-bottom: 1.75rem;
+      color: #9ca3af;
+      max-width: 620px;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1.3fr 1.2fr;
+      gap: 2.25rem;
+      align-items: center;
+    }
+
+    @media (max-width: 800px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .col p {
+      line-height: 1.6;
+      color: #e5e7eb;
+    }
+
+    .rounded-img {
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.55);
+    }
+
+    /* ---------- HERO ACCUEIL ---------- */
+    .hero {
+      position: relative;
+      min-height: 65vh;
+      display: flex;
+      align-items: center;
+      color: #f9fafb;
+      background-image:
+        radial-gradient(circle at top, rgba(249, 115, 22, 0.17) 0, transparent 50%),
+        radial-gradient(circle at bottom left, rgba(56, 189, 248, 0.22) 0, transparent 60%),
+        linear-gradient(135deg, #020617, #020617 45%, #030712 100%);
+      overflow: hidden;
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(244, 244, 245, 0.08) 0, transparent 55%),
+        radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.12) 0, transparent 45%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      padding: 4rem 0 3rem;
+      max-width: 720px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2.4rem, 4vw, 3rem);
+      margin-bottom: 0.9rem;
+    }
+
+    .hero-content p {
+      font-size: 1.05rem;
+      max-width: 590px;
+      color: #e5e7eb;
+    }
+
+    /* ---------- VIDEO ---------- */
+    .video-wrapper {
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: #020617;
+      max-width: 800px;   /* largeur max de la vidéo */
+      margin: 0 auto;     /* centrage horizontal */
+    }
+
+    .video-wrapper video {
+      width: 100%;
+      height: auto;
+      display: block;
+      background: #000;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #000;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+      border-top: 1px solid #111827;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.6);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" class="active" data-i18n="nav_home">Accueil</a>
+        <a href="programme.html" data-i18n="nav_programme">Programme</a>
+        <a href="diplomes.html" data-i18n="nav_diplomes">Diplômés</a>
+        <a href="faq.html" data-i18n="nav_faq">FAQ</a>
+        <a href="contact.html" data-i18n="nav_contact">Nous joindre</a>
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav_login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR</button>
+    </div>
+  </header>
+
+  <!-- SECTION HERO -->
+  <section class="hero">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-content">
+      <h1 data-i18n="hero_title">C’est quoi un DEC en intégration multimédia&nbsp;?</h1>
+      <p data-i18n="hero_text">
+        C’est 3 ans d’apprentissages en travaillant sur des projets concrets avec
+        plus de 30 logiciels. Effectuer un stage, poursuivre vos études
+        à l’université ou obtenir un emploi dans différentes entreprises de
+        multimédia ou dans la fonction publique fédérale.
+      </p>
+    </div>
+  </section>
+
+  <!-- VIDÉO -->
+  <section class="section" id="video">
+    <div class="container">
+      <h2 data-i18n="video_title">Découvre le programme en vidéo</h2>
+      <p class="section-intro" data-i18n="video_intro">
+        Une immersion dans les travaux, les cours et la vie du département TIM.
+      </p>
+
+      <div class="video-wrapper">
+        <video controls poster="img/face.png">
+          <source src="img/video.mp4" type="video/mp4" />
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <!-- LE PROGRAMME TIM -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/programmeTIM.png" alt="Affiche programme TIM" class="rounded-img" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="prog_title">Le programme TIM</h2>
+        <p data-i18n="prog_text">
+          Design, programmation, vidéo, animation, 3D, jeux, interactivité…
+          Le programme TIM te forme à créer du multimédia professionnel sur 3 ans.
+        </p>
+
+        <a href="programme.html" class="btn-secondary" data-i18n="prog_btn">
+          Voir la page Programme
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉTUDIANT D’UN JOUR -->
+  <section class="section">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/etudiant_un_jour.png" class="rounded-img"
+             alt="Étudiant d’un jour" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="etud_title">Étudiant d’un jour</h2>
+        <p data-i18n="etud_text">
+          Viens vivre une vraie demi-journée au Cégep dans nos classes de multimédia.
+        </p>
+
+        <a href="etudiant-un-jour.html" class="btn-secondary" data-i18n="etud_btn">
+          En savoir plus / Participer
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGES -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <div class="col">
+        <h2 data-i18n="stages_title">Les stages TIM</h2>
+        <p data-i18n="stages_text">
+          4 mois de stage rémunéré pour t’intégrer dans un milieu
+          professionnel et développer des compétences concrètes.
+        </p>
+
+        <a href="stages.html" class="btn-secondary" data-i18n="stages_btn">
+          Voir la page Stages
+        </a>
+      </div>
+
+      <div class="col">
+        <img src="img/stages.png" alt="Les stages" class="rounded-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- EMPLOI D'ÉTÉ -->
+  <section class="section">
+    <div class="container two-cols">
+      <div class="col">
+        <h2 data-i18n="job_title">Emplois d’été rémunérés</h2>
+        <p data-i18n="job_text">
+          Plusieurs de nos étudiants obtiennent un emploi d’été au gouvernement fédéral
+          dès la première année. Découvre comment t’inscrire et maximiser tes chances !
+        </p>
+
+        <a href="emploi-ete.html" class="btn-secondary" data-i18n="job_btn">
+          Voir la page Emploi d’été
+        </a>
+      </div>
+
+      <div class="col">
+        <img src="img/emploi_ete.png" alt="Emploi d’été" class="rounded-img" />
+      </div>
+    </div>
+  </section>
+
+  <!-- UQAT -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/uqat.png" alt="UQAT – Jeux vidéo" class="rounded-img" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="uqat_title">Poursuivre à l’université en jeux vidéo (UQAT)</h2>
+        <p data-i18n="uqat_text">
+          Après ton DEC, plusieurs diplômés poursuivent leurs études
+          en création de jeux vidéo à l’UQAT.
+        </p>
+
+        <a href="uqat.html" class="btn-secondary" data-i18n="uqat_btn">
+          Voir la page UQAT
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOURSES -->
+  <section class="section">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/1500.png" alt="Bourse Perspective Québec" class="rounded-img" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="bourses_title">Des bourses de 1 500 $ par session réussie</h2>
+        <p data-i18n="bourses_text">
+          Jusqu’à 9 000 $ pendant ta formation grâce aux Bourses Perspective Québec.
+        </p>
+
+        <a href="bourses.html" class="btn-primary" data-i18n="bourses_btn">
+          Voir la page Bourses
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOS DIPLÔMÉS -->
+  <section class="section alt">
+    <div class="container">
+      <h2 data-i18n="grads_title">Des diplômés partout dans l’industrie</h2>
+      <p class="section-intro" data-i18n="grads_intro">
+        Ils travaillent en agence, en studio, au gouvernement, dans le jeu vidéo
+        et dans la production multimédia.
+      </p>
+
+      <a href="diplomes.html" class="btn-primary" data-i18n="grads_btn">
+        Voir les portraits
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ + CONTACT -->
+  <section class="section">
+    <div class="container two-cols">
+      <div class="col">
+        <h2 data-i18n="faq_title">Questions fréquentes</h2>
+        <p data-i18n="faq_text">
+          Tout savoir sur les cours, la 3D, la programmation et l’admission.
+        </p>
+        <a href="faq.html" class="text-link" data-i18n="faq_link">
+          Lire la FAQ
+        </a>
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="contact_title">Besoin d’aide ?</h2>
+        <p data-i18n="contact_text">
+          Écris directement au département ou viens poser tes questions.
+        </p>
+        <a href="contact.html" class="btn-primary" data-i18n="contact_btn">
+          Nous joindre
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer_text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chat_header">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot" data-i18n="chat_intro">
+          Salut ! Pose-moi une question sur le programme TIM ou l’admission 😄
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          data-i18n-placeholder="chat_placeholder"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- JS : AUTH + traductions + langue + chatbot -->
+  <script>
+    // =======================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =======================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || (window.currentLang || "fr");
+
+      if (auth) {
+        // Texte du lien quand connecté
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =======================
+    // 1. TABLEAU DE TRADUCTION
+    // =======================
+    const translations = {
+      fr: {
+        page_title: "Accueil – Technique d’intégration multimédia",
+
+        nav_home: "Accueil",
+        nav_programme: "Programme",
+        nav_diplomes: "Diplômés",
+        nav_faq: "FAQ",
+        nav_contact: "Nous joindre",
+        nav_login: "Connexion",
+
+        hero_title: "C’est quoi un DEC en intégration multimédia&nbsp;?",
+        hero_text:
+          "C’est 3 ans d’apprentissages en travaillant sur des projets concrets avec plus de 30 logiciels. Effectuer un stage, poursuivre vos études à l’université ou obtenir un emploi dans différentes entreprises de multimédia ou dans la fonction publique fédérale.",
+
+        video_title: "Découvre le programme en vidéo",
+        video_intro:
+          "Une immersion dans les travaux, les cours et la vie du département TIM.",
+
+        prog_title: "Le programme TIM",
+        prog_text:
+          "Design, programmation, vidéo, animation, 3D, jeux, interactivité… Le programme TIM te forme à créer du multimédia professionnel sur 3 ans.",
+        prog_btn: "Voir la page Programme",
+
+        etud_title: "Étudiant d’un jour",
+        etud_text:
+          "Viens vivre une vraie demi-journée au Cégep dans nos classes de multimédia.",
+        etud_btn: "En savoir plus / Participer",
+
+        stages_title: "Les stages TIM",
+        stages_text:
+          "4 mois de stage rémunéré pour t’intégrer dans un milieu professionnel et développer des compétences concrètes.",
+        stages_btn: "Voir la page Stages",
+
+        job_title: "Emplois d’été rémunérés",
+        job_text:
+          "Plusieurs de nos étudiants obtiennent un emploi d’été au gouvernement fédéral dès la première année. Découvre comment t’inscrire et maximiser tes chances !",
+        job_btn: "Voir la page Emploi d’été",
+
+        uqat_title: "Poursuivre à l’université en jeux vidéo (UQAT)",
+        uqat_text:
+          "Après ton DEC, plusieurs diplômés poursuivent leurs études en création de jeux vidéo à l’UQAT.",
+        uqat_btn: "Voir la page UQAT",
+
+        bourses_title: "Des bourses de 1 500 $ par session réussie",
+        bourses_text:
+          "Jusqu’à 9 000 $ pendant ta formation grâce aux Bourses Perspective Québec.",
+        bourses_btn: "Voir la page Bourses",
+
+        grads_title: "Des diplômés partout dans l’industrie",
+        grads_intro:
+          "Ils travaillent en agence, en studio, au gouvernement, dans le jeu vidéo et dans la production multimédia.",
+        grads_btn: "Voir les portraits",
+
+        faq_title: "Questions fréquentes",
+        faq_text:
+          "Tout savoir sur les cours, la 3D, la programmation et l’admission.",
+        faq_link: "Lire la FAQ",
+
+        contact_title: "Besoin d’aide ?",
+        contact_text:
+          "Écris directement au département ou viens poser tes questions.",
+        contact_btn: "Nous joindre",
+
+        footer_text: "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        chat_header: "Assistant TIM",
+        chat_intro:
+          "Salut ! Pose-moi une question sur le programme TIM ou l’admission 😄",
+        chat_placeholder: "Écris ton message…",
+        chat_auto_reply:
+          "Merci pour ta question ! Sur le vrai site, un conseiller TIM pourrait te répondre plus précisément selon ton projet d’études."
+      },
+
+      en: {
+        page_title: "Home – Multimedia Integration Technology",
+
+        nav_home: "Home",
+        nav_programme: "Program",
+        nav_diplomes: "Graduates",
+        nav_faq: "FAQ",
+        nav_contact: "Contact us",
+        nav_login: "Login",
+
+        hero_title: "What is a DEC in Multimedia Integration?",
+        hero_text:
+          "It’s a 3-year program where you learn by working on real-world projects with more than 30 different software tools. Do an internship, continue your studies at university, or get a job in multimedia companies or the federal public service.",
+
+        video_title: "Discover the program in video",
+        video_intro:
+          "A look at the projects, courses, and daily life in the TIM department.",
+
+        prog_title: "The TIM program",
+        prog_text:
+          "Design, programming, video, animation, 3D, games, interactivity… The TIM program trains you to create professional multimedia over 3 years.",
+        prog_btn: "View the Program page",
+
+        etud_title: "Student for a Day",
+        etud_text:
+          "Come experience a real half-day at the Cégep in our multimedia classes.",
+        etud_btn: "Learn more / Sign up",
+
+        stages_title: "TIM Internships",
+        stages_text:
+          "A 4-month paid internship to integrate into a professional environment and develop concrete skills.",
+        stages_btn: "View the Internships page",
+
+        job_title: "Paid Summer Jobs",
+        job_text:
+          "Many of our students get a summer job with the federal government as early as their first year. Learn how to apply and boost your chances!",
+        job_btn: "View the Summer Jobs page",
+
+        uqat_title: "Continue to University in Game Design (UQAT)",
+        uqat_text:
+          "After your DEC, many graduates continue their studies in game creation at UQAT.",
+        uqat_btn: "View the UQAT page",
+
+        bourses_title: "$1,500 scholarships per successful term",
+        bourses_text:
+          "Up to $9,000 during your studies thanks to the Perspective Québec Scholarships.",
+        bourses_btn: "View the Scholarships page",
+
+        grads_title: "Graduates across the industry",
+        grads_intro:
+          "They work in agencies, studios, government, video games and multimedia production.",
+        grads_btn: "View their stories",
+
+        faq_title: "Frequently asked questions",
+        faq_text:
+          "Everything you want to know about courses, 3D, programming and admission.",
+        faq_link: "Read the FAQ",
+
+        contact_title: "Need help?",
+        contact_text:
+          "Write directly to the department or come and ask your questions.",
+        contact_btn: "Contact us",
+
+        footer_text: "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        chat_header: "TIM Assistant",
+        chat_intro:
+          "Hi! Ask me a question about the TIM program or admission 😄",
+        chat_placeholder: "Type your message…",
+        chat_auto_reply:
+          "Thanks for your question! On the real site, a TIM advisor could answer you more precisely based on your study plans."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const dict = translations[currentLang] || translations.fr;
+
+      // Lang attribute
+      document.documentElement.lang = currentLang === "fr" ? "fr" : "en";
+
+      // Titre de la page
+      if (dict.page_title) {
+        document.title = dict.page_title;
+      }
+
+      // Textes simples
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      // Placeholders (ex: chatbot)
+      document
+        .querySelectorAll("[data-i18n-placeholder]")
+        .forEach(el => {
+          const key = el.getAttribute("data-i18n-placeholder");
+          if (dict[key]) {
+            el.placeholder = dict[key];
+          }
+        });
+
+      // Bouton langue
+      const langBtn = document.getElementById("lang-toggle");
+      if (langBtn) {
+        langBtn.textContent = currentLang === "fr" ? "FR" : "EN";
+      }
+
+      // Mettre à jour le header selon l'état de connexion + langue
+      applyAuthToHeader();
+    }
+
+    // =======================
+    // 2. LANG BUTTON + INIT
+    // =======================
+    document.addEventListener("DOMContentLoaded", () => {
+      applyTranslations();
+
+      const langBtn = document.getElementById("lang-toggle");
+      if (langBtn) {
+        langBtn.addEventListener("click", () => {
+          currentLang = currentLang === "fr" ? "en" : "fr";
+          applyTranslations();
+        });
+      }
+
+      // =======================
+      // 3. CHATBOT
+      // =======================
+      const chatbotToggle = document.getElementById("chatbot-toggle");
+      const chatbotWindow = document.getElementById("chatbot-window");
+      const chatbotClose = document.getElementById("chatbot-close");
+      const chatbotForm = document.getElementById("chatbot-form");
+      const chatbotInput = document.getElementById("chatbot-input");
+      const chatbotBody = document.getElementById("chatbot-body");
+
+      function toggleChatbot(open) {
+        if (!chatbotWindow) return;
+        if (open === undefined) {
+          chatbotWindow.classList.toggle("open");
+        } else if (open) {
+          chatbotWindow.classList.add("open");
+        } else {
+          chatbotWindow.classList.remove("open");
+        }
+      }
+
+      if (chatbotToggle) {
+        chatbotToggle.addEventListener("click", () => toggleChatbot());
+      }
+
+      if (chatbotClose) {
+        chatbotClose.addEventListener("click", () => toggleChatbot(false));
+      }
+
+      function addChatMessage(text, from = "bot") {
+        if (!chatbotBody) return;
+        const msg = document.createElement("div");
+        msg.className = "chatbot-msg " + from;
+        msg.textContent = text;
+        chatbotBody.appendChild(msg);
+        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+      }
+
+      if (chatbotForm) {
+        chatbotForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const text = chatbotInput.value.trim();
+          if (!text) return;
+
+          addChatMessage(text, "user");
+          chatbotInput.value = "";
+
+          const dict = translations[currentLang] || translations.fr;
+          const reply = dict.chat_auto_reply || translations.fr.chat_auto_reply;
+
+          setTimeout(() => {
+            addChatMessage(reply, "bot");
+          }, 400);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

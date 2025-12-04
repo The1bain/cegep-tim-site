@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="page-title">Les stages – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS INTÉGRÉ -->
+  <style>
+    /* ---------- BASE ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT GÉNÉRAL ---------- */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 3rem 0;
+      background: #f9fafb;
+    }
+
+    .section.alt {
+      background: #ffffff;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .col {
+      min-width: 0;
+    }
+
+    .rounded-img {
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    }
+
+    .section h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      color: #4b5563;
+      max-width: 640px;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* pas de burger pour le TP */
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 4rem 0 3rem;
+      background-size: cover;
+      background-position: center;
+      color: #f9fafb;
+      overflow: hidden;
+    }
+
+    .hero-small {
+      padding: 3rem 0 2.5rem;
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.7)
+      );
+      mix-blend-mode: multiply;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 1.5rem;
+      color: #e5e7eb;
+    }
+
+    /* ---------- BOUTONS ---------- */
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      gap: 0.45rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+                  background 0.12s ease, color 0.12s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(249, 115, 22, 0.6);
+    }
+
+    .btn-secondary {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+      transform: translateY(-1px);
+    }
+
+    /* ---------- STAGE FILTERS + TABLE ---------- */
+    .stage-filters {
+      margin-top: 1rem;
+      margin-bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    #stage-search {
+      padding: 0.55rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.85);
+      outline: none;
+      font-size: 0.9rem;
+    }
+
+    #stage-search::placeholder {
+      color: #9ca3af;
+    }
+
+    .stage-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .stage-chip {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      padding: 0.3rem 0.9rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: background 0.12s ease, color 0.12s ease,
+                  box-shadow 0.12s ease, border-color 0.12s ease;
+    }
+
+    .stage-chip:hover {
+      box-shadow: 0 6px 16px rgba(15, 23, 42, 0.16);
+    }
+
+    .stage-chip.active {
+      background: #111827;
+      color: #f9fafb;
+      border-color: #f97316;
+      box-shadow: 0 8px 22px rgba(15, 23, 42, 0.5);
+    }
+
+    .stage-table-wrapper {
+      margin-top: 0.75rem;
+      border-radius: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 14px 40px rgba(15, 23, 42, 0.16);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .stage-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    .stage-table thead {
+      background: #111827;
+      color: #f9fafb;
+    }
+
+    .stage-table th,
+    .stage-table td {
+      padding: 0.65rem 0.9rem;
+      text-align: left;
+    }
+
+    .stage-table tbody tr:nth-child(even) {
+      background: #f9fafb;
+    }
+
+    .stage-table tbody tr.hide {
+      display: none;
+    }
+
+    .stage-table a {
+      color: #1d4ed8;
+      text-decoration: underline;
+    }
+
+    /* ---------- TIMELINE ---------- */
+    .timeline {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.8rem 1rem;
+      border-radius: 0.9rem;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    }
+
+    .timeline-step h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1rem;
+    }
+
+    .timeline-step p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-accordion {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .faq-item {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: #f9fafb;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-weight: 700;
+      margin-left: 0.75rem;
+    }
+
+    .faq-item.open .faq-question {
+      background: #111827;
+      color: #f9fafb;
+    }
+
+    .faq-item.open .faq-question::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease;
+      padding: 0 1rem;
+    }
+
+    .faq-item.open .faq-answer {
+      padding-top: 0.6rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15,23,42,0.5);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.55);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148,163,184,0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148,163,184,0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub" data-i18n="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav-home">Accueil</a>
+        <a href="programme.html" data-i18n="nav-program">Programme</a>
+        <a href="diplomes.html" data-i18n="nav-grads">Diplômés</a>
+        <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+        <a href="contact.html" data-i18n="nav-contact">Nous joindre</a>
+        <!-- Lien de connexion commun à tous les pages -->
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav-login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR</button>
+    </div>
+  </header>
+
+  <!-- HERO STAGES -->
+  <section class="hero hero-small" style="background-image: url('img/stages.png');">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-content">
+      <h1 data-i18n="hero-title">Les stages en intégration multimédia</h1>
+      <p data-i18n="hero-text">
+        4 mois de stage rémunéré pour t’intégrer à un milieu professionnel et
+        lancer ta carrière en multimédia.
+      </p>
+      <a href="#liste-stages" class="btn-primary" data-i18n="hero-cta">Voir les milieux de stage</a>
+    </div>
+  </section>
+
+  <!-- INTRO + IMAGE -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/stages.png" alt="Étudiants en travail collaboratif"
+             class="rounded-img" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="intro-title">Un réseau de partenaires depuis plus de 20 ans</h2>
+        <p data-i18n="intro-p1">
+          Nous avons la chance de pouvoir compter sur un grand éventail de
+          partenaires de stage depuis plus de 20 ans&nbsp;!
+        </p>
+        <p data-i18n="intro-p2">
+          Nos stages rémunérés de 4 mois permettent à nos étudiants de
+          réellement s’intégrer dans un milieu professionnel. La plupart du
+          temps, les stages se transforment en emplois permanents. Pour
+          plusieurs, c’est le début d’une carrière trépidante en multimédia. 
+          Pour d’autres, c’est une expérience supplémentaire avant d’accéder à
+          l’université.
+        </p>
+        <p data-i18n="intro-p3">
+          Tous les stages se déroulent ici en Outaouais, mais également partout
+          au Québec, selon les aspirations des étudiants.
+        </p>
+        <p data-i18n="intro-p4">
+          <strong>Voici la liste officielle de nos milieux de stage pour l’année 2024.</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- OUTIL INTERACTIF : FILTRE + RECHERCHE DES MILIEUX DE STAGE -->
+  <section class="section" id="liste-stages">
+    <div class="container">
+      <h2 data-i18n="list-title">Milieux de stage 2024</h2>
+      <p class="section-intro" data-i18n="list-intro">
+        Utilise la recherche et les filtres pour explorer les différents
+        milieux de stage possibles.
+      </p>
+
+      <!-- Barre de recherche -->
+      <div class="stage-filters">
+        <input
+          type="text"
+          id="stage-search"
+          placeholder="Rechercher par nom ou type…"
+          data-i18n-placeholder="stage-search-ph"
+        />
+        <div class="stage-chips">
+          <button class="stage-chip active" data-type="all" data-i18n="stage-chip-all">Tous</button>
+          <button class="stage-chip" data-type="gouv" data-i18n="stage-chip-gouv">Gouvernement</button>
+          <button class="stage-chip" data-type="prive" data-i18n="stage-chip-prive">Secteur privé</button>
+          <button class="stage-chip" data-type="autre" data-i18n="stage-chip-autre">Autres organismes</button>
+        </div>
+      </div>
+
+      <!-- Tableau des milieux de stage -->
+      <div class="stage-table-wrapper">
+        <table class="stage-table">
+          <thead>
+            <tr>
+              <th data-i18n="table-org">Organisation</th>
+              <th data-i18n="table-type">Type / Ministère</th>
+            </tr>
+          </thead>
+          <tbody id="stage-tbody">
+            <tr data-type="gouv">
+              <td>OPIC</td>
+              <td>Environnement et Changement climatique Canada</td>
+            </tr>
+            <tr data-type="prive">
+              <td><a href="https://www.samson.ca/" target="_blank">Samson</a></td>
+              <td>Agence / Secteur privé (mandats Justice Canada, etc.)</td>
+            </tr>
+            <tr data-type="gouv">
+              <td>STO</td>
+              <td>Affaires mondiales Canada</td>
+            </tr>
+            <tr data-type="gouv">
+              <td>Gendarmerie royale du Canada</td>
+              <td>Service Canada</td>
+            </tr>
+            <tr data-type="gouv">
+              <td>Conseil de la radiodiffusion et des télécommunications canadiennes (CRTC)</td>
+              <td>École de la fonction publique du Canada / Gouvernement du Canada</td>
+            </tr>
+            <tr data-type="gouv">
+              <td>Conseil national de recherches Canada</td>
+              <td>Conseil de recherches en sciences humaines du Canada – Gouvernement du Canada</td>
+            </tr>
+            <tr data-type="autre">
+              <td>Médias communautaires / organismes culturels</td>
+              <td>Organismes sans but lucratif, festivals, événements</td>
+            </tr>
+            <tr data-type="prive">
+              <td>Studios de jeux indépendants</td>
+              <td>Production de jeux vidéo, UI/UX, marketing</td>
+            </tr>
+            <!-- tu peux ajouter d'autres lignes ici -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE : DÉROULEMENT DU STAGE -->
+  <section class="section alt">
+    <div class="container">
+      <h2 data-i18n="timeline-title">Comment se déroule ton stage&nbsp;?</h2>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <span class="step-number">1</span>
+          <div>
+            <h3 data-i18n="step1-title">Préparation en classe</h3>
+            <p data-i18n="step1-text">
+              Tu es accompagné pour préparer ton CV, ton portfolio et tes
+              démarches de recherche de stage.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-number">2</span>
+          <div>
+            <h3 data-i18n="step2-title">Choix du milieu de stage</h3>
+            <p data-i18n="step2-text">
+              Tu choisis un milieu en fonction de tes intérêts : web, vidéo,
+              jeu, design, communication, etc.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-number">3</span>
+          <div>
+            <h3 data-i18n="step3-title">Stage de 4 mois rémunéré</h3>
+            <p data-i18n="step3-text">
+              Tu intègres l’équipe, tu participes aux projets et tu développes
+              des compétences concrètes sur le terrain.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-number">4</span>
+          <div>
+            <h3 data-i18n="step4-title">Retour en classe &amp; bilan</h3>
+            <p data-i18n="step4-text">
+              À ton retour, tu présentes ton expérience et tu peux continuer à
+              collaborer avec ton milieu de stage ou transformer cette
+              expérience en emploi.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINI FAQ STAGES -->
+  <section class="section">
+    <div class="container">
+      <h2 data-i18n="faq-title">Questions fréquentes sur les stages</h2>
+
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq1-q">
+            Est-ce que le stage est rémunéré&nbsp;?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq1-a">
+              Oui, le stage de 4 mois est rémunéré dans la grande majorité des milieux.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq2-q">
+            Est-ce que le stage peut mener à un emploi&nbsp;?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq2-a">
+              Très souvent, oui. Plusieurs stages se prolongent en emploi
+              étudiant ou à temps plein après le DEC.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq3-q">
+            Est-ce que je peux faire mon stage à l’extérieur de l’Outaouais&nbsp;?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq3-a">
+              Oui, certains étudiants font leur stage ailleurs au Québec selon
+              leurs aspirations et les possibilités de milieu de stage.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer-text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT COMPLET -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chatbot-title">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">
+          <span data-i18n="chatbot-welcome">
+            Salut&nbsp;! Pose-moi une question sur les stages ou le programme TIM 😊
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+          data-i18n-placeholder="chatbot-placeholder"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT INTÉGRÉ -->
+  <script>
+    // =========================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =========================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || (window.currentLang || "fr");
+
+      if (auth) {
+        // Texte du lien quand "connecté"
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =========================
+    // 1. DICTIONNAIRE DE TRADUCTION
+    // =========================
+    const translations = {
+      fr: {
+        "page-title": "Les stages – Technique d’intégration multimédia",
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Accueil",
+        "nav-program": "Programme",
+        "nav-grads": "Diplômés",
+        "nav-faq": "FAQ",
+        "nav-contact": "Nous joindre",
+        "nav-login": "Connexion",
+
+        "hero-title": "Les stages en intégration multimédia",
+        "hero-text": "4 mois de stage rémunéré pour t’intégrer à un milieu professionnel et lancer ta carrière en multimédia.",
+        "hero-cta": "Voir les milieux de stage",
+
+        "intro-title": "Un réseau de partenaires depuis plus de 20 ans",
+        "intro-p1": "Nous avons la chance de pouvoir compter sur un grand éventail de partenaires de stage depuis plus de 20 ans&nbsp;!",
+        "intro-p2": "Nos stages rémunérés de 4 mois permettent à nos étudiants de réellement s’intégrer dans un milieu professionnel. La plupart du temps, les stages se transforment en emplois permanents. Pour plusieurs, c’est le début d’une carrière trépidante en multimédia. Pour d’autres, c’est une expérience supplémentaire avant d’accéder à l’université.",
+        "intro-p3": "Tous les stages se déroulent ici en Outaouais, mais également partout au Québec, selon les aspirations des étudiants.",
+        "intro-p4": "<strong>Voici la liste officielle de nos milieux de stage pour l’année 2024.</strong>",
+
+        "list-title": "Milieux de stage 2024",
+        "list-intro": "Utilise la recherche et les filtres pour explorer les différents milieux de stage possibles.",
+        "stage-search-ph": "Rechercher par nom ou type…",
+        "stage-chip-all": "Tous",
+        "stage-chip-gouv": "Gouvernement",
+        "stage-chip-prive": "Secteur privé",
+        "stage-chip-autre": "Autres organismes",
+        "table-org": "Organisation",
+        "table-type": "Type / Ministère",
+
+        "timeline-title": "Comment se déroule ton stage&nbsp;?",
+        "step1-title": "Préparation en classe",
+        "step1-text": "Tu es accompagné pour préparer ton CV, ton portfolio et tes démarches de recherche de stage.",
+        "step2-title": "Choix du milieu de stage",
+        "step2-text": "Tu choisis un milieu en fonction de tes intérêts : web, vidéo, jeu, design, communication, etc.",
+        "step3-title": "Stage de 4 mois rémunéré",
+        "step3-text": "Tu intègres l’équipe, tu participes aux projets et tu développes des compétences concrètes sur le terrain.",
+        "step4-title": "Retour en classe &amp; bilan",
+        "step4-text": "À ton retour, tu présentes ton expérience et tu peux continuer à collaborer avec ton milieu de stage ou transformer cette expérience en emploi.",
+
+        "faq-title": "Questions fréquentes sur les stages",
+        "faq1-q": "Est-ce que le stage est rémunéré&nbsp;?",
+        "faq1-a": "Oui, le stage de 4 mois est rémunéré dans la grande majorité des milieux.",
+        "faq2-q": "Est-ce que le stage peut mener à un emploi&nbsp;?",
+        "faq2-a": "Très souvent, oui. Plusieurs stages se prolongent en emploi étudiant ou à temps plein après le DEC.",
+        "faq3-q": "Est-ce que je peux faire mon stage à l’extérieur de l’Outaouais&nbsp;?",
+        "faq3-a": "Oui, certains étudiants font leur stage ailleurs au Québec selon leurs aspirations et les possibilités de milieu de stage.",
+
+        "footer-text": "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        "chatbot-title": "Assistant TIM",
+        "chatbot-welcome": "Salut&nbsp;! Pose-moi une question sur les stages ou le programme TIM 😊",
+        "chatbot-placeholder": "Écris ton message…",
+        "chatbot-answer": "Merci pour ta question! Sur le site réel, un conseiller TIM ou un chatbot plus avancé pourrait te donner une réponse précise sur les stages, les milieux de stage et le programme."
+      },
+      en: {
+        "page-title": "Internships – Multimedia Integration Technology",
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Home",
+        "nav-program": "Program",
+        "nav-grads": "Graduates",
+        "nav-faq": "FAQ",
+        "nav-contact": "Contact us",
+        "nav-login": "Login",
+
+        "hero-title": "Internships in Multimedia Integration",
+        "hero-text": "A 4-month paid internship to integrate into a professional environment and launch your multimedia career.",
+        "hero-cta": "See internship placements",
+
+        "intro-title": "A network of partners for over 20 years",
+        "intro-p1": "We are fortunate to have a wide range of internship partners for over 20 years!",
+        "intro-p2": "Our 4-month paid internships allow students to truly integrate into a professional environment. Most of the time, internships turn into permanent jobs. For many, it’s the start of an exciting career in multimedia. For others, it’s an extra experience before going to university.",
+        "intro-p3": "All internships take place here in the Outaouais region, but also across Quebec, depending on the students’ goals.",
+        "intro-p4": "<strong>Here is the official list of our internship placements for 2024.</strong>",
+
+        "list-title": "Internship placements 2024",
+        "list-intro": "Use the search and filters to explore the different possible internship environments.",
+        "stage-search-ph": "Search by name or type…",
+        "stage-chip-all": "All",
+        "stage-chip-gouv": "Government",
+        "stage-chip-prive": "Private sector",
+        "stage-chip-autre": "Other organizations",
+        "table-org": "Organization",
+        "table-type": "Type / Department",
+
+        "timeline-title": "How does your internship work?",
+        "step1-title": "Preparation in class",
+        "step1-text": "You are guided to prepare your resumé, portfolio and internship search.",
+        "step2-title": "Choosing your internship environment",
+        "step2-text": "You choose an environment based on your interests: web, video, game, design, communication, etc.",
+        "step3-title": "4-month paid internship",
+        "step3-text": "You join the team, participate in projects and develop concrete, real-world skills.",
+        "step4-title": "Back to class & debrief",
+        "step4-text": "When you return, you present your experience and may continue to collaborate with your internship site or turn it into a job.",
+
+        "faq-title": "Frequently asked questions about internships",
+        "faq1-q": "Is the internship paid?",
+        "faq1-a": "Yes, the 4-month internship is paid in the vast majority of environments.",
+        "faq2-q": "Can the internship lead to a job?",
+        "faq2-a": "Very often, yes. Many internships continue as student jobs or full-time jobs after the DEC.",
+        "faq3-q": "Can I do my internship outside the Outaouais region?",
+        "faq3-a": "Yes, some students do their internship elsewhere in Quebec depending on their goals and the available placements.",
+
+        "footer-text": "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        "chatbot-title": "TIM Assistant",
+        "chatbot-welcome": "Hi! Ask me a question about internships or the TIM program 😊",
+        "chatbot-placeholder": "Type your message…",
+        "chatbot-answer": "Thanks for your question! On the real site, a TIM advisor or a more advanced chatbot could give you a precise answer about internships, placements and the program."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const elements = document.querySelectorAll("[data-i18n]");
+      elements.forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const dict = translations[currentLang] || translations.fr;
+        const text = dict[key];
+        if (text !== undefined) {
+          el.innerHTML = text;
+        }
+      });
+
+      // placeholders
+      const placeholderEls = document.querySelectorAll("[data-i18n-placeholder]");
+      placeholderEls.forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const dict = translations[currentLang] || translations.fr;
+        const text = dict[key];
+        if (text !== undefined) {
+          el.setAttribute("placeholder", text);
+        }
+      });
+
+      // <title>
+      const titleEl = document.querySelector("title[data-i18n='page-title']");
+      const dict = translations[currentLang] || translations.fr;
+      if (titleEl && dict["page-title"]) {
+        titleEl.innerHTML = dict["page-title"];
+      }
+
+      // attribut lang du <html>
+      document.documentElement.lang = currentLang === "fr" ? "fr" : "en";
+
+      // bouton langue
+      const langBtn = document.getElementById("lang-toggle");
+      if (langBtn) {
+        langBtn.textContent = currentLang === "fr" ? "FR" : "EN";
+      }
+
+      // mettre à jour l'état de connexion (texte du lien + badge)
+      applyAuthToHeader();
+    }
+
+    // =========================
+    // 2. BOUTON LANGUE
+    // =========================
+    const langBtn = document.getElementById("lang-toggle");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        currentLang = currentLang === "fr" ? "en" : "fr";
+        applyTranslations();
+      });
+    }
+
+    // appliquer FR au chargement
+    applyTranslations();
+
+    // =========================
+    // 3. SCROLL DOUX POUR LES ANCRES
+    // =========================
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", (e) => {
+        const targetId = link.getAttribute("href");
+        if (targetId && targetId.startsWith("#")) {
+          const el = document.querySelector(targetId);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      });
+    });
+
+    // =========================
+    // 4. FILTRES DES MILIEUX DE STAGE
+    // =========================
+    const stageSearch = document.getElementById("stage-search");
+    const stageChips = document.querySelectorAll(".stage-chip");
+    const stageRows = document.querySelectorAll("#stage-tbody tr");
+    let currentStageFilter = "all";
+
+    function applyStageFilters() {
+      const search = stageSearch.value.trim().toLowerCase();
+
+      stageRows.forEach(row => {
+        const type = row.dataset.type || "autre";
+        const text = row.textContent.toLowerCase();
+
+        let visible = true;
+
+        if (currentStageFilter !== "all" && type !== currentStageFilter) {
+          visible = false;
+        }
+
+        if (search && !text.includes(search)) {
+          visible = false;
+        }
+
+        row.classList.toggle("hide", !visible);
+      });
+    }
+
+    stageChips.forEach(chip => {
+      chip.addEventListener("click", () => {
+        stageChips.forEach(c => c.classList.remove("active"));
+        chip.classList.add("active");
+        currentStageFilter = chip.dataset.type || "all";
+        applyStageFilters();
+      });
+    });
+
+    if (stageSearch) {
+      stageSearch.addEventListener("input", applyStageFilters);
+    }
+
+    // =========================
+    // 5. FAQ ACCORDÉON
+    // =========================
+    const faqItems = document.querySelectorAll(".faq-item");
+    faqItems.forEach(item => {
+      const btn = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+      if (!btn || !answer) return;
+
+      answer.style.maxHeight = "0";
+
+      btn.addEventListener("click", () => {
+        const isOpen = item.classList.contains("open");
+
+        faqItems.forEach(other => {
+          if (other !== item) {
+            other.classList.remove("open");
+            const ans = other.querySelector(".faq-answer");
+            if (ans) ans.style.maxHeight = "0";
+          }
+        });
+
+        if (!isOpen) {
+          item.classList.add("open");
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        } else {
+          item.classList.remove("open");
+          answer.style.maxHeight = "0";
+        }
+      });
+    });
+
+    // =========================
+    // 6. CHATBOT
+    // =========================
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function toggleChatbot(open) {
+      if (!chatbotWindow) return;
+      if (open === undefined) {
+        chatbotWindow.classList.toggle("open");
+      } else if (open) {
+        chatbotWindow.classList.add("open");
+      } else {
+        chatbotWindow.classList.remove("open");
+      }
+    }
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener("click", () => toggleChatbot());
+    }
+    if (chatbotClose) {
+      chatbotClose.addEventListener("click", () => toggleChatbot(false));
+    }
+
+    function addChatMessage(text, from = "bot") {
+      if (!chatbotBody) return;
+      const msg = document.createElement("div");
+      msg.className = "chatbot-msg " + from;
+      msg.textContent = text;
+      chatbotBody.appendChild(msg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    if (chatbotForm) {
+      chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatbotInput.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, "user");
+        chatbotInput.value = "";
+
+        setTimeout(() => {
+          const dict = translations[currentLang] || translations.fr;
+          const answer = dict["chatbot-answer"];
+          addChatMessage(answer, "bot");
+        }, 400);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Étudiant d’un jour – TIM</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS intégré pour cette page + thème général -->
+  <style>
+    /* ---------- BASE ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT GÉNÉRAL ---------- */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 3rem 0;
+      background: #f9fafb;
+    }
+
+    .section.alt {
+      background: #ffffff;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .col {
+      min-width: 0;
+    }
+
+    .rounded-img {
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.2);
+    }
+
+    .section h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      color: #4b5563;
+      max-width: 640px;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* version simple : pas de menu burger pour le TP */
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 4rem 0 3rem;
+      background-image: linear-gradient(135deg, #0f172a, #111827);
+      color: #f9fafb;
+      overflow: hidden;
+    }
+
+    .hero-small {
+      padding: 3rem 0 2.5rem;
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.4), transparent),
+                  radial-gradient(circle at 100% 100%, rgba(249, 115, 22, 0.55), transparent);
+      opacity: 0.28;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 1.5rem;
+      color: #e5e7eb;
+    }
+
+    /* ---------- BOUTONS ---------- */
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      gap: 0.45rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+                  background 0.12s ease, color 0.12s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(249, 115, 22, 0.6);
+    }
+
+    .btn-secondary {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+      transform: translateY(-1px);
+    }
+
+    /* ---------- CHOIX D’EXPÉRIENCE ---------- */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin: 1.5rem 0 1.25rem;
+    }
+
+    .choice-card {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      padding: 0.75rem 0.9rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-align: center;
+      transition: background 0.15s ease, transform 0.15s ease,
+                  box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .choice-card:hover {
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .choice-card.active {
+      background: linear-gradient(135deg, #0f172a, #111827);
+      color: #f9fafb;
+      border-color: #f97316;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.4);
+    }
+
+    .choice-desc {
+      display: none;
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      font-size: 0.95rem;
+      color: #374151;
+    }
+
+    .choice-desc h3 {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+    }
+
+    .choice-desc.active {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .choice-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 550px) {
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- TIMELINE (étapes de la journée) ---------- */
+    .timeline {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.8rem 1rem;
+      border-radius: 0.9rem;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 6px 18px rgba(15,23,42,0.08);
+    }
+
+    .timeline-step h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1rem;
+    }
+
+    .timeline-step p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    /* ---------- MINI FAQ ---------- */
+    .faq-accordion {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .faq-item {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: #f9fafb;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-weight: 700;
+      margin-left: 0.75rem;
+    }
+
+    .faq-item.open .faq-question {
+      background: #111827;
+      color: #f9fafb;
+    }
+
+    .faq-item.open .faq-question::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease;
+      padding: 0 1rem;
+    }
+
+    .faq-item.open .faq-answer {
+      padding-top: 0.6rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    /* ---------- FORMULAIRE ---------- */
+    .contact-form {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.5rem;
+      padding: 1rem;
+      border-radius: 0.9rem;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    .form-group {
+      display: grid;
+      gap: 0.2rem;
+      font-size: 0.9rem;
+    }
+
+    .form-group label {
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      border-radius: 0.6rem;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      padding: 0.5rem 0.7rem;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #f97316;
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.45);
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15,23,42,0.5);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.55);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    #chatbot-window.open {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    .chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-messages {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+    }
+
+    .chat-msg {
+      margin-bottom: 0.35rem;
+      display: flex;
+    }
+
+    .chat-msg span {
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+
+    .chat-msg.user {
+      justify-content: flex-end;
+    }
+
+    .chat-msg.user span {
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    .chat-msg.bot span {
+      background: #ffffff;
+      border: 1px solid rgba(148,163,184,0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148,163,184,0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-send {
+      border: none;
+      padding: 0 0.7rem;
+      background: #111827;
+      color: #f9fafb;
+      font-size: 0.8rem;
+      cursor: pointer;
+    }
+
+    #chatbot-send:hover {
+      background: #020617;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER (même que les autres pages) -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav_home">Accueil</a>
+        <a href="programme.html" data-i18n="nav_programme">Programme</a>
+        <a href="diplomes.html" data-i18n="nav_diplomes">Diplômés</a>
+        <a href="faq.html" data-i18n="nav_faq">FAQ</a>
+        <a href="contact.html" data-i18n="nav_contact">Nous joindre</a>
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav_login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR</button>
+    </div>
+  </header>
+
+  <!-- HERO SPÉCIAL ÉTUDIANT D'UN JOUR -->
+  <section class="hero hero-small">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-content">
+      <h1 data-i18n="hero_title">Étudiant d’un jour</h1>
+      <p data-i18n="hero_text">
+        Viens passer une demi-journée dans nos cours de multimédia et découvre
+        si le programme TIM est fait pour toi.
+      </p>
+      <a href="#inscription" class="btn-primary" data-i18n="hero_btn">Je veux participer</a>
+    </div>
+  </section>
+
+  <!-- TEXTE OFFICIEL + IMAGE -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/etudiant_un_jour.png" alt="Étudiant d’un jour"
+             class="rounded-img" />
+      </div>
+      <div class="col">
+        <h2 data-i18n="about_title">Viens vivre une vraie journée de Cégep</h2>
+        <p data-i18n="about_p1">
+          Viens passer une journée au Cégep dans nos classes en multimédia.
+          C’est l’occasion de voir si notre programme est fait pour toi&nbsp;!
+        </p>
+        <p data-i18n="about_p2">
+          <strong>Participer à l’expérience Étudiant ou Étudiante d’un jour :</strong>
+        </p>
+        <ul>
+          <li data-i18n="about_li1">
+            C’est passer une demi-journée dans un ou deux cours du programme de ton choix.
+          </li>
+          <li data-i18n="about_li2">
+            Tu vis le Cégep comme un vrai étudiant ou une vraie étudiante.
+          </li>
+          <li data-i18n="about_li3">
+            Tu découvres ton futur milieu d’études en pleine action.
+          </li>
+        </ul>
+        <p data-i18n="about_p3">
+          Fais comme près de la moitié de nos nouveaux admis qui ont participé
+          à l’activité Étudiant d’un jour avant de s’inscrire&nbsp;!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOC INTERACTIF 1 : CHOISIS TON TYPE D’EXPÉRIENCE -->
+  <section class="section">
+    <div class="container">
+      <h2 data-i18n="choice_title">Choisis le type d’expérience que tu veux vivre</h2>
+      <p class="section-intro" data-i18n="choice_intro">
+        Clique sur un profil pour voir le type de cours que tu pourrais visiter.
+      </p>
+
+      <div class="choice-grid">
+        <button class="choice-card active" data-desc="#desc-web" data-i18n="choice_web">
+          Web &amp; programmation
+        </button>
+        <button class="choice-card" data-desc="#desc-jeux" data-i18n="choice_game">
+          Jeux vidéo &amp; animation
+        </button>
+        <button class="choice-card" data-desc="#desc-design" data-i18n="choice_design">
+          Design &amp; image
+        </button>
+        <button class="choice-card" data-desc="#desc-video" data-i18n="choice_video">
+          Vidéo &amp; audio
+        </button>
+      </div>
+
+      <div class="choice-desc active" id="desc-web">
+        <h3 data-i18n="desc_web_title">Web &amp; programmation</h3>
+        <p data-i18n="desc_web_text">
+          Tu assistes à un cours de HTML/CSS ou JavaScript, tu vois comment on
+          crée un site ou une application web interactive et tu peux poser tes questions.
+        </p>
+      </div>
+      <div class="choice-desc" id="desc-jeux">
+        <h3 data-i18n="desc_game_title">Jeux vidéo &amp; animation</h3>
+        <p data-i18n="desc_game_text">
+          Découvre comment on conçoit un niveau de jeu, comment on crée des
+          personnages et comment on les anime.
+        </p>
+      </div>
+      <div class="choice-desc" id="desc-design">
+        <h3 data-i18n="desc_design_title">Design &amp; image</h3>
+        <p data-i18n="desc_design_text">
+          Tu assistes à un cours de design graphique ou d’interface et tu vois
+          comment on utilise Photoshop, Illustrator, Figma, etc.
+        </p>
+      </div>
+      <div class="choice-desc" id="desc-video">
+        <h3 data-i18n="desc_video_title">Vidéo &amp; audio</h3>
+        <p data-i18n="desc_video_text">
+          Tu découvres le studio, le tournage, le montage vidéo et le mixage
+          audio sur de vrais projets étudiants.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BLOC INTERACTIF 2 : ÉTAPES DE LA JOURNÉE -->
+  <section class="section alt">
+    <div class="container">
+      <h2 data-i18n="timeline_title">Comment se déroule ta demi-journée&nbsp;?</h2>
+      <div class="timeline">
+        <div class="timeline-step">
+          <span class="step-number">1</span>
+          <div>
+            <h3 data-i18n="timeline_step1_title">Accueil au Cégep</h3>
+            <p data-i18n="timeline_step1_text">
+              On te rencontre à l’entrée, on te présente le programme et on t’accompagne en classe.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <span class="step-number">2</span>
+          <div>
+            <h3 data-i18n="timeline_step2_title">Cours en direct</h3>
+            <p data-i18n="timeline_step2_text">
+              Tu t’installes avec les étudiants, tu observes le cours et tu peux poser des questions.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <span class="step-number">3</span>
+          <div>
+            <h3 data-i18n="timeline_step3_title">Visite des locaux</h3>
+            <p data-i18n="timeline_step3_text">
+              Tu vois les labs, le studio vidéo, les espaces de travail collaboratif.
+            </p>
+          </div>
+        </div>
+        <div class="timeline-step">
+          <span class="step-number">4</span>
+          <div>
+            <h3 data-i18n="timeline_step4_title">Discussion avec un prof ou un étudiant</h3>
+            <p data-i18n="timeline_step4_text">
+              On prend quelques minutes pour répondre à toutes tes questions sur le programme.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINI FAQ SPÉCIALE ÉTUDIANT D'UN JOUR -->
+  <section class="section">
+    <div class="container">
+      <h2 data-i18n="faq_title">Questions fréquentes sur Étudiant d’un jour</h2>
+
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq1_q">Est-ce que c’est payant ?</button>
+          <div class="faq-answer">
+            <p data-i18n="faq1_a">Non, l’activité Étudiant d’un jour est entièrement gratuite.</p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq2_q">
+            Est-ce que je peux venir avec un ami ou un parent ?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq2_a">
+              Oui, c’est possible dans la plupart des cas. Il suffit de le mentionner lors de l’inscription.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq3_q">
+            Est-ce que je peux choisir le type de cours que je visite ?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq3_a">
+              On essaie de t’assigner à un cours correspondant à ton intérêt : web, vidéo, jeux, design, etc.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INSCRIPTION -->
+  <section class="section alt" id="inscription">
+    <div class="container two-cols">
+      <div class="col">
+        <h2 data-i18n="register_title">Prêt à t’inscrire ?</h2>
+        <p data-i18n="register_text">
+          L’inscription officielle se fait sur le site du Cégep. Clique sur le
+          bouton ci-dessous pour accéder au formulaire.
+        </p>
+        <a
+          href="https://cegepoutaouais.qc.ca/futurs-etudiants/etudiant-dun-jour/"
+          target="_blank"
+          class="btn-primary"
+          data-i18n="register_btn"
+        >
+          Accéder au formulaire officiel
+        </a>
+      </div>
+      <div class="col">
+        <p data-i18n="mini_form_text">
+          <strong>Option facultative :</strong> tu peux aussi remplir ce mini formulaire
+          pour que nous puissions te contacter :
+        </p>
+        <form class="contact-form" id="ej-form">
+          <div class="form-group">
+            <label for="ej-nom" data-i18n="form_name_label">Nom</label>
+            <input
+              type="text"
+              id="ej-nom"
+              required
+              data-i18n-placeholder="form_name_ph"
+              placeholder="Ton nom complet"
+            />
+          </div>
+          <div class="form-group">
+            <label for="ej-email" data-i18n="form_email_label">Courriel</label>
+            <input
+              type="email"
+              id="ej-email"
+              required
+              data-i18n-placeholder="form_email_ph"
+              placeholder="ton.adresse@email.com"
+            />
+          </div>
+          <div class="form-group">
+            <label for="ej-interet" data-i18n="form_interest_label">
+              Ce qui t’intéresse le plus
+            </label>
+            <input
+              type="text"
+              id="ej-interet"
+              data-i18n-placeholder="form_interest_ph"
+              placeholder="Web, jeux vidéo, design, vidéo…"
+            />
+          </div>
+          <button type="submit" class="btn-secondary" data-i18n="form_submit_btn">
+            Envoyer
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer_text">
+        © Technique d’intégration multimédia – Cégep de l’Outaouais
+      </p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT COMPLET -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">?</button>
+
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chat_header">Assistant TIM</span>
+        <button class="chatbot-close" aria-label="Fermer" id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-messages" id="chatbot-messages">
+        <div class="chat-msg bot">
+          <span data-i18n="chat_intro">
+            Salut! Pose-moi une question sur le programme TIM ou Étudiant d’un jour 😊
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          autocomplete="off"
+          data-i18n-placeholder="chat_placeholder"
+          placeholder="Écris ta question..."
+        />
+        <button type="submit" id="chatbot-send" data-i18n="chat_send_btn">
+          Envoyer
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT INTÉGRÉ -->
+  <script>
+    // =======================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =======================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || (window.currentLang || "fr");
+
+      if (auth) {
+        // Texte du lien connexion quand connecté
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =======================
+    // 1. TRADUCTIONS FR / EN
+    // =======================
+    const translations = {
+      fr: {
+        page_title: "Étudiant d’un jour – TIM",
+
+        nav_home: "Accueil",
+        nav_programme: "Programme",
+        nav_diplomes: "Diplômés",
+        nav_faq: "FAQ",
+        nav_contact: "Nous joindre",
+        nav_login: "Connexion",
+
+        hero_title: "Étudiant d’un jour",
+        hero_text:
+          "Viens passer une demi-journée dans nos cours de multimédia et découvre si le programme TIM est fait pour toi.",
+        hero_btn: "Je veux participer",
+
+        about_title: "Viens vivre une vraie journée de Cégep",
+        about_p1:
+          "Viens passer une journée au Cégep dans nos classes en multimédia. C’est l’occasion de voir si notre programme est fait pour toi&nbsp;!",
+        about_p2:
+          "<strong>Participer à l’expérience Étudiant ou Étudiante d’un jour :</strong>",
+        about_li1:
+          "C’est passer une demi-journée dans un ou deux cours du programme de ton choix.",
+        about_li2:
+          "Tu vis le Cégep comme un vrai étudiant ou une vraie étudiante.",
+        about_li3:
+          "Tu découvres ton futur milieu d’études en pleine action.",
+        about_p3:
+          "Fais comme près de la moitié de nos nouveaux admis qui ont participé à l’activité Étudiant d’un jour avant de s’inscrire&nbsp;!",
+
+        choice_title: "Choisis le type d’expérience que tu veux vivre",
+        choice_intro:
+          "Clique sur un profil pour voir le type de cours que tu pourrais visiter.",
+        choice_web: "Web &amp; programmation",
+        choice_game: "Jeux vidéo &amp; animation",
+        choice_design: "Design &amp; image",
+        choice_video: "Vidéo &amp; audio",
+
+        desc_web_title: "Web &amp; programmation",
+        desc_web_text:
+          "Tu assistes à un cours de HTML/CSS ou JavaScript, tu vois comment on crée un site ou une application web interactive et tu peux poser tes questions.",
+        desc_game_title: "Jeux vidéo &amp; animation",
+        desc_game_text:
+          "Découvre comment on conçoit un niveau de jeu, comment on crée des personnages et comment on les anime.",
+        desc_design_title: "Design &amp; image",
+        desc_design_text:
+          "Tu assistes à un cours de design graphique ou d’interface et tu vois comment on utilise Photoshop, Illustrator, Figma, etc.",
+        desc_video_title: "Vidéo &amp; audio",
+        desc_video_text:
+          "Tu découvres le studio, le tournage, le montage vidéo et le mixage audio sur de vrais projets étudiants.",
+
+        timeline_title: "Comment se déroule ta demi-journée&nbsp;?",
+        timeline_step1_title: "Accueil au Cégep",
+        timeline_step1_text:
+          "On te rencontre à l’entrée, on te présente le programme et on t’accompagne en classe.",
+        timeline_step2_title: "Cours en direct",
+        timeline_step2_text:
+          "Tu t’installes avec les étudiants, tu observes le cours et tu peux poser des questions.",
+        timeline_step3_title: "Visite des locaux",
+        timeline_step3_text:
+          "Tu vois les labs, le studio vidéo, les espaces de travail collaboratif.",
+        timeline_step4_title: "Discussion avec un prof ou un étudiant",
+        timeline_step4_text:
+          "On prend quelques minutes pour répondre à toutes tes questions sur le programme.",
+
+        faq_title: "Questions fréquentes sur Étudiant d’un jour",
+        faq1_q: "Est-ce que c’est payant ?",
+        faq1_a: "Non, l’activité Étudiant d’un jour est entièrement gratuite.",
+        faq2_q: "Est-ce que je peux venir avec un ami ou un parent ?",
+        faq2_a:
+          "Oui, c’est possible dans la plupart des cas. Il suffit de le mentionner lors de l’inscription.",
+        faq3_q: "Est-ce que je peux choisir le type de cours que je visite ?",
+        faq3_a:
+          "On essaie de t’assigner à un cours correspondant à ton intérêt : web, vidéo, jeux, design, etc.",
+
+        register_title: "Prêt à t’inscrire ?",
+        register_text:
+          "L’inscription officielle se fait sur le site du Cégep. Clique sur le bouton ci-dessous pour accéder au formulaire.",
+        register_btn: "Accéder au formulaire officiel",
+
+        mini_form_text:
+          "<strong>Option facultative :</strong> tu peux aussi remplir ce mini formulaire pour que nous puissions te contacter :",
+
+
+        form_name_label: "Nom",
+        form_name_ph: "Ton nom complet",
+        form_email_label: "Courriel",
+        form_email_ph: "ton.adresse@email.com",
+        form_interest_label: "Ce qui t’intéresse le plus",
+        form_interest_ph: "Web, jeux vidéo, design, vidéo…",
+        form_submit_btn: "Envoyer",
+
+        footer_text:
+          "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        ej_error: "Merci de remplir au minimum ton nom et ton courriel.",
+        ej_success:
+          "Merci {name} ! Nous avons bien reçu ton intérêt. Sur un vrai site, un membre de l’équipe TIM te contacterait.",
+
+        chat_header: "Assistant TIM",
+        chat_intro:
+          "Salut! Pose-moi une question sur le programme TIM ou Étudiant d’un jour 😊",
+        chat_placeholder: "Écris ta question...",
+        chat_send_btn: "Envoyer",
+        chat_auto_reply:
+          "Merci pour ta question ! Sur le site réel, un conseiller TIM pourrait te donner une réponse précise sur le programme ou Étudiant d’un jour."
+      },
+
+      en: {
+        page_title: "Student for a Day – TIM",
+
+        nav_home: "Home",
+        nav_programme: "Program",
+        nav_diplomes: "Graduates",
+        nav_faq: "FAQ",
+        nav_contact: "Contact us",
+        nav_login: "Login",
+
+        hero_title: "Student for a Day",
+        hero_text:
+          "Come spend half a day in our multimedia courses and see if the TIM program is right for you.",
+        hero_btn: "I want to participate",
+
+        about_title: "Experience a real CEGEP day",
+        about_p1:
+          "Come spend a day at the CEGEP in our multimedia classes. It’s a great way to see if our program fits you!",
+        about_p2:
+          "<strong>Taking part in the Student for a Day experience:</strong>",
+        about_li1:
+          "You spend half a day in one or two courses in the program of your choice.",
+        about_li2:
+          "You experience CEGEP life like a real student.",
+        about_li3:
+          "You discover your future study environment in action.",
+        about_p3:
+          "Do like nearly half of our new students who took part in Student for a Day before applying!",
+
+        choice_title: "Choose the experience you want to live",
+        choice_intro:
+          "Click on a profile to see which type of course you could visit.",
+        choice_web: "Web &amp; Programming",
+        choice_game: "Video Games &amp; Animation",
+        choice_design: "Design &amp; Imaging",
+        choice_video: "Video &amp; Audio",
+
+        desc_web_title: "Web &amp; Programming",
+        desc_web_text:
+          "You attend an HTML/CSS or JavaScript class, see how to build a website or interactive web app, and ask your questions.",
+        desc_game_title: "Video Games &amp; Animation",
+        desc_game_text:
+          "Discover how a game level is designed, how characters are created and how they are animated.",
+        desc_design_title: "Design &amp; Imaging",
+        desc_design_text:
+          "You attend a graphic or interface design class and see how tools like Photoshop, Illustrator, or Figma are used.",
+        desc_video_title: "Video &amp; Audio",
+        desc_video_text:
+          "You discover the studio, shooting, video editing and audio mixing on real student projects.",
+
+        timeline_title: "How does your half-day unfold?",
+        timeline_step1_title: "Welcome at the CEGEP",
+        timeline_step1_text:
+          "We meet you at the entrance, introduce the program and walk you to class.",
+        timeline_step2_title: "Live class",
+        timeline_step2_text:
+          "You sit with the students, watch the class, and can ask questions.",
+        timeline_step3_title: "Tour of the facilities",
+        timeline_step3_text:
+          "You discover the labs, video studio and collaborative workspaces.",
+        timeline_step4_title: "Chat with a teacher or student",
+        timeline_step4_text:
+          "We take a few minutes to answer all your questions about the program.",
+
+        faq_title: "Frequently asked questions about Student for a Day",
+        faq1_q: "Is it free?",
+        faq1_a: "Yes, the Student for a Day activity is completely free.",
+        faq2_q: "Can I come with a friend or a parent?",
+        faq2_a:
+          "Yes, in most cases it is possible. Just mention it when you sign up.",
+        faq3_q: "Can I choose the type of course I visit?",
+        faq3_a:
+          "We try to assign you to a course that matches your interests: web, video, games, design, etc.",
+
+        register_title: "Ready to sign up?",
+        register_text:
+          "Official registration is done on the CEGEP website. Click the button below to access the form.",
+        register_btn: "Go to the official form",
+
+        mini_form_text:
+          "<strong>Optional:</strong> you can also fill out this short form so we can contact you:",
+
+        form_name_label: "Name",
+        form_name_ph: "Your full name",
+        form_email_label: "Email",
+        form_email_ph: "your.address@email.com",
+        form_interest_label: "What interests you most",
+        form_interest_ph: "Web, video games, design, video…",
+        form_submit_btn: "Send",
+
+        footer_text:
+          "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        ej_error: "Please fill in at least your name and email.",
+        ej_success:
+          "Thanks {name}! We’ve received your interest. On a real site, a member of the TIM team would contact you.",
+
+        chat_header: "TIM Assistant",
+        chat_intro:
+          "Hi! Ask me a question about the TIM program or Student for a Day 😊",
+        chat_placeholder: "Type your question...",
+        chat_send_btn: "Send",
+        chat_auto_reply:
+          "Thanks for your question! On the real site, a TIM advisor could give you a precise answer about the program or Student for a Day."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const dict = translations[currentLang] || translations.fr;
+
+      // Lang attribute
+      document.documentElement.lang = currentLang === "fr" ? "fr" : "en";
+
+      // Titre de la page
+      if (dict.page_title) {
+        document.title = dict.page_title;
+      }
+
+      // Éléments avec data-i18n (innerHTML)
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (dict[key]) {
+          el.innerHTML = dict[key];
+        }
+      });
+
+      // Placeholders
+      document
+        .querySelectorAll("[data-i18n-placeholder]")
+        .forEach(el => {
+          const key = el.getAttribute("data-i18n-placeholder");
+          if (dict[key]) {
+            el.placeholder = dict[key];
+          }
+        });
+
+      // Bouton langue
+      const langBtn = document.getElementById("lang-toggle");
+      if (langBtn) {
+        langBtn.textContent = currentLang === "fr" ? "FR" : "EN";
+      }
+
+      // Mettre à jour le header selon l'état de connexion + langue
+      applyAuthToHeader();
+    }
+
+    // =======================
+    // 2. INTERACTIONS
+    // =======================
+    document.addEventListener("DOMContentLoaded", () => {
+      applyTranslations();
+
+      // Bouton langue
+      const langBtn = document.getElementById("lang-toggle");
+      if (langBtn) {
+        langBtn.addEventListener("click", () => {
+          currentLang = currentLang === "fr" ? "en" : "fr";
+          applyTranslations();
+        });
+      }
+
+      // Scroll doux vers inscription
+      document.querySelectorAll('a[href^="#"]').forEach(link => {
+        link.addEventListener("click", (e) => {
+          const targetId = link.getAttribute("href");
+          if (targetId && targetId.startsWith("#")) {
+            const el = document.querySelector(targetId);
+            if (el) {
+              e.preventDefault();
+              el.scrollIntoView({ behavior: "smooth", block: "start" });
+            }
+          }
+        });
+      });
+
+      // Choix d’expérience
+      const choiceCards = document.querySelectorAll(".choice-card");
+      const choiceDescs = document.querySelectorAll(".choice-desc");
+
+      choiceCards.forEach(card => {
+        card.addEventListener("click", () => {
+          choiceCards.forEach(c => c.classList.remove("active"));
+          card.classList.add("active");
+
+          const targetSelector = card.dataset.desc;
+          choiceDescs.forEach(d => d.classList.remove("active"));
+          const targetDesc = document.querySelector(targetSelector);
+          if (targetDesc) targetDesc.classList.add("active");
+        });
+      });
+
+      // Mini FAQ
+      const faqItems = document.querySelectorAll(".faq-item");
+      faqItems.forEach(item => {
+        const btn = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+        if (!btn || !answer) return;
+
+        answer.style.maxHeight = "0";
+
+        btn.addEventListener("click", () => {
+          const isOpen = item.classList.contains("open");
+
+          faqItems.forEach(other => {
+            if (other !== item) {
+              other.classList.remove("open");
+              const ans = other.querySelector(".faq-answer");
+              if (ans) ans.style.maxHeight = "0";
+            }
+          });
+
+          if (!isOpen) {
+            item.classList.add("open");
+            answer.style.maxHeight = answer.scrollHeight + "px";
+          } else {
+            item.classList.remove("open");
+            answer.style.maxHeight = "0";
+          }
+        });
+      });
+
+      // Mini formulaire Étudiant d’un jour
+      const ejForm = document.getElementById("ej-form");
+      if (ejForm) {
+        ejForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const nom = document.getElementById("ej-nom").value.trim();
+          const email = document.getElementById("ej-email").value.trim();
+          const dict = translations[currentLang] || translations.fr;
+
+          if (!nom || !email) {
+            alert(dict.ej_error || translations.fr.ej_error);
+            return;
+          }
+
+          const msgTemplate = dict.ej_success || translations.fr.ej_success;
+          const msg = msgTemplate.replace("{name}", nom);
+          alert(msg);
+          ejForm.reset();
+        });
+      }
+
+      // Chatbot
+      const chatbotToggle = document.getElementById("chatbot-toggle");
+      const chatbotWindow = document.getElementById("chatbot-window");
+      const chatbotClose = document.getElementById("chatbot-close");
+      const chatbotForm = document.getElementById("chatbot-form");
+      const chatbotInput = document.getElementById("chatbot-input");
+      const chatbotMessages = document.getElementById("chatbot-messages");
+
+      function toggleChatbot(open) {
+        if (!chatbotWindow) return;
+        if (open === undefined) {
+          chatbotWindow.classList.toggle("open");
+        } else if (open) {
+          chatbotWindow.classList.add("open");
+        } else {
+          chatbotWindow.classList.remove("open");
+        }
+      }
+
+      if (chatbotToggle) {
+        chatbotToggle.addEventListener("click", () => toggleChatbot());
+      }
+      if (chatbotClose) {
+        chatbotClose.addEventListener("click", () => toggleChatbot(false));
+      }
+
+      function addChatMessage(text, from = "bot") {
+        if (!chatbotMessages) return;
+        const msg = document.createElement("div");
+        msg.className = "chat-msg " + from;
+        const span = document.createElement("span");
+        span.textContent = text;
+        msg.appendChild(span);
+        chatbotMessages.appendChild(msg);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }
+
+      if (chatbotForm) {
+        chatbotForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          const text = chatbotInput.value.trim();
+          if (!text) return;
+
+          addChatMessage(text, "user");
+          chatbotInput.value = "";
+
+          const dict = translations[currentLang] || translations.fr;
+          const reply = dict.chat_auto_reply || translations.fr.chat_auto_reply;
+
+          setTimeout(() => {
+            addChatMessage(reply, "bot");
+          }, 400);
+        });
+      }
+    });
+  </script>
+</body>
+</html>

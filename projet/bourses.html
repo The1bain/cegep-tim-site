@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="page-title">Bourses – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS INTÉGRÉ -->
+  <style>
+    /* ---------- BASE ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT GÉNÉRAL ---------- */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 3rem 0;
+      background: #f9fafb;
+    }
+
+    .section.alt {
+      background: #ffffff;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .col {
+      min-width: 0;
+    }
+
+    .rounded-img {
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    }
+
+    .section h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      color: #4b5563;
+      max-width: 640px;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* pas de burger pour le TP */
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 4rem 0 3rem;
+      background-size: cover;
+      background-position: center;
+      color: #f9fafb;
+      overflow: hidden;
+    }
+
+    .hero-small {
+      padding: 3rem 0 2.5rem;
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.7)
+      );
+      mix-blend-mode: multiply;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 1.5rem;
+      color: #e5e7eb;
+      font-size: 1rem;
+    }
+
+    .hero p strong {
+      color: #facc15;
+    }
+
+    /* ---------- BOUTONS ---------- */
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      gap: 0.45rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+                  background 0.12s ease, color 0.12s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(249, 115, 22, 0.6);
+    }
+
+    .btn-secondary {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+      transform: translateY(-1px);
+    }
+
+    /* ---------- SIMULATEUR BOURSES ---------- */
+    .simu-wrapper {
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      border-radius: 1rem;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      font-size: 0.95rem;
+    }
+
+    .simu-wrapper label {
+      display: block;
+      margin-bottom: 0.6rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    #nb-sessions {
+      width: 100%;
+      margin: 0.5rem 0 0.8rem;
+    }
+
+    .simu-values {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .simu-values strong {
+      color: #16a34a;
+      margin-left: 0.25rem;
+    }
+
+    .note {
+      margin-top: 0.85rem;
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    /* ---------- FAQ (avec <details>) ---------- */
+    .faq-accordion {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .faq-item {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-question {
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f9fafb;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-weight: 700;
+      margin-left: 0.75rem;
+    }
+
+    .faq-item[open] .faq-question {
+      background: #111827;
+      color: #f9fafb;
+    }
+
+    .faq-item[open] .faq-question::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      padding: 0 1rem 0.8rem;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .faq-answer p {
+      margin: 0.6rem 0 0;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15,23,42,0.5);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.55);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148,163,184,0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148,163,184,0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub" data-i18n="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav-home">Accueil</a>
+        <a href="programme.html" data-i18n="nav-program">Programme</a>
+        <a href="diplomes.html" data-i18n="nav-grads">Diplômés</a>
+        <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+        <a href="contact.html" data-i18n="nav-contact">Nous joindre</a>
+        <!-- Lien connexion commun -->
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav-login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR</button>
+    </div>
+  </header>
+
+  <!-- HERO BOURSES -->
+  <section class="hero hero-small" style="background-image: url('img/1500.png');">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-content">
+      <h1 data-i18n="hero-title">Bourses Perspective Québec</h1>
+      <p data-i18n="hero-text">
+        Reçois <strong>1 500&nbsp;$</strong> après chaque session à temps plein réussie
+        en intégration multimédia, jusqu’à <strong>9 000&nbsp;$</strong> au total.
+      </p>
+      <a href="#details" class="btn-primary" data-i18n="hero-cta">Comment ça fonctionne&nbsp;?</a>
+    </div>
+  </section>
+
+  <!-- CONTENU PRINCIPAL -->
+  <section class="section" id="details">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/1500.png" alt="C’est 1500 $ qui t’attend"
+             class="rounded-img" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="main-title">Une bourse pour chaque session réussie</h2>
+        <p data-i18n="main-p1">
+          Tu souhaites t’inscrire au Cégep de l’Outaouais ou tu fais déjà partie de la
+          communauté étudiante&nbsp;? Le programme technique d’intégration multimédia
+          pourrait te faire bénéficier d’une bourse très intéressante.
+        </p>
+        <p data-i18n="main-p2">
+          Ce programme d’étude a été visé pour augmenter la main-d’œuvre dans des
+          domaines d’emploi précis. Tu recevras <strong>1500&nbsp;$ par session</strong>
+          à temps plein réussie. Au bout de ton parcours académique, c’est un total de
+          <strong>9 000&nbsp;$</strong> que tu auras touché si tu réussis toutes tes sessions.
+        </p>
+
+        <a href="https://www.quebec.ca/education/aide-financiere-aux-etudes/bourses-perspective"
+           target="_blank" rel="noopener" class="btn-secondary" data-i18n="main-cta">
+          En savoir plus sur Québec.ca
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- SIMULATEUR INTERACTIF -->
+  <section class="section alt">
+    <div class="container">
+      <h2 data-i18n="simu-title">Simule le montant que tu peux recevoir</h2>
+      <p class="section-intro" data-i18n="simu-intro">
+        Choisis le nombre de sessions à temps plein que tu prévois réussir
+        dans le programme d’intégration multimédia.
+      </p>
+
+      <div class="simu-wrapper">
+        <label for="nb-sessions" data-i18n="simu-label">
+          Nombre de sessions réussies (1 à 6)&nbsp;:
+        </label>
+        <input type="range" id="nb-sessions" min="1" max="6" value="6" />
+        <div class="simu-values">
+          <span id="nb-sessions-value">6</span>
+          <span data-i18n="simu-sessions-label">
+            sessions × 1 500&nbsp;$ =
+          </span>
+          <strong id="montant-total">9 000&nbsp;$</strong>
+        </div>
+      </div>
+
+      <p class="note" data-i18n="simu-note">
+        * Calcul indicatif, basé sur la règle actuelle des Bourses Perspective Québec.
+        Les modalités officielles demeurent celles du ministère.
+      </p>
+    </div>
+  </section>
+
+  <!-- MINI FAQ BOURSES -->
+  <section class="section">
+    <div class="container">
+      <h2 data-i18n="faq-title">Questions fréquentes sur les bourses</h2>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary class="faq-question" data-i18n="faq1-q">
+            Qui peut recevoir les Bourses Perspective Québec&nbsp;?
+          </summary>
+          <div class="faq-answer">
+            <p data-i18n="faq1-a">
+              Elles sont offertes aux étudiantes et étudiants qui réussissent
+              leurs sessions à temps plein dans certains programmes ciblés,
+              dont la Technique d’intégration multimédia.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question" data-i18n="faq2-q">
+            Est-ce automatique si je suis inscrit en TIM&nbsp;?
+          </summary>
+          <div class="faq-answer">
+            <p data-i18n="faq2-a">
+              Tu dois être inscrit à temps plein et réussir ta session selon les
+              critères du ministère. Le montant est ensuite versé après la session.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question" data-i18n="faq3-q">
+            Est-ce que cette bourse se cumule avec d’autres aides financières&nbsp;?
+          </summary>
+          <div class="faq-answer">
+            <p data-i18n="faq3-a">
+              Oui, tu peux aussi être admissible à l’Aide financière aux études,
+              aux bourses Parcours et au Programme de prêts et bourses pour
+              études à temps plein.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer-text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chatbot-title">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">
+          <span data-i18n="chatbot-welcome">
+            Salut ! Pose-moi une question sur les bourses ou le programme TIM 😄
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+          data-i18n-placeholder="chatbot-placeholder"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT INTÉGRÉ -->
+  <script>
+    // =========================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =========================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || (window.currentLang || "fr");
+
+      if (auth) {
+        // Texte du lien quand "connecté"
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =========================
+    // 1. DICTIONNAIRE DE TRADUCTION
+    // =========================
+    const translations = {
+      fr: {
+        "page-title": "Bourses – Technique d’intégration multimédia",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Accueil",
+        "nav-program": "Programme",
+        "nav-grads": "Diplômés",
+        "nav-faq": "FAQ",
+        "nav-contact": "Nous joindre",
+        "nav-login": "Connexion",
+
+        "hero-title": "Bourses Perspective Québec",
+        "hero-text": "Reçois <strong>1 500&nbsp;$</strong> après chaque session à temps plein réussie en intégration multimédia, jusqu’à <strong>9 000&nbsp;$</strong> au total.",
+        "hero-cta": "Comment ça fonctionne&nbsp;?",
+
+        "main-title": "Une bourse pour chaque session réussie",
+        "main-p1": "Tu souhaites t’inscrire au Cégep de l’Outaouais ou tu fais déjà partie de la communauté étudiante&nbsp;? Le programme technique d’intégration multimédia pourrait te faire bénéficier d’une bourse très intéressante.",
+        "main-p2": "Ce programme d’étude a été visé pour augmenter la main-d’œuvre dans des domaines d’emploi précis. Tu recevras <strong>1500&nbsp;$ par session</strong> à temps plein réussie. Au bout de ton parcours académique, c’est un total de <strong>9 000&nbsp;$</strong> que tu auras touché si tu réussis toutes tes sessions.",
+        "main-cta": "En savoir plus sur Québec.ca",
+
+        "simu-title": "Simule le montant que tu peux recevoir",
+        "simu-intro": "Choisis le nombre de sessions à temps plein que tu prévois réussir dans le programme d’intégration multimédia.",
+        "simu-label": "Nombre de sessions réussies (1 à 6)&nbsp;:",
+        "simu-sessions-label": " sessions × 1 500&nbsp;$ =",
+        "simu-note": "* Calcul indicatif, basé sur la règle actuelle des Bourses Perspective Québec. Les modalités officielles demeurent celles du ministère.",
+
+        "faq-title": "Questions fréquentes sur les bourses",
+        "faq1-q": "Qui peut recevoir les Bourses Perspective Québec&nbsp;?",
+        "faq1-a": "Elles sont offertes aux étudiantes et étudiants qui réussissent leurs sessions à temps plein dans certains programmes ciblés, dont la Technique d’intégration multimédia.",
+        "faq2-q": "Est-ce automatique si je suis inscrit en TIM&nbsp;?",
+        "faq2-a": "Tu dois être inscrit à temps plein et réussir ta session selon les critères du ministère. Le montant est ensuite versé après la session.",
+        "faq3-q": "Est-ce que cette bourse se cumule avec d’autres aides financières&nbsp;?",
+        "faq3-a": "Oui, tu peux aussi être admissible à l’Aide financière aux études, aux bourses Parcours et au Programme de prêts et bourses pour études à temps plein.",
+
+        "footer-text": "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        "chatbot-title": "Assistant TIM",
+        "chatbot-welcome": "Salut ! Pose-moi une question sur les bourses ou le programme TIM 😄",
+        "chatbot-placeholder": "Écris ton message…",
+        "chatbot-answer": "Merci pour ta question! Sur le vrai site, un conseiller TIM ou un chatbot plus avancé pourrait te donner des infos détaillées sur les Bourses Perspective Québec et l’aide financière."
+      },
+      en: {
+        "page-title": "Scholarships – Multimedia Integration Technology",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Home",
+        "nav-program": "Program",
+        "nav-grads": "Graduates",
+        "nav-faq": "FAQ",
+        "nav-contact": "Contact us",
+        "nav-login": "Login",
+
+        "hero-title": "Perspective Québec Scholarships",
+        "hero-text": "Receive <strong>$1,500</strong> after each successfully completed full-time semester in Multimedia Integration, up to a total of <strong>$9,000</strong>.",
+        "hero-cta": "How does it work?",
+
+        "main-title": "A scholarship for every successful semester",
+        "main-p1": "Are you planning to register at Cégep de l’Outaouais or are you already a student here? The Multimedia Integration Technology program may give you access to a very attractive scholarship.",
+        "main-p2": "This program has been targeted to increase the workforce in specific job sectors. You receive <strong>$1,500 per successful full-time semester</strong>. By the end of your academic pathway, this can add up to a total of <strong>$9,000</strong> if you complete all your semesters successfully.",
+        "main-cta": "Learn more on Québec.ca",
+
+        "simu-title": "Estimate how much you could receive",
+        "simu-intro": "Choose how many full-time semesters you plan to successfully complete in the Multimedia Integration program.",
+        "simu-label": "Number of successful semesters (1 to 6):",
+        "simu-sessions-label": " semesters × $1,500 =",
+        "simu-note": "* This is an estimate based on the current rules for Perspective Québec Scholarships. Official terms and conditions remain those of the ministry.",
+
+        "faq-title": "Frequently asked questions about the scholarships",
+        "faq1-q": "Who can receive the Perspective Québec Scholarships?",
+        "faq1-a": "They are offered to students who successfully complete their full-time semesters in certain targeted programs, including the Multimedia Integration Technology program.",
+        "faq2-q": "Is it automatic if I am enrolled in TIM?",
+        "faq2-a": "You must be registered full-time and successfully complete your semester according to the ministry’s criteria. The amount is then paid after the semester.",
+        "faq3-q": "Can this scholarship be combined with other financial aid?",
+        "faq3-a": "Yes, you may also be eligible for Loans and Bursaries, Parcours scholarships, and other student financial aid programs.",
+
+        "footer-text": "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        "chatbot-title": "TIM Assistant",
+        "chatbot-welcome": "Hi! Ask me a question about scholarships or the TIM program 😄",
+        "chatbot-placeholder": "Type your message…",
+        "chatbot-answer": "Thanks for your question! On the real site, a TIM advisor or a more advanced chatbot could give you detailed information about Perspective Québec Scholarships and financial aid."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const dict = translations[currentLang] || translations.fr;
+
+      const elements = document.querySelectorAll("[data-i18n]");
+      elements.forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const text = dict[key];
+        if (text !== undefined) {
+          el.innerHTML = text;
+        }
+      });
+
+      const placeholderEls = document.querySelectorAll("[data-i18n-placeholder]");
+      placeholderEls.forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const text = dict[key];
+        if (text !== undefined) {
+          el.setAttribute("placeholder", text);
+        }
+      });
+
+      const titleEl = document.querySelector("title[data-i18n='page-title']");
+      if (titleEl && dict["page-title"]) {
+        titleEl.innerHTML = dict["page-title"];
+      }
+
+      document.documentElement.lang = currentLang === "fr" ? "fr" : "en";
+
+      const langBtn = document.getElementById("lang-toggle");
+      if (langBtn) {
+        langBtn.textContent = currentLang === "fr" ? "FR" : "EN";
+      }
+
+      // Auth header + lien connexion
+      applyAuthToHeader();
+
+      // Met à jour le simulateur si présent
+      if (typeof updateSimu === "function") {
+        updateSimu();
+      }
+    }
+
+    // ---- Bouton langue ----
+    const langBtn = document.getElementById("lang-toggle");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        currentLang = currentLang === "fr" ? "en" : "fr";
+        applyTranslations();
+      });
+    }
+
+    // appliquer FR au chargement
+    applyTranslations();
+
+    // ---- Scroll doux pour les liens internes (#details) ----
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", (e) => {
+        const targetId = link.getAttribute("href");
+        if (targetId && targetId.startsWith("#")) {
+          const el = document.querySelector(targetId);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      });
+    });
+
+    // ---- Simulateur bourses ----
+    const range = document.getElementById('nb-sessions');
+    const spanSessions = document.getElementById('nb-sessions-value');
+    const spanTotal = document.getElementById('montant-total');
+
+    function updateSimu() {
+      if (!range || !spanSessions || !spanTotal) return;
+      const n = parseInt(range.value, 10);
+      const total = n * 1500;
+      spanSessions.textContent = n;
+      const locale = currentLang === "fr" ? "fr-CA" : "en-CA";
+      const currency = total.toLocaleString(locale, {
+        style: "currency",
+        currency: "CAD"
+      });
+      spanTotal.textContent = currency;
+    }
+
+    if (range && spanSessions && spanTotal) {
+      range.addEventListener('input', updateSimu);
+      updateSimu();
+    }
+
+    // ---- Chatbot ----
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function toggleChatbot(open) {
+      if (!chatbotWindow) return;
+      if (open === undefined) {
+        chatbotWindow.classList.toggle("open");
+      } else if (open) {
+        chatbotWindow.classList.add("open");
+      } else {
+        chatbotWindow.classList.remove("open");
+      }
+    }
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener("click", () => toggleChatbot());
+    }
+    if (chatbotClose) {
+      chatbotClose.addEventListener("click", () => toggleChatbot(false));
+    }
+
+    function addChatMessage(text, from = "bot") {
+      if (!chatbotBody) return;
+      const msg = document.createElement("div");
+      msg.className = "chatbot-msg " + from;
+      msg.textContent = text;
+      chatbotBody.appendChild(msg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    if (chatbotForm) {
+      chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatbotInput.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, "user");
+        chatbotInput.value = "";
+
+        setTimeout(() => {
+          const dict = translations[currentLang] || translations.fr;
+          const answer = dict["chatbot-answer"];
+          addChatMessage(answer, "bot");
+        }, 400);
+      });
+    }
+  </script>
+</body>
+</html>

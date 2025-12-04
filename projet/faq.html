@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="page-title">FAQ – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ✅ CSS GLOBAL + SPÉCIFIQUE FAQ -->
+  <style>
+    /* ---------- BASE GLOBALE ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT GÉNÉRAL ---------- */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 3rem 0;
+      background: #f9fafb;
+    }
+
+    .section.alt {
+      background: #ffffff;
+    }
+
+    .section h1 {
+      font-size: 2.1rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .section-intro {
+      color: #4b5563;
+      max-width: 700px;
+      margin: 0.5rem auto 1.5rem;
+    }
+
+    .center {
+      text-align: center;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.94);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* pas de menu burger pour le TP */
+      }
+    }
+
+    /* ---------- FAQ ---------- */
+    .faq-list {
+      max-width: 900px;
+      margin: 2rem auto;
+    }
+
+    .faq-item {
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      border-radius: 12px;
+      margin-bottom: 1rem;
+      overflow: hidden;
+      background: #ffffff;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+      transition: box-shadow 0.25s ease, transform 0.18s ease,
+                  border-color 0.25s ease;
+    }
+
+    .faq-item:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.15);
+      border-color: rgba(249, 115, 22, 0.7);
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-align: left;
+      background: transparent;
+      border: none;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .faq-icon {
+      transition: transform 0.25s ease;
+      font-size: 1.3rem;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 1.25rem;
+      transition: max-height 0.25s ease, padding 0.25s ease;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 500px;   /* assez grand pour contenir le texte */
+      padding-bottom: 1rem;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg); /* + devient X */
+    }
+
+    .faq-answer p {
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+      line-height: 1.5;
+      color: #111827;
+      font-size: 0.95rem;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.5);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.55);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub" data-i18n="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav-home">Accueil</a>
+        <a href="programme.html" data-i18n="nav-program">Programme</a>
+        <a href="diplomes.html" data-i18n="nav-grads">Diplômés</a>
+        <a href="faq.html" class="active" data-i18n="nav-faq">FAQ</a>
+        <!-- 🔑 même id que sur la page diplômés -->
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav-login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR / EN</button>
+    </div>
+  </header>
+
+  <!-- CONTENU FAQ -->
+  <section class="section">
+    <div class="container">
+      <h1 class="center" data-i18n="faq-title">FAQ</h1>
+      <p class="section-intro center" data-i18n="faq-intro">
+        Tu te poses des questions sur les stages, la programmation, la 3D ou le web ?
+        Clique sur une question pour afficher la réponse.
+      </p>
+
+      <div class="faq-list">
+
+        <!-- 1. STAGES -->
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="q1">
+            Comment fonctionnent les stages ?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="q1-a1">
+              Lors de la 5<sup>e</sup> session, un cours spécifique est à l’horaire afin
+              d’encadrer la démarche de stage. Il s’agit d’un stage rémunéré de 4 mois.
+            </p>
+            <p data-i18n="q1-a2">
+              Le département TIM possède de nombreux partenaires depuis 2000 dans
+              différentes entreprises de multimédia de la région et dans la fonction
+              publique fédérale. La plupart du temps, le stage se transforme en emploi :
+              c’est le début d’une superbe carrière en multimédia.
+            </p>
+          </div>
+        </div>
+
+        <!-- 2. DEC TECHNIQUE -->
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="q2">
+            Le programme en multimédia, c’est un DEC technique ?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="q2-a1">
+              Oui ! C’est une formation de 3 ans qui te permet d’acquérir des compétences
+              spécifiques pour le marché du travail.
+            </p>
+            <p data-i18n="q2-a2">
+              L’avantage du DEC technique en TIM, c’est que tu passes deux ans et demi à
+              l’école et la dernière session en stage rémunéré. C’est un cheminement idéal
+              pour commencer une carrière stimulante et bien payée.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3. ADOBE / NIVEAU -->
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="q3">
+            Dois-je être déjà bon en programmation ou avec les logiciels d’ADOBE ?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="q3-a1">
+              Non ! Nous commençons la formation au début pour tout le monde.
+            </p>
+            <p data-i18n="q3-a2">
+              Si tu as envie de réaliser des productions interactives comme des sites web,
+              des jeux, de la vidéo, de l’animation ou du montage, tu vas apprendre tout ce
+              qu’il faut pendant le programme : pas besoin d’être un pro à l’entrée.
+            </p>
+          </div>
+        </div>
+
+        <!-- 4. PROGRAMMATION -->
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="q4">
+            Est-ce qu’on fait beaucoup de programmation ?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="q4-a1">
+              Oui. Comme la formation utilise principalement les technologies du web,
+              tu verras entre autres <strong>HTML, CSS, JavaScript</strong> et
+              <strong>PHP/MySQL</strong>.
+            </p>
+            <p data-i18n="q4-a2">
+              La programmation sert à rendre les projets interactifs : sites web dynamiques,
+              jeux, applications, interfaces animées, etc.
+            </p>
+          </div>
+        </div>
+
+        <!-- 5. 3D -->
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="q5">
+            Est-ce qu’on fait beaucoup de 3D ?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="q5-a1">
+              Oui, la 3D fait partie de la formation. Tu apprends à modéliser et animer des
+              objets et des environnements 3D avec un logiciel professionnel semblable à ce
+              qui est utilisé dans l’industrie du jeu vidéo.
+            </p>
+          </div>
+        </div>
+
+        <!-- 6. CRÉATIF OU TECHNIQUE -->
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="q6">
+            Est-ce que c’est un programme créatif ou technique ?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="q6-a1">
+              Les deux ! Le multimédia est créatif parce que tu conçois des visuels,
+              vidéos, animations, sites web et jeux à partir de zéro.
+            </p>
+            <p data-i18n="q6-a2">
+              Le programme comporte aussi un aspect technique important : tu apprends à
+              programmer certains aspects de tes créations pour créer de l’interactivité.
+            </p>
+          </div>
+        </div>
+
+        <!-- 7. WEB -->
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="q7">
+            Est-ce qu’on fait beaucoup de web ?
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="q7-a1">
+              Oui. Comme il n’existe pas encore de formation universitaire spécialisée
+              uniquement en web, le programme TIM prépare très bien au marché du web.
+            </p>
+            <p data-i18n="q7-a2">
+              La formation reste toutefois multidisciplinaire : elle touche aussi aux jeux
+              vidéo, à la 3D, au design graphique et aux médias interactifs.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer-text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- ✅ CHATBOT -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chatbot-title">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">
+          <span data-i18n="chatbot-welcome">
+            Salut ! Pose-moi une question sur le programme TIM ou la FAQ 😄
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+          data-i18n-placeholder="chatbot-placeholder"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- ✅ JS GLOBAL + FAQ + CHATBOT -->
+  <script>
+    // =========================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =========================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || "fr";
+
+      if (auth) {
+        // Connecté
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =========================
+    // 1. DICTIONNAIRE DE TRADUCTION
+    // =========================
+    const translations = {
+      fr: {
+        "page-title": "FAQ – Technique d’intégration multimédia",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Accueil",
+        "nav-program": "Programme",
+        "nav-grads": "Diplômés",
+        "nav-faq": "FAQ",
+        "nav-contact": "Nous joindre",
+        "nav-login": "Connexion",
+
+        "faq-title": "FAQ",
+        "faq-intro": "Tu te poses des questions sur les stages, la programmation, la 3D ou le web ? Clique sur une question pour afficher la réponse.",
+
+        "q1": "Comment fonctionnent les stages ?",
+        "q1-a1": "Lors de la 5<sup>e</sup> session, un cours spécifique est à l’horaire afin d’encadrer la démarche de stage. Il s’agit d’un stage rémunéré de 4 mois.",
+        "q1-a2": "Le département TIM possède de nombreux partenaires depuis 2000 dans différentes entreprises de multimédia de la région et dans la fonction publique fédérale. La plupart du temps, le stage se transforme en emploi : c’est le début d’une superbe carrière en multimédia.",
+
+        "q2": "Le programme en multimédia, c’est un DEC technique ?",
+        "q2-a1": "Oui ! C’est une formation de 3 ans qui te permet d’acquérir des compétences spécifiques pour le marché du travail.",
+        "q2-a2": "L’avantage du DEC technique en TIM, c’est que tu passes deux ans et demi à l’école et la dernière session en stage rémunéré. C’est un cheminement idéal pour commencer une carrière stimulante et bien payée.",
+
+        "q3": "Dois-je être déjà bon en programmation ou avec les logiciels d’ADOBE ?",
+        "q3-a1": "Non ! Nous commençons la formation au début pour tout le monde.",
+        "q3-a2": "Si tu as envie de réaliser des productions interactives comme des sites web, des jeux, de la vidéo, de l’animation ou du montage, tu vas apprendre tout ce qu’il faut pendant le programme : pas besoin d’être un pro à l’entrée.",
+
+        "q4": "Est-ce qu’on fait beaucoup de programmation ?",
+        "q4-a1": "Oui. Comme la formation utilise principalement les technologies du web, tu verras entre autres <strong>HTML, CSS, JavaScript</strong> et <strong>PHP/MySQL</strong>.",
+        "q4-a2": "La programmation sert à rendre les projets interactifs : sites web dynamiques, jeux, applications, interfaces animées, etc.",
+
+        "q5": "Est-ce qu’on fait beaucoup de 3D ?",
+        "q5-a1": "Oui, la 3D fait partie de la formation. Tu apprends à modéliser et animer des objets et des environnements 3D avec un logiciel professionnel semblable à ce qui est utilisé dans l’industrie du jeu vidéo.",
+
+        "q6": "Est-ce que c’est un programme créatif ou technique ?",
+        "q6-a1": "Les deux ! Le multimédia est créatif parce que tu conçois des visuels, vidéos, animations, sites web et jeux à partir de zéro.",
+        "q6-a2": "Le programme comporte aussi un aspect technique important : tu apprends à programmer certains aspects de tes créations pour créer de l’interactivité.",
+
+        "q7": "Est-ce qu’on fait beaucoup de web ?",
+        "q7-a1": "Oui. Comme il n’existe pas encore de formation universitaire spécialisée uniquement en web, le programme TIM prépare très bien au marché du web.",
+        "q7-a2": "La formation reste toutefois multidisciplinaire : elle touche aussi aux jeux vidéo, à la 3D, au design graphique et aux médias interactifs.",
+
+        "footer-text": "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        "chatbot-title": "Assistant TIM",
+        "chatbot-welcome": "Salut ! Pose-moi une question sur le programme TIM ou la FAQ 😄",
+        "chatbot-placeholder": "Écris ton message…",
+        "chatbot-answer": "Merci pour ta question ! Sur le vrai site, un conseiller TIM pourrait te répondre plus en détail selon ta situation."
+      },
+      en: {
+        "page-title": "FAQ – Multimedia Integration Technology",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Home",
+        "nav-program": "Program",
+        "nav-grads": "Graduates",
+        "nav-faq": "FAQ",
+        "nav-contact": "Contact us",
+        "nav-login": "Login",
+
+        "faq-title": "FAQ",
+        "faq-intro": "Do you have questions about internships, programming, 3D or the web? Click on a question to see the answer.",
+
+        "q1": "How do internships work?",
+        "q1-a1": "In the 5th semester, there is a dedicated course to support the internship process. It is a paid 4-month internship.",
+        "q1-a2": "The TIM department has had many partners since 2000 in various multimedia companies in the region and in the federal public service. Most of the time, the internship turns into a job: it’s the start of a great career in multimedia.",
+
+        "q2": "Is the multimedia program a technical DEC?",
+        "q2-a1": "Yes! It’s a 3-year program that gives you specific skills for the job market.",
+        "q2-a2": "One advantage of the technical DEC in TIM is that you spend two and a half years in class, and the final semester in a paid internship. It’s an ideal path to start a stimulating and well-paid career.",
+
+        "q3": "Do I need to already be good at programming or Adobe software?",
+        "q3-a1": "No! We start from the basics with everyone.",
+        "q3-a2": "If you want to create interactive projects like websites, games, videos, animations or edits, you’ll learn everything you need during the program — you don’t need to be a pro when you start.",
+
+        "q4": "Is there a lot of programming?",
+        "q4-a1": "Yes. Since the program mainly uses web technologies, you’ll see among others <strong>HTML, CSS, JavaScript</strong> and <strong>PHP/MySQL</strong>.",
+        "q4-a2": "Programming is used to make projects interactive: dynamic websites, games, applications, animated interfaces, and more.",
+
+        "q5": "Is there a lot of 3D?",
+        "q5-a1": "Yes, 3D is part of the training. You’ll learn to model and animate 3D objects and environments using professional software similar to what is used in the video game industry.",
+
+        "q6": "Is it a creative or technical program?",
+        "q6-a1": "Both! Multimedia is creative because you design visuals, videos, animations, websites and games from scratch.",
+        "q6-a2": "The program also has an important technical side: you learn to code parts of your creations to make them interactive.",
+
+        "q7": "Is there a lot of web?",
+        "q7-a1": "Yes. Since there is still no university program focused only on web, the TIM program prepares you very well for the web job market.",
+        "q7-a2": "The training is still multidisciplinary: it also covers video games, 3D, graphic design and interactive media.",
+
+        "footer-text": "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        "chatbot-title": "TIM Assistant",
+        "chatbot-welcome": "Hi! Ask me a question about the TIM program or this FAQ 😄",
+        "chatbot-placeholder": "Type your message…",
+        "chatbot-answer": "Thanks for your question! On the real site, a TIM advisor could give you a more detailed answer for your specific situation."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const elements = document.querySelectorAll("[data-i18n]");
+      elements.forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.innerHTML = text;
+        }
+      });
+
+      const placeholderEls = document.querySelectorAll("[data-i18n-placeholder]");
+      placeholderEls.forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.setAttribute("placeholder", text);
+        }
+      });
+
+      const titleEl = document.querySelector("title[data-i18n='page-title']");
+      if (titleEl) {
+        titleEl.innerHTML = translations[currentLang]["page-title"];
+      }
+
+      document.documentElement.lang = currentLang;
+
+      // 🔁 appliqué à chaque changement de langue
+      applyAuthToHeader();
+    }
+
+    // ---- Bouton langue ----
+    const langBtn = document.getElementById("lang-toggle");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        currentLang = currentLang === "fr" ? "en" : "fr";
+        langBtn.textContent = currentLang === "fr" ? "FR / EN" : "EN / FR";
+        applyTranslations();
+      });
+    }
+
+    // appliquer FR au chargement (+ auth)
+    applyTranslations();
+
+    // ---- FAQ accordéon ----
+    document.addEventListener("DOMContentLoaded", () => {
+      const faqItems = document.querySelectorAll(".faq-item");
+
+      faqItems.forEach(item => {
+        const btn = item.querySelector(".faq-question");
+        const answer = item.querySelector(".faq-answer");
+
+        btn.addEventListener("click", () => {
+          const isOpen = item.classList.contains("open");
+
+          // Fermer tous les autres items
+          faqItems.forEach(i => {
+            i.classList.remove("open");
+            const ans = i.querySelector(".faq-answer");
+            ans.style.maxHeight = 0;
+          });
+
+          // Ouvrir celui cliqué
+          if (!isOpen) {
+            item.classList.add("open");
+            answer.style.maxHeight = answer.scrollHeight + "px";
+          }
+        });
+      });
+    });
+
+    // ---- Chatbot ----
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function toggleChatbot(open) {
+      if (!chatbotWindow) return;
+      if (open === undefined) {
+        chatbotWindow.classList.toggle("open");
+      } else if (open) {
+        chatbotWindow.classList.add("open");
+      } else {
+        chatbotWindow.classList.remove("open");
+      }
+    }
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener("click", () => toggleChatbot());
+    }
+
+    if (chatbotClose) {
+      chatbotClose.addEventListener("click", () => toggleChatbot(false));
+    }
+
+    function addChatMessage(text, from = "bot") {
+      if (!chatbotBody) return;
+      const msg = document.createElement("div");
+      msg.className = "chatbot-msg " + from;
+      msg.textContent = text;
+      chatbotBody.appendChild(msg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    if (chatbotForm) {
+      chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatbotInput.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, "user");
+        chatbotInput.value = "";
+
+        // Réponse simulée en FR/EN
+        setTimeout(() => {
+          const answer = translations[currentLang]["chatbot-answer"];
+          addChatMessage(answer, "bot");
+        }, 400);
+      });
+    }
+  </script>
+
+</body>
+</html>

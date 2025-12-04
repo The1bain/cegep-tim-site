@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="page-title">Emploi d’été – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS INTÉGRÉ -->
+  <style>
+    /* ---------- BASE ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT GÉNÉRAL ---------- */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 3rem 0;
+      background: #f9fafb;
+    }
+
+    .section.alt {
+      background: #ffffff;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .col {
+      min-width: 0;
+    }
+
+    .rounded-img {
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    }
+
+    .section h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      color: #4b5563;
+      max-width: 640px;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* simplicité : pas de menu burger pour le TP */
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 4rem 0 3rem;
+      background-size: cover;
+      background-position: center;
+      color: #f9fafb;
+      overflow: hidden;
+    }
+
+    .hero-small {
+      padding: 3rem 0 2.5rem;
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.7)
+      );
+      mix-blend-mode: multiply;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 1.5rem;
+      color: #e5e7eb;
+    }
+
+    /* ---------- BOUTONS ---------- */
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      gap: 0.45rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+                  background 0.12s ease, color 0.12s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(249, 115, 22, 0.6);
+    }
+
+    .btn-secondary {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+      transform: translateY(-1px);
+    }
+
+    /* ---------- BLOC AVANTAGES (choice-grid) ---------- */
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.75rem;
+      margin: 1.5rem 0 1.25rem;
+    }
+
+    .choice-card {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      padding: 0.75rem 0.9rem;
+      cursor: pointer;
+      font-size: 0.9rem;
+      text-align: center;
+      transition: background 0.15s ease, transform 0.15s ease,
+                  box-shadow 0.15s ease, border-color 0.15s ease;
+    }
+
+    .choice-card:hover {
+      box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+      transform: translateY(-1px);
+    }
+
+    .choice-card.active {
+      background: linear-gradient(135deg, #0f172a, #111827);
+      color: #f9fafb;
+      border-color: #f97316;
+      box-shadow: 0 10px 28px rgba(15, 23, 42, 0.4);
+    }
+
+    .choice-desc {
+      display: none;
+      border-radius: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      padding: 1rem 1.25rem;
+      background: #ffffff;
+      font-size: 0.95rem;
+      color: #374151;
+    }
+
+    .choice-desc h3 {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+    }
+
+    .choice-desc.active {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      .choice-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 550px) {
+      .choice-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- TIMELINE ÉTAPES ---------- */
+    .timeline {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .timeline-step {
+      display: flex;
+      gap: 0.75rem;
+      align-items: flex-start;
+      padding: 0.8rem 1rem;
+      border-radius: 0.9rem;
+      background: #f9fafb;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.08);
+    }
+
+    .timeline-step h3 {
+      margin: 0 0 0.25rem;
+      font-size: 1rem;
+    }
+
+    .timeline-step p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .step-number {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    /* ---------- MINI FAQ ---------- */
+    .faq-accordion {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .faq-item {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .faq-question {
+      width: 100%;
+      text-align: left;
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      background: #f9fafb;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-weight: 700;
+      margin-left: 0.75rem;
+    }
+
+    .faq-item.open .faq-question {
+      background: #111827;
+      color: #f9fafb;
+    }
+
+    .faq-item.open .faq-question::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.2s ease;
+      padding: 0 1rem;
+    }
+
+    .faq-item.open .faq-answer {
+      padding-top: 0.6rem;
+      padding-bottom: 0.75rem;
+    }
+
+    .faq-answer p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15,23,42,0.5);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.55);
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: none;
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148,163,184,0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148,163,184,0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub" data-i18n="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav-home">Accueil</a>
+        <a href="programme.html" data-i18n="nav-program" class="active">Programme</a>
+        <a href="diplomes.html" data-i18n="nav-grads">Diplômés</a>
+        <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+        <a href="contact.html" data-i18n="nav-contact">Nous joindre</a>
+        <!-- lien connexion avec id pour le script d'auth -->
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav-login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR / EN</button>
+    </div>
+  </header>
+
+  <!-- HERO EMPLOI D'ÉTÉ -->
+  <section class="hero hero-small" style="background-image: url('img/emploi_ete.png');">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-content">
+      <h1 data-i18n="hero-title">Emploi d’été au gouvernement fédéral</h1>
+      <p data-i18n="hero-text">
+        Dès la première année, le cours Environnement professionnel peut t’ouvrir
+        les portes d’un emploi d’été rémunéré dans la fonction publique.
+      </p>
+      <a href="#comment-ca-marche" class="btn-primary" data-i18n="hero-cta">
+        Comment ça marche&nbsp;?
+      </a>
+    </div>
+  </section>
+
+  <!-- TEXTE OFFICIEL + IMAGE -->
+  <section class="section alt" id="presentation">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/emploi_ete.png"
+             alt="Étudiant en emploi d’été dans un studio"
+             class="rounded-img" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="present-title">Une expérience rémunérée dès la première année</h2>
+        <p data-i18n="present-p1">
+          Plusieurs de nos étudiants obtiennent un emploi d’été au gouvernement
+          fédéral dès la première année d’études en Multimédia. Dans le cadre du
+          cours <strong>Environnement Professionnel</strong> à la première session,
+          un expert du gouvernement fédéral est invité dans la classe afin d’aider
+          les étudiants à s’inscrire au programme d’emplois.
+        </p>
+        <p data-i18n="present-p2">
+          Allez acquérir une expérience précieuse et enrichissante en travaillant
+          pour un des plus importants employeurs d’étudiants au Canada. Découvrez
+          les centaines de carrières et les milliers d’emplois offerts par le
+          gouvernement du Canada dans tout le pays.
+        </p>
+        <p data-i18n="present-p3">
+          <strong>Assurez-vous de vous inscrire avant février afin d’obtenir
+          les meilleures chances d’emplois&nbsp;!</strong>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION INTERACTIVE : POURQUOI C’EST INTÉRESSANT ? -->
+  <section class="section" id="comment-ca-marche">
+    <div class="container">
+      <h2 data-i18n="why-title">Pourquoi c’est une tellement bonne opportunité&nbsp;?</h2>
+      <p class="section-intro" data-i18n="why-intro">
+        Clique sur un avantage pour voir plus de détails.
+      </p>
+
+      <div class="choice-grid">
+        <button class="choice-card active" data-desc="#avantage-salaire" data-i18n="adv-salary">
+          Salaire et conditions
+        </button>
+        <button class="choice-card" data-desc="#avantage-experience" data-i18n="adv-experience">
+          Expérience concrète
+        </button>
+        <button class="choice-card" data-desc="#avantage-reseau" data-i18n="adv-network">
+          Réseau et contacts
+        </button>
+        <button class="choice-card" data-desc="#avantage-cv" data-i18n="adv-cv">
+          Un gros plus sur ton CV
+        </button>
+      </div>
+
+      <div class="choice-desc active" id="avantage-salaire">
+        <h3 data-i18n="adv-salary-title">Salaire et conditions</h3>
+        <p data-i18n="adv-salary-text">
+          Tu es rémunéré selon les échelles salariales de la fonction publique,
+          avec des horaires compatibles avec les études et le retour au Cégep.
+        </p>
+      </div>
+
+      <div class="choice-desc" id="avantage-experience">
+        <h3 data-i18n="adv-experience-title">Expérience concrète</h3>
+        <p data-i18n="adv-experience-text">
+          Tu travailles sur de vrais projets (web, vidéo, graphisme, outils internes)
+          dans un environnement professionnel structuré.
+        </p>
+      </div>
+
+      <div class="choice-desc" id="avantage-reseau">
+        <h3 data-i18n="adv-network-title">Réseau et contacts</h3>
+        <p data-i18n="adv-network-text">
+          Tu rencontres des gestionnaires, analystes, designers et développeurs qui
+          peuvent t’ouvrir des portes pour d’autres emplois plus tard.
+        </p>
+      </div>
+
+      <div class="choice-desc" id="avantage-cv">
+        <h3 data-i18n="adv-cv-title">Un gros plus sur ton CV</h3>
+        <p data-i18n="adv-cv-text">
+          Avoir travaillé pour le gouvernement du Canada dès le DEC impressionne
+          autant les employeurs que les universités.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ÉTAPES DE CANDIDATURE -->
+  <section class="section alt">
+    <div class="container">
+      <h2 data-i18n="steps-title">
+        Étapes pour postuler au Programme fédéral d’expérience de travail étudiant
+      </h2>
+
+      <div class="timeline">
+        <div class="timeline-step">
+          <span class="step-number">1</span>
+          <div>
+            <h3 data-i18n="step1-title">Suivre le cours Environnement professionnel</h3>
+            <p data-i18n="step1-text">
+              À la première session, un cours te présente la fonction publique,
+              les types de postes et la façon de poser ta candidature.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-number">2</span>
+          <div>
+            <h3 data-i18n="step2-title">Assister à la présentation de l’expert fédéral</h3>
+            <p data-i18n="step2-text">
+              Un invité du gouvernement vient en classe pour expliquer le programme
+              et répondre aux questions.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-number">3</span>
+          <div>
+            <h3 data-i18n="step3-title">Remplir ta candidature en ligne</h3>
+            <p data-i18n="step3-text">
+              Tu crées ton profil sur le site du gouvernement, tu indiques ton
+              domaine d’intérêt et tu soumets ton CV.
+            </p>
+          </div>
+        </div>
+
+        <div class="timeline-step">
+          <span class="step-number">4</span>
+          <div>
+            <h3 data-i18n="step4-title">Entrevue et sélection</h3>
+            <p data-i18n="step4-text">
+              Si ton profil correspond, tu peux être convoqué en entrevue et
+              obtenir un emploi d’été dans l’un des nombreux ministères.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINI FAQ EMPLOI D'ÉTÉ -->
+  <section class="section">
+    <div class="container">
+      <h2 data-i18n="faq-title">Questions fréquentes sur l’emploi d’été</h2>
+
+      <div class="faq-accordion">
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq1-q">
+            Est-ce que l’emploi d’été est garanti pour tout le monde ?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq1-a">
+              Non, il s’agit d’un processus de sélection. Mais le cours
+              Environnement professionnel t’aide à bien préparer ta candidature.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq2-q">
+            Est-ce que je peux retourner travailler les étés suivants ?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq2-a">
+              Oui, plusieurs étudiants reviennent plus d’un été ou obtiennent plus
+              tard un poste à temps partiel ou temps plein.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question" data-i18n="faq3-q">
+            Est-ce que l’emploi est en lien direct avec le multimédia ?
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq3-a">
+              La plupart des postes proposés aux étudiants du TIM touchent le web,
+              le design, la vidéo, la communication ou le soutien numérique.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIEN OFFICIEL -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <div class="col">
+        <h2 data-i18n="apply-title">Prêt à postuler&nbsp;?</h2>
+        <p data-i18n="apply-text">
+          L’inscription se fait directement sur le site du gouvernement du Canada,
+          dans la section du <strong>Programme fédéral d’expérience de travail
+          étudiant</strong>.
+        </p>
+        <a href="https://www.canada.ca/fr/commission-fonction-publique/emplois/services/recrutement/etudiants/programme-federal-experience-travail-etudiant.html"
+           target="_blank" class="btn-primary" data-i18n="apply-cta">
+          Accéder au site du gouvernement
+        </a>
+      </div>
+      <div class="col">
+        <p data-i18n="apply-note">
+          N’oublie pas de t’inscrire <strong>avant février</strong> pour maximiser tes
+          chances d’être sélectionné&nbsp;!
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer-text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT COMPLET -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chatbot-title">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">
+          <span data-i18n="chatbot-welcome">
+            Salut&nbsp;! Pose-moi une question sur le programme TIM ou l’emploi d’été 😊
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+          data-i18n-placeholder="chatbot-placeholder"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT INTÉGRÉ -->
+  <script>
+    // =========================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =========================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || "fr";
+
+      if (auth) {
+        // Texte du lien connexion quand connecté
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =========================
+    // 1. DICTIONNAIRE DE TRADUCTION
+    // =========================
+    const translations = {
+      fr: {
+        "page-title": "Emploi d’été – Technique d’intégration multimédia",
+        "logo-sub": "Cégep de l’Outaouais",
+
+        "nav-home": "Accueil",
+        "nav-program": "Programme",
+        "nav-grads": "Diplômés",
+        "nav-faq": "FAQ",
+        "nav-contact": "Nous joindre",
+        "nav-login": "Connexion",
+
+        "hero-title": "Emploi d’été au gouvernement fédéral",
+        "hero-text": "Dès la première année, le cours Environnement professionnel peut t’ouvrir les portes d’un emploi d’été rémunéré dans la fonction publique.",
+        "hero-cta": "Comment ça marche&nbsp;?",
+
+        "present-title": "Une expérience rémunérée dès la première année",
+        "present-p1": "Plusieurs de nos étudiants obtiennent un emploi d’été au gouvernement fédéral dès la première année d’études en Multimédia. Dans le cadre du cours <strong>Environnement Professionnel</strong> à la première session, un expert du gouvernement fédéral est invité dans la classe afin d’aider les étudiants à s’inscrire au programme d’emplois.",
+        "present-p2": "Allez acquérir une expérience précieuse et enrichissante en travaillant pour un des plus importants employeurs d’étudiants au Canada. Découvrez les centaines de carrières et les milliers d’emplois offerts par le gouvernement du Canada dans tout le pays.",
+        "present-p3": "<strong>Assurez-vous de vous inscrire avant février afin d’obtenir les meilleures chances d’emplois&nbsp;!</strong>",
+
+        "why-title": "Pourquoi c’est une tellement bonne opportunité&nbsp;?",
+        "why-intro": "Clique sur un avantage pour voir plus de détails.",
+
+        "adv-salary": "Salaire et conditions",
+        "adv-experience": "Expérience concrète",
+        "adv-network": "Réseau et contacts",
+        "adv-cv": "Un gros plus sur ton CV",
+
+        "adv-salary-title": "Salaire et conditions",
+        "adv-salary-text": "Tu es rémunéré selon les échelles salariales de la fonction publique, avec des horaires compatibles avec les études et le retour au Cégep.",
+        "adv-experience-title": "Expérience concrète",
+        "adv-experience-text": "Tu travailles sur de vrais projets (web, vidéo, graphisme, outils internes) dans un environnement professionnel structuré.",
+        "adv-network-title": "Réseau et contacts",
+        "adv-network-text": "Tu rencontres des gestionnaires, analystes, designers et développeurs qui peuvent t’ouvrir des portes pour d’autres emplois plus tard.",
+        "adv-cv-title": "Un gros plus sur ton CV",
+        "adv-cv-text": "Avoir travaillé pour le gouvernement du Canada dès le DEC impressionne autant les employeurs que les universités.",
+
+        "steps-title": "Étapes pour postuler au Programme fédéral d’expérience de travail étudiant",
+        "step1-title": "Suivre le cours Environnement professionnel",
+        "step1-text": "À la première session, un cours te présente la fonction publique, les types de postes et la façon de poser ta candidature.",
+        "step2-title": "Assister à la présentation de l’expert fédéral",
+        "step2-text": "Un invité du gouvernement vient en classe pour expliquer le programme et répondre aux questions.",
+        "step3-title": "Remplir ta candidature en ligne",
+        "step3-text": "Tu crées ton profil sur le site du gouvernement, tu indiques ton domaine d’intérêt et tu soumets ton CV.",
+        "step4-title": "Entrevue et sélection",
+        "step4-text": "Si ton profil correspond, tu peux être convoqué en entrevue et obtenir un emploi d’été dans l’un des nombreux ministères.",
+
+        "faq-title": "Questions fréquentes sur l’emploi d’été",
+        "faq1-q": "Est-ce que l’emploi d’été est garanti pour tout le monde ?",
+        "faq1-a": "Non, il s’agit d’un processus de sélection. Mais le cours Environnement professionnel t’aide à bien préparer ta candidature.",
+        "faq2-q": "Est-ce que je peux retourner travailler les étés suivants ?",
+        "faq2-a": "Oui, plusieurs étudiants reviennent plus d’un été ou obtiennent plus tard un poste à temps partiel ou temps plein.",
+        "faq3-q": "Est-ce que l’emploi est en lien direct avec le multimédia ?",
+        "faq3-a": "La plupart des postes proposés aux étudiants du TIM touchent le web, le design, la vidéo, la communication ou le soutien numérique.",
+
+        "apply-title": "Prêt à postuler&nbsp;?",
+        "apply-text": "L’inscription se fait directement sur le site du gouvernement du Canada, dans la section du <strong>Programme fédéral d’expérience de travail étudiant</strong>.",
+        "apply-cta": "Accéder au site du gouvernement",
+        "apply-note": "N’oublie pas de t’inscrire <strong>avant février</strong> pour maximiser tes chances d’être sélectionné&nbsp;!",
+
+        "footer-text": "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        "chatbot-title": "Assistant TIM",
+        "chatbot-welcome": "Salut&nbsp;! Pose-moi une question sur le programme TIM ou l’emploi d’été 😊",
+        "chatbot-placeholder": "Écris ton message…",
+        "chatbot-answer": "Merci pour ta question! Sur le site réel, un conseiller TIM ou un chatbot plus avancé pourrait te donner une réponse précise sur l’emploi d’été ou le programme."
+      },
+      en: {
+        "page-title": "Summer Job – Multimedia Integration Technology",
+        "logo-sub": "Cégep de l’Outaouais",
+
+        "nav-home": "Home",
+        "nav-program": "Program",
+        "nav-grads": "Graduates",
+        "nav-faq": "FAQ",
+        "nav-contact": "Contact us",
+        "nav-login": "Login",
+
+        "hero-title": "Summer job with the Federal Government",
+        "hero-text": "As early as your first year, the course Professional Environment can open the door to a paid summer job in the public service.",
+        "hero-cta": "How does it work?",
+
+        "present-title": "A paid experience starting in first year",
+        "present-p1": "Many of our students get a summer job with the federal government as early as their first year in Multimedia. In the <strong>Professional Environment</strong> course in the first semester, a federal government expert is invited to the class to help students register for the student job program.",
+        "present-p2": "Gain valuable and rewarding experience working for one of the largest student employers in Canada. Discover hundreds of careers and thousands of jobs offered by the Government of Canada across the country.",
+        "present-p3": "<strong>Make sure to apply before February to get the best chances of being hired!</strong>",
+
+        "why-title": "Why is this such a great opportunity?",
+        "why-intro": "Click on an advantage to see more details.",
+
+        "adv-salary": "Salary and conditions",
+        "adv-experience": "Hands-on experience",
+        "adv-network": "Network and contacts",
+        "adv-cv": "A big plus on your resumé",
+
+        "adv-salary-title": "Salary and conditions",
+        "adv-salary-text": "You are paid according to the federal public service salary scales, with schedules that work with your studies and your return to Cégep.",
+        "adv-experience-title": "Hands-on experience",
+        "adv-experience-text": "You work on real projects (web, video, graphic design, internal tools) in a structured professional environment.",
+        "adv-network-title": "Network and contacts",
+        "adv-network-text": "You meet managers, analysts, designers and developers who can open doors for other jobs later on.",
+        "adv-cv-title": "A big plus on your resumé",
+        "adv-cv-text": "Having worked for the Government of Canada during your DEC impresses both employers and universities.",
+
+        "steps-title": "Steps to apply to the Federal Student Work Experience Program",
+        "step1-title": "Take the Professional Environment course",
+        "step1-text": "In your first semester, a course introduces you to the public service, types of positions and how to apply.",
+        "step2-title": "Attend the federal expert’s presentation",
+        "step2-text": "A guest from the government comes to class to explain the program and answer questions.",
+        "step3-title": "Complete your online application",
+        "step3-text": "You create your profile on the government website, select your field of interest and submit your resumé.",
+        "step4-title": "Interview and selection",
+        "step4-text": "If your profile fits, you may be invited for an interview and offered a summer job in one of the many departments.",
+
+        "faq-title": "Frequently asked questions about the summer job",
+        "faq1-q": "Is the summer job guaranteed for everyone?",
+        "faq1-a": "No, it’s a selection process. But the Professional Environment course helps you prepare a strong application.",
+        "faq2-q": "Can I go back to work there in later summers?",
+        "faq2-a": "Yes, many students return for more than one summer or later get a part-time or full-time position.",
+        "faq3-q": "Is the job directly related to multimedia?",
+        "faq3-a": "Most positions offered to TIM students are related to web, design, video, communication or digital support.",
+
+        "apply-title": "Ready to apply?",
+        "apply-text": "You apply directly on the Government of Canada website, in the section for the <strong>Federal Student Work Experience Program</strong>.",
+        "apply-cta": "Go to the government website",
+        "apply-note": "Don’t forget to apply <strong>before February</strong> to maximize your chances of being selected!",
+
+        "footer-text": "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        "chatbot-title": "TIM Assistant",
+        "chatbot-welcome": "Hi! Ask me a question about the TIM program or the summer job 😊",
+        "chatbot-placeholder": "Type your message…",
+        "chatbot-answer": "Thanks for your question! On the real site, a TIM advisor or a more advanced chatbot could give you a precise answer about the summer job or the program."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const elements = document.querySelectorAll("[data-i18n]");
+      elements.forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.innerHTML = text;
+        }
+      });
+
+      // placeholders
+      const placeholderEls = document.querySelectorAll("[data-i18n-placeholder]");
+      placeholderEls.forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.setAttribute("placeholder", text);
+        }
+      });
+
+      // <title>
+      const titleEl = document.querySelector("title[data-i18n='page-title']");
+      if (titleEl) {
+        titleEl.innerHTML = translations[currentLang]["page-title"];
+      }
+
+      // attribut lang du <html>
+      document.documentElement.lang = currentLang;
+
+      // mettre à jour le header selon l'état de connexion + langue
+      applyAuthToHeader();
+    }
+
+    // =========================
+    // 2. BOUTON LANGUE
+    // =========================
+    const langBtn = document.getElementById("lang-toggle");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        currentLang = currentLang === "fr" ? "en" : "fr";
+        langBtn.textContent = currentLang === "fr" ? "FR / EN" : "EN / FR";
+        applyTranslations();
+      });
+    }
+
+    // appliquer FR au chargement (sécurité)
+    applyTranslations();
+
+    // =========================
+    // 3. SCROLL DOUX ANCRES INTERNES
+    // =========================
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", (e) => {
+        const targetId = link.getAttribute("href");
+        if (targetId && targetId.startsWith("#")) {
+          const el = document.querySelector(targetId);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      });
+    });
+
+    // =========================
+    // 4. CARTES D’AVANTAGES
+    // =========================
+    const choiceCards = document.querySelectorAll(".choice-card");
+    const choiceDescs = document.querySelectorAll(".choice-desc");
+
+    choiceCards.forEach(card => {
+      card.addEventListener("click", () => {
+        choiceCards.forEach(c => c.classList.remove("active"));
+        card.classList.add("active");
+
+        const targetSelector = card.dataset.desc;
+        choiceDescs.forEach(d => d.classList.remove("active"));
+        const target = document.querySelector(targetSelector);
+        if (target) target.classList.add("active");
+      });
+    });
+
+    // =========================
+    // 5. FAQ ACCORDÉON
+    // =========================
+    const faqItems = document.querySelectorAll(".faq-item");
+    faqItems.forEach(item => {
+      const btn = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+      if (!btn || !answer) return;
+
+      // cacher au départ
+      answer.style.maxHeight = "0";
+
+      btn.addEventListener("click", () => {
+        const isOpen = item.classList.contains("open");
+
+        // fermer les autres
+        faqItems.forEach(other => {
+          if (other !== item) {
+            other.classList.remove("open");
+            const ans = other.querySelector(".faq-answer");
+            if (ans) ans.style.maxHeight = "0";
+          }
+        });
+
+        if (!isOpen) {
+          item.classList.add("open");
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        } else {
+          item.classList.remove("open");
+          answer.style.maxHeight = "0";
+        }
+      });
+    });
+
+    // =========================
+    // 6. CHATBOT
+    // =========================
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function toggleChatbot(open) {
+      if (!chatbotWindow) return;
+      if (open === undefined) {
+        chatbotWindow.classList.toggle("open");
+      } else if (open) {
+        chatbotWindow.classList.add("open");
+      } else {
+        chatbotWindow.classList.remove("open");
+      }
+    }
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener("click", () => toggleChatbot());
+    }
+    if (chatbotClose) {
+      chatbotClose.addEventListener("click", () => toggleChatbot(false));
+    }
+
+    function addChatMessage(text, from = "bot") {
+      if (!chatbotBody) return;
+      const msg = document.createElement("div");
+      msg.className = "chatbot-msg " + from;
+      msg.textContent = text;
+      chatbotBody.appendChild(msg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    if (chatbotForm) {
+      chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatbotInput.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, "user");
+        chatbotInput.value = "";
+
+        // réponse générique bilingue selon la langue actuelle
+        setTimeout(() => {
+          const answer = translations[currentLang]["chatbot-answer"];
+          addChatMessage(answer, "bot");
+        }, 400);
+      });
+    }
+  </script>
+</body>
+</html>

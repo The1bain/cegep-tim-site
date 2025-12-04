@@ -1,0 +1,71 @@
+/* Hero plus petit pour pages internes */
+.hero-small {
+  min-height: 45vh;
+}
+
+/* Cartes interactives Étudiant d’un jour */
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.choice-card {
+  border-radius: 1rem;
+  border: 1px solid #e5e7eb;
+  background: #ffffff;
+  padding: 0.9rem 1rem;
+  cursor: pointer;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
+}
+
+.choice-card:hover {
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.06);
+}
+
+.choice-card.active {
+  border-color: #38bdf8;
+  box-shadow: 0 10px 25px rgba(56, 189, 248, 0.25);
+}
+
+/* Description associée */
+.choice-desc {
+  display: none;
+  margin-top: 1.5rem;
+  background: #f9fafb;
+  padding: 1rem 1.2rem;
+  border-radius: 0.9rem;
+}
+
+.choice-desc.active {
+  display: block;
+}
+
+/* Timeline des étapes */
+.timeline {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.timeline-step {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+}
+
+.step-number {
+  width: 32px;
+  height: 32px;
+  border-radius: 999px;
+  background: #38bdf8;
+  color: #0b1120;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+}

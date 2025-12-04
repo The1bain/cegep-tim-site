@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="page-title">Nous joindre – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- HTML + CSS intégrés -->
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #0f172a;
+      background: #020617;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.96);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+      align-items: center;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+      margin-left: 1rem;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none;
+      }
+    }
+
+    /* ---------- BOUTONS ---------- */
+    .btn-primary,
+    .btn-secondary,
+    .text-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.6rem 1.15rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease,
+                  background 0.15s ease, color 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.65);
+    }
+
+    .btn-secondary {
+      background: #0b1120;
+      color: #e5e7eb;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.6);
+    }
+
+    .text-link {
+      padding: 0;
+      border-radius: 0;
+      border: none;
+      background: transparent;
+      color: #f97316;
+      font-weight: 500;
+      box-shadow: none;
+    }
+
+    .text-link:hover {
+      text-decoration: underline;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ---------- SECTIONS ---------- */
+    .section {
+      padding: 3.25rem 0;
+      background: #020617;
+      color: #e5e7eb;
+    }
+
+    .section.alt {
+      background: radial-gradient(circle at top, #0b1120 0, #020617 55%, #020617 100%);
+    }
+
+    .section h2 {
+      font-size: 1.8rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      margin-top: 0.3rem;
+      margin-bottom: 1.75rem;
+      color: #9ca3af;
+      max-width: 620px;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: 1.25fr 1.25fr;
+      gap: 2.25rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 800px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .rounded-card {
+      border-radius: 16px;
+      padding: 1.4rem 1.5rem;
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.7);
+    }
+
+    .rounded-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1.1rem;
+    }
+
+    .rounded-card p {
+      margin-top: 0;
+      margin-bottom: 0.4rem;
+      line-height: 1.6;
+      color: #e5e7eb;
+      font-size: 0.95rem;
+    }
+
+    .info-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .info-list li {
+      margin-bottom: 0.6rem;
+      display: flex;
+      gap: 0.4rem;
+      align-items: flex-start;
+    }
+
+    .info-label {
+      font-weight: 600;
+      min-width: 70px;
+    }
+
+    /* ---------- HERO NOUS JOINDRE ---------- */
+    .contact-hero {
+      position: relative;
+      padding: 3.2rem 0 2.4rem;
+      background-image:
+        radial-gradient(circle at top, rgba(249, 115, 22, 0.23) 0, transparent 50%),
+        radial-gradient(circle at bottom left, rgba(56, 189, 248, 0.16) 0, transparent 55%),
+        linear-gradient(135deg, #020617, #020617 50%, #030712 100%);
+      color: #f9fafb;
+      overflow: hidden;
+    }
+
+    .contact-hero-inner {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .contact-hero h1 {
+      font-size: clamp(2.1rem, 4vw, 2.6rem);
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-hero p {
+      color: #e5e7eb;
+      max-width: 640px;
+      margin-bottom: 1.4rem;
+    }
+
+    .contact-hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.78rem;
+      color: #fbbf24;
+    }
+
+    .contact-tag {
+      border-radius: 999px;
+      border: 1px solid rgba(248, 250, 252, 0.25);
+      padding: 0.18rem 0.6rem;
+    }
+
+    /* ---------- FORMULAIRE ---------- */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-top: 0.4rem;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      font-size: 0.9rem;
+    }
+
+    .form-group label {
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      border-radius: 0.75rem;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      outline: none;
+      background: #020617;
+      color: #e5e7eb;
+    }
+
+    .form-group textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: #f97316;
+      box-shadow: 0 0 0 1px rgba(249, 115, 22, 0.4);
+    }
+
+    .form-row-inline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 640px) {
+      .form-row-inline {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-success {
+      margin-top: 0.5rem;
+      font-size: 0.85rem;
+      color: #4ade80;
+      display: none;
+    }
+
+    .contact-success.visible {
+      display: block;
+    }
+
+    /* ---------- BLOC INFOS COMPLÉMENTAIRES ---------- */
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1rem;
+      margin-top: 1.8rem;
+      font-size: 0.9rem;
+    }
+
+    .mini-card {
+      border-radius: 14px;
+      padding: 0.9rem 1rem;
+      background: #020617;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: #e5e7eb;
+    }
+
+    .mini-card h4 {
+      margin: 0 0 0.4rem;
+      font-size: 0.95rem;
+    }
+
+    .mini-card p {
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    .mini-card small {
+      display: block;
+      margin-top: 0.3rem;
+      color: #9ca3af;
+      font-size: 0.78rem;
+    }
+
+    /* ---------- FAQ COURTE ---------- */
+    .faq-list {
+      margin-top: 1.25rem;
+      border-radius: 12px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      overflow: hidden;
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(15, 23, 42, 0.9);
+      background: #020617;
+    }
+
+    .faq-item:last-child {
+      border-bottom: none;
+    }
+
+    .faq-question {
+      width: 100%;
+      padding: 0.7rem 0.9rem;
+      background: transparent;
+      border: none;
+      color: #e5e7eb;
+      text-align: left;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    .faq-icon {
+      font-size: 1.1rem;
+      transition: transform 0.2s ease;
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 0.9rem;
+      font-size: 0.86rem;
+      color: #d1d5db;
+      transition: max-height 0.25s ease, padding-bottom 0.25s ease;
+    }
+
+    .faq-answer p {
+      margin: 0.55rem 0 0.7rem;
+      line-height: 1.5;
+    }
+
+    .faq-item.open .faq-answer {
+      max-height: 200px;
+      padding-bottom: 0.75rem;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #000;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+      border-top: 1px solid #111827;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.6);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.6);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub" data-i18n="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav-home">Accueil</a>
+        <a href="programme.html" data-i18n="nav-program">Programme</a>
+        <a href="diplomes.html" data-i18n="nav-grads">Diplômés</a>
+        <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+        <a href="contact.html" class="active" data-i18n="nav-contact">Nous joindre</a>
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav-login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR / EN</button>
+    </div>
+  </header>
+
+  <!-- HERO NOUS JOINDRE -->
+  <section class="contact-hero">
+    <div class="container contact-hero-inner">
+      <h1 data-i18n="hero-title">Nous joindre</h1>
+      <p data-i18n="hero-text">
+        Tu as des questions sur le programme TIM, l’admission, les stages
+        ou la vie au Cégep de l’Outaouais&nbsp;? Écris-nous directement.
+      </p>
+      <div class="contact-hero-tags">
+        <span class="contact-tag" data-i18n="tag-program">Questions sur le programme</span>
+        <span class="contact-tag" data-i18n="tag-openhouse">Portes ouvertes &amp; Étudiant d’un jour</span>
+        <span class="contact-tag" data-i18n="tag-followup">Suivi de dossier</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION PRINCIPALE : INFOS + FORMULAIRE -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <!-- Infos de contact -->
+      <div class="rounded-card">
+        <h3 data-i18n="contact-coord-title">Coordonnées du département TIM</h3>
+        <ul class="info-list">
+          <li>
+            <span class="info-label" data-i18n="label-email">Courriel</span>
+            <span><a href="mailto:tim@cegepoutaouais.qc.ca" class="text-link">tim@cegepoutaouais.qc.ca</a></span>
+          </li>
+          <li>
+            <span class="info-label" data-i18n="label-phone">Téléphone</span>
+            <span>
+              (819) 770-4012<br />
+              <small data-i18n="phone-note">poste département TIM (exemple)</small>
+            </span>
+          </li>
+          <li>
+            <span class="info-label" data-i18n="label-campus">Campus</span>
+            <span data-i18n="campus-address">
+              Cégep de l’Outaouais – Campus Gabrielle-Roy<br />
+              333, boul. de la Cité-des-Jeunes<br />
+              Gatineau (Québec)
+            </span>
+          </li>
+        </ul>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <h4 data-i18n="mini-admission-title">Questions sur l’admission</h4>
+            <p data-i18n="mini-admission-text">
+              Renseigne-toi sur les préalables, la demande d’admission
+              ou le cheminement scolaire.
+            </p>
+            <small data-i18n="mini-admission-note">Nous pourrons t’orienter vers les bons services.</small>
+          </div>
+          <div class="mini-card">
+            <h4 data-i18n="mini-visit-title">Visite &amp; activités</h4>
+            <p data-i18n="mini-visit-text">
+              Portes ouvertes, Étudiant d’un jour, visites de groupes
+              scolaires ou événements spéciaux.
+            </p>
+            <small data-i18n="mini-visit-note">Indique la date souhaitée dans ton message.</small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Formulaire -->
+      <div class="rounded-card">
+        <h3 data-i18n="form-title">Écris-nous un message</h3>
+        <p style="font-size:0.9rem; color:#9ca3af; margin-top:0; margin-bottom:0.6rem;"
+           data-i18n="form-intro">
+          Remplis ce formulaire et une personne du département te répondra
+          par courriel dès que possible.
+        </p>
+
+        <form id="contact-form" class="contact-form">
+          <div class="form-row-inline">
+            <div class="form-group">
+              <label for="contact-nom" data-i18n="form-name-label">Nom complet</label>
+              <input type="text" id="contact-nom" required
+                     data-i18n-placeholder="form-name-ph" />
+            </div>
+            <div class="form-group">
+              <label for="contact-email" data-i18n="form-email-label">Courriel</label>
+              <input type="email" id="contact-email" required
+                     data-i18n-placeholder="form-email-ph" />
+            </div>
+          </div>
+
+          <div class="form-row-inline">
+            <div class="form-group">
+              <label for="contact-interet" data-i18n="form-interest-label">Intérêt principal</label>
+              <select id="contact-interet">
+                <option value="" data-i18n="form-interest-opt0">Choisir une option…</option>
+                <option value="admission" data-i18n="form-interest-opt1">Admission / inscription</option>
+                <option value="programme" data-i18n="form-interest-opt2">Questions sur le programme</option>
+                <option value="stages" data-i18n="form-interest-opt3">Stages / emploi d’été</option>
+                <option value="visite" data-i18n="form-interest-opt4">Étudiant d’un jour / visite</option>
+                <option value="autre" data-i18n="form-interest-opt5">Autre</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="contact-tel" data-i18n="form-phone-label">Téléphone (facultatif)</label>
+              <input type="tel" id="contact-tel"
+                     data-i18n-placeholder="form-phone-ph" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="contact-message" data-i18n="form-message-label">Message</label>
+            <textarea id="contact-message" required
+                      data-i18n-placeholder="form-message-ph"></textarea>
+          </div>
+
+          <button type="submit" class="btn-primary" data-i18n="form-submit">Envoyer le message</button>
+          <div id="contact-success" class="contact-success" data-i18n="form-success">
+            Merci&nbsp;! Ton message a été enregistré (simulation pour le TP).
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINI FAQ CONTACT -->
+  <section class="section">
+    <div class="container">
+      <h2 data-i18n="faq-title">Questions fréquentes à propos de TIM</h2>
+      <p class="section-intro" data-i18n="faq-intro">
+        Avant d’écrire, tu peux jeter un œil à ces réponses rapides.
+      </p>
+
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            <span data-i18n="faq-q1">
+              Est-ce que je peux visiter le département avant de m’inscrire&nbsp;?
+            </span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq-a1">
+              Oui. Les activités Étudiant d’un jour et les portes ouvertes te
+              permettent de voir les locaux, parler avec les enseignants et
+              découvrir les projets réalisés en classe.
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span data-i18n="faq-q2">
+              À qui écrire si j’ai une question précise sur le programme&nbsp;?
+            </span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq-a2">
+              Tu peux utiliser le formulaire ci-dessus ou écrire au département
+              TIM à l’adresse courriel indiquée. Ton message sera acheminé à la
+              bonne personne (coordonnateur, enseignant, etc.).
+            </p>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span data-i18n="faq-q3">
+              Combien de temps avant d’avoir une réponse&nbsp;?
+            </span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            <p data-i18n="faq-a3">
+              Habituellement, tu obtiens une réponse en quelques jours ouvrables,
+              selon la période de l’année (admission, fin de session, etc.).
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer-text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chatbot-title">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">
+          <span data-i18n="chatbot-welcome">
+            Salut&nbsp;! Pose-moi une question sur le programme TIM, l’admission ou la page Nous joindre 😄
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+          data-i18n-placeholder="chatbot-placeholder"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- JS intégré : auth, i18n, langue, formulaire, FAQ, chatbot -->
+  <script>
+    // =========
+    // 0. AUTH PARTAGÉE (simulation)
+    // =========
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || "fr";
+
+      if (auth) {
+        // Texte du lien connexion quand connecté
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =========
+    // 1. TRADUCTIONS / I18N
+    // =========
+    const translations = {
+      fr: {
+        "page-title": "Nous joindre – Technique d’intégration multimédia",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Accueil",
+        "nav-program": "Programme",
+        "nav-grads": "Diplômés",
+        "nav-faq": "FAQ",
+        "nav-contact": "Nous joindre",
+        "nav-login": "Connexion",
+
+        "hero-title": "Nous joindre",
+        "hero-text": "Tu as des questions sur le programme TIM, l’admission, les stages ou la vie au Cégep de l’Outaouais&nbsp;? Écris-nous directement.",
+        "tag-program": "Questions sur le programme",
+        "tag-openhouse": "Portes ouvertes &amp; Étudiant d’un jour",
+        "tag-followup": "Suivi de dossier",
+
+        "contact-coord-title": "Coordonnées du département TIM",
+        "label-email": "Courriel",
+        "label-phone": "Téléphone",
+        "label-campus": "Campus",
+        "phone-note": "poste département TIM (exemple)",
+        "campus-address": "Cégep de l’Outaouais – Campus Gabrielle-Roy<br />333, boul. de la Cité-des-Jeunes<br />Gatineau (Québec)",
+
+        "mini-admission-title": "Questions sur l’admission",
+        "mini-admission-text": "Renseigne-toi sur les préalables, la demande d’admission ou le cheminement scolaire.",
+        "mini-admission-note": "Nous pourrons t’orienter vers les bons services.",
+        "mini-visit-title": "Visite &amp; activités",
+        "mini-visit-text": "Portes ouvertes, Étudiant d’un jour, visites de groupes scolaires ou événements spéciaux.",
+        "mini-visit-note": "Indique la date souhaitée dans ton message.",
+
+        "form-title": "Écris-nous un message",
+        "form-intro": "Remplis ce formulaire et une personne du département te répondra par courriel dès que possible.",
+        "form-name-label": "Nom complet",
+        "form-email-label": "Courriel",
+        "form-interest-label": "Intérêt principal",
+        "form-phone-label": "Téléphone (facultatif)",
+        "form-message-label": "Message",
+        "form-name-ph": "",
+        "form-email-ph": "",
+        "form-phone-ph": "",
+        "form-message-ph": "",
+        "form-interest-opt0": "Choisir une option…",
+        "form-interest-opt1": "Admission / inscription",
+        "form-interest-opt2": "Questions sur le programme",
+        "form-interest-opt3": "Stages / emploi d’été",
+        "form-interest-opt4": "Étudiant d’un jour / visite",
+        "form-interest-opt5": "Autre",
+        "form-submit": "Envoyer le message",
+        "form-success": "Merci&nbsp;! Ton message a été enregistré (simulation pour le TP).",
+
+        "faq-title": "Questions fréquentes à propos de TIM",
+        "faq-intro": "Avant d’écrire, tu peux jeter un œil à ces réponses rapides.",
+        "faq-q1": "Est-ce que je peux visiter le département avant de m’inscrire&nbsp;?",
+        "faq-a1": "Oui. Les activités Étudiant d’un jour et les portes ouvertes te permettent de voir les locaux, parler avec les enseignants et découvrir les projets réalisés en classe.",
+        "faq-q2": "À qui écrire si j’ai une question précise sur le programme&nbsp;?",
+        "faq-a2": "Tu peux utiliser le formulaire ci-dessus ou écrire au département TIM à l’adresse courriel indiquée. Ton message sera acheminé à la bonne personne (coordonnateur, enseignant, etc.).",
+        "faq-q3": "Combien de temps avant d’avoir une réponse&nbsp;?",
+        "faq-a3": "Habituellement, tu obtiens une réponse en quelques jours ouvrables, selon la période de l’année (admission, fin de session, etc.).",
+
+        "footer-text": "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        "chatbot-title": "Assistant TIM",
+        "chatbot-welcome": "Salut&nbsp;! Pose-moi une question sur le programme TIM, l’admission ou la page Nous joindre 😄",
+        "chatbot-placeholder": "Écris ton message…",
+        "chatbot-answer": "Merci pour ta question ! Sur le vrai site, un membre de l’équipe TIM pourrait te répondre plus précisément."
+      },
+      en: {
+        "page-title": "Contact us – Multimedia Integration Technology",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Home",
+        "nav-program": "Program",
+        "nav-grads": "Graduates",
+        "nav-faq": "FAQ",
+        "nav-contact": "Contact us",
+        "nav-login": "Login",
+
+        "hero-title": "Contact us",
+        "hero-text": "Do you have questions about the TIM program, admission, internships or student life at Cégep de l’Outaouais? Write to us directly.",
+        "tag-program": "Program questions",
+        "tag-openhouse": "Open house & Student-for-a-day",
+        "tag-followup": "Application follow-up",
+
+        "contact-coord-title": "TIM department contact details",
+        "label-email": "Email",
+        "label-phone": "Phone",
+        "label-campus": "Campus",
+        "phone-note": "TIM department extension (example)",
+        "campus-address": "Cégep de l’Outaouais – Gabrielle-Roy campus<br />333, Cité-des-Jeunes Blvd.<br />Gatineau (Quebec)",
+
+        "mini-admission-title": "Admission questions",
+        "mini-admission-text": "Find out about prerequisites, the application process or academic pathway.",
+        "mini-admission-note": "We’ll direct you to the right services.",
+        "mini-visit-title": "Visits & activities",
+        "mini-visit-text": "Open house events, Student-for-a-day, school group visits or special events.",
+        "mini-visit-note": "Mention your preferred date in your message.",
+
+        "form-title": "Send us a message",
+        "form-intro": "Fill out this form and someone from the department will get back to you by email as soon as possible.",
+        "form-name-label": "Full name",
+        "form-email-label": "Email",
+        "form-interest-label": "Main interest",
+        "form-phone-label": "Phone (optional)",
+        "form-message-label": "Message",
+        "form-name-ph": "",
+        "form-email-ph": "",
+        "form-phone-ph": "",
+        "form-message-ph": "",
+        "form-interest-opt0": "Choose an option…",
+        "form-interest-opt1": "Admission / registration",
+        "form-interest-opt2": "Program questions",
+        "form-interest-opt3": "Internships / summer jobs",
+        "form-interest-opt4": "Student-for-a-day / visit",
+        "form-interest-opt5": "Other",
+        "form-submit": "Send message",
+        "form-success": "Thank you! Your message has been recorded (simulation for the assignment).",
+
+        "faq-title": "Frequently asked questions about TIM",
+        "faq-intro": "Before writing to us, you can take a look at these quick answers.",
+        "faq-q1": "Can I visit the department before I apply?",
+        "faq-a1": "Yes. The Student-for-a-day activity and open house events let you see the labs, talk with teachers and discover projects created in class.",
+        "faq-q2": "Who should I contact if I have a specific question about the program?",
+        "faq-a2": "You can use the form above or email the TIM department at the address shown. Your message will be forwarded to the right person (coordinator, teacher, etc.).",
+        "faq-q3": "How long does it take to get an answer?",
+        "faq-a3": "Usually you’ll receive a reply within a few business days, depending on the time of year (admission period, end of semester, etc.).",
+
+        "footer-text": "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        "chatbot-title": "TIM Assistant",
+        "chatbot-welcome": "Hi! Ask me a question about the TIM program, admission or the Contact page 😄",
+        "chatbot-placeholder": "Type your message…",
+        "chatbot-answer": "Thanks for your question! On the real site, a member of the TIM team could answer in more detail."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const elements = document.querySelectorAll("[data-i18n]");
+      elements.forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.innerHTML = text;
+        }
+      });
+
+      const placeholderEls = document.querySelectorAll("[data-i18n-placeholder]");
+      placeholderEls.forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.setAttribute("placeholder", text);
+        }
+      });
+
+      const titleEl = document.querySelector("title[data-i18n='page-title']");
+      if (titleEl) {
+        titleEl.innerHTML = translations[currentLang]["page-title"];
+      }
+
+      document.documentElement.lang = currentLang;
+
+      // Met à jour le header selon l'état de connexion + langue
+      applyAuthToHeader();
+    }
+
+    // Toggle langue + appliquer i18n
+    const langBtn = document.getElementById("lang-toggle");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        currentLang = currentLang === "fr" ? "en" : "fr";
+        langBtn.textContent = currentLang === "fr" ? "FR / EN" : "EN / FR";
+        applyTranslations();
+      });
+    }
+
+    // Formulaire de contact (simulation)
+    const contactForm = document.getElementById("contact-form");
+    const contactSuccess = document.getElementById("contact-success");
+
+    if (contactForm) {
+      contactForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        if (contactSuccess) {
+          contactSuccess.classList.add("visible");
+        }
+        contactForm.reset();
+      });
+    }
+
+    // FAQ mini accordéon
+    const faqItems = document.querySelectorAll(".faq-item");
+    faqItems.forEach((item) => {
+      const btn = item.querySelector(".faq-question");
+      const answer = item.querySelector(".faq-answer");
+
+      btn.addEventListener("click", () => {
+        const isOpen = item.classList.contains("open");
+
+        faqItems.forEach((i) => {
+          i.classList.remove("open");
+          const a = i.querySelector(".faq-answer");
+          if (a) a.style.maxHeight = 0;
+        });
+
+        if (!isOpen) {
+          item.classList.add("open");
+          answer.style.maxHeight = answer.scrollHeight + "px";
+        }
+      });
+    });
+
+    // Chatbot simple
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function toggleChatbot(open) {
+      if (!chatbotWindow) return;
+      if (open === undefined) {
+        chatbotWindow.classList.toggle("open");
+      } else if (open) {
+        chatbotWindow.classList.add("open");
+      } else {
+        chatbotWindow.classList.remove("open");
+      }
+    }
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener("click", () => toggleChatbot());
+    }
+
+    if (chatbotClose) {
+      chatbotClose.addEventListener("click", () => toggleChatbot(false));
+    }
+
+    function addChatMessage(text, from = "bot") {
+      if (!chatbotBody) return;
+      const msg = document.createElement("div");
+      msg.className = "chatbot-msg " + from;
+      msg.textContent = text;
+      chatbotBody.appendChild(msg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    if (chatbotForm) {
+      chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatbotInput.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, "user");
+        chatbotInput.value = "";
+
+        setTimeout(() => {
+          const answer = translations[currentLang]["chatbot-answer"];
+          addChatMessage(answer, "bot");
+        }, 400);
+      });
+    }
+
+    // Initialisation FR + état de connexion
+    applyTranslations();
+  </script>
+</body>
+</html>

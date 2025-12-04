@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="page-title">Diplômés – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS INTÉGRÉ -->
+  <style>
+    /* ---------- BASE ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT GÉNÉRAL ---------- */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 3rem 0;
+      background: #f9fafb;
+    }
+
+    .section.alt {
+      background: #ffffff;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    .col {
+      min-width: 0;
+    }
+
+    .rounded-img {
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    }
+
+    .section h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      color: #4b5563;
+      max-width: 700px;
+      margin: 0.5rem 0 1.5rem;
+    }
+
+    @media (max-width: 900px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+      align-items: center;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* pas de burger pour le TP */
+      }
+    }
+
+    /* ---------- HERO PAGE DIPLÔMÉS ---------- */
+    .page-hero {
+      padding: 3rem 0 2rem;
+      background: radial-gradient(circle at top left, #1f2937, #020617);
+      color: #f9fafb;
+    }
+
+    .page-hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .page-hero .section-intro {
+      color: #e5e7eb;
+      margin-top: 0.75rem;
+    }
+
+    /* ---------- MISE EN PAGE DIPLÔMÉS ---------- */
+    .diplomes-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 220px) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: flex-start;
+    }
+
+    @media (max-width: 900px) {
+      .diplomes-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Onglets (noms des diplômés) */
+    .diplomes-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      position: sticky;
+      top: 5.5rem;
+    }
+
+    .grad-tab {
+      width: 100%;
+      text-align: left;
+      padding: 0.6rem 0.9rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      background: #ffffff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.1s ease,
+                  box-shadow 0.15s ease, color 0.15s ease,
+                  border-color 0.15s ease;
+    }
+
+    .grad-tab:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.12);
+    }
+
+    .grad-tab.active {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 600;
+      border-color: transparent;
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+    }
+
+    /* Panneaux de contenu */
+    .diplomes-panels {
+      min-width: 0;
+    }
+
+    .grad-panel {
+      display: none;
+      background: #ffffff;
+      border-radius: 1.1rem;
+      padding: 1.5rem;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.16);
+      border: 1px solid rgba(148, 163, 184, 0.75);
+    }
+
+    .grad-panel.active {
+      display: block;
+    }
+
+    .col-photo {
+      max-width: 260px;
+    }
+
+    .col-text h2 {
+      font-size: 1.6rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .grad-meta {
+      font-size: 0.85rem;
+      color: #6b7280;
+      margin: 0.15rem 0;
+    }
+
+    .col-text h3 {
+      font-size: 1.1rem;
+      margin-top: 1.1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .col-text p {
+      font-size: 0.92rem;
+      line-height: 1.5;
+      color: #111827;
+      margin-top: 0.4rem;
+    }
+
+    .grad-list {
+      padding-left: 1.1rem;
+      margin-top: 0.35rem;
+      font-size: 0.92rem;
+      color: #111827;
+    }
+
+    .grad-list li {
+      margin-bottom: 0.15rem;
+    }
+
+    @media (max-width: 900px) {
+      .grad-panel {
+        padding: 1.1rem;
+      }
+      .two-cols {
+        gap: 1.4rem;
+      }
+      .col-photo {
+        max-width: none;
+      }
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.5);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.55);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148, 163, 184, 0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub" data-i18n="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav-home">Accueil</a>
+        <a href="programme.html" data-i18n="nav-program">Programme</a>
+        <a href="diplomes.html" class="active" data-i18n="nav-grads">Diplômés</a>
+        <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+        <a href="contact.html" data-i18n="nav-contact">Nous joindre</a>
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav-login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR / EN</button>
+    </div>
+  </header>
+
+  <!-- EN-TÊTE PAGE DIPLÔMÉS -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 data-i18n="hero-title">Nos diplômés</h1>
+      <p class="section-intro" data-i18n="hero-intro">
+        Après le DEC en intégration multimédia, nos finissant·es travaillent
+        en vidéo, design, web, jeux, évènementiel et plus.
+        Clique sur un portrait pour découvrir son parcours.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECTION INTERACTIVE -->
+  <section class="section">
+    <div class="container diplomes-layout">
+
+      <!-- Onglets (boutons) -->
+      <div class="diplomes-tabs">
+        <button class="grad-tab active" data-target="grad-anne" data-i18n="tab-anne">Anne Sophie</button>
+        <button class="grad-tab" data-target="grad-julien" data-i18n="tab-julien">Julien</button>
+        <button class="grad-tab" data-target="grad-axel" data-i18n="tab-axel">Axel</button>
+        <button class="grad-tab" data-target="grad-maxime" data-i18n="tab-maxime">Maxime</button>
+      </div>
+
+      <!-- Panneaux de contenu -->
+      <div class="diplomes-panels">
+
+        <!-- Anne Sophie -->
+        <article id="grad-anne" class="grad-panel active">
+          <div class="two-cols">
+            <div class="col col-photo">
+              <img src="img/annesophie.webp" alt="Portrait d’Anne Sophie" class="rounded-img" />
+            </div>
+            <div class="col col-text">
+              <h2 data-i18n="anne-name">Anne Sophie</h2>
+              <p class="grad-meta" data-i18n="anne-meta1">Obtention DEC en multimédia : Mai 2019</p>
+              <p class="grad-meta" data-i18n="anne-meta2">Lieu de stage : École de la fonction publique du Canada</p>
+
+              <h3 data-i18n="anne-h3-parcours">Parcours professionnel</h3>
+              <p data-i18n="anne-parcours">
+               J’ai fait mon stage à l’École de la fonction publique du Canada de février à mai 
+               2019. L’employeur m’a ensuite donné un contrat « casual » pour l’été et puis 
+               finalement le 30 septembre 2019 j’ai eu ma permanence comme employé temps 
+               plein dans la même équipe. Je suis encore dans cette équipe depuis et j’adore 
+               mon travail! Je vais aussi présentement à l’Université du Québec en Outaouais à 
+               temps partiel. J’ai commencé en septembre 2021 et je fais un baccalauréat avec 
+               majeure en communication et mineure en pratiques administratives. Je voulais 
+               simplement approfondir mes compétences dans mon domaine qui est très centré 
+               sur la communication et aussi m’ouvrir davantage d’opportunité pour ma carrière. 
+               (Autre détails: le gouvernement me paye mes études)
+              </p>
+
+              <h3 data-i18n="anne-h3-emploi">Emploi actuel</h3>
+              <p data-i18n="anne-emploi1">
+                Depuis mon entrée au sein de l’École de la fonction publique du Canada, je suis 
+                vidéaste (éditrice vidéo) en tant que GT-3. Mes tâches consistent à faire des 
+                montages vidéo à partir de clips filmés lors de tournages soit des événements ou 
+                des entrevues. Je dois aussi créer des vidéos Motion Graphics ainsi 
+                qu’enregistrer et éditer des podcasts. Je crée des produits multimédias pour la 
+                promotion de nos événements et de nos cours en ligne. Les vidéos sont ensuite 
+                publiés sur plusieurs plateformes comme le site web de l’École; les réseaux 
+                sociaux comme Twitter, Linkdln, YouTube; et sur notre plateforme 
+                d’apprentissage en ligne.
+              </p>
+              <p data-i18n="anne-emploi2">
+                Depuis seulement une semaine, je suis réalisatrice par intérim pour une durée 
+                d’un an (IS-4). C’est-à-dire que je remplace une de nos réalisatrices qui est en 
+                congé pour un an. Je devrais donc retourner à mon rôle de vidéaste sauf si une 
+                autre position dans ce poste s’ouvre dans notre équipe. C’est en fait le rôle que 
+                je voulais obtenir après mes années d’études! Mes tâches sont beaucoup moins 
+                techniques que lorsque j’étais vidéaste. C’est beaucoup de gestion. En effet, 
+                mes tâches consistent à avoir des rencontres avec les clients pour comprendre 
+                davantage quel produit ils aimeraient que l’on produise; être en contact au fur et 
+                à mesure que leur projet avance; être présente pour les enregistrements virtuels 
+                et en personne; s’assurer de transmettre les commentaires des clients à l’éditeur 
+                assigné et que le tout soit fait correctement; donner mes commentaires sur le 
+                vidéo ou podcast à l’éditeur et puis finalement livré le produit final. Dans mes 
+                tâches, il y a aussi l’écriture d’un storyboard si nécessaire et puis donner des 
+                conseils aux clients sur leur projet pour s’assurer que le but voulu sera bien 
+                atteint avec le produit demandé.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Julien -->
+        <article id="grad-julien" class="grad-panel">
+          <div class="two-cols">
+            <div class="col col-photo">
+              <img src="img/julien.webp" alt="Portrait de Julien" class="rounded-img" />
+            </div>
+            <div class="col col-text">
+              <h2 data-i18n="julien-name">Julien</h2>
+              <p class="grad-meta" data-i18n="julien-meta1">Obtention DEC en multimédia : En 2003</p>
+              <p class="grad-meta" data-i18n="julien-meta2">
+                Lieu de stage : Petite boite de multimédia dans le vieux Hull
+                qui n’existe plus présentement
+              </p>
+
+              <h3 data-i18n="julien-h3-parcours">Parcours professionnel</h3>
+              <p data-i18n="julien-parcours">
+                Durant mon bac en design graphique à l’UQAM j’ai travaillé comme designer de sites web pour Maison d’Aujourd’hui. J’ai débuté mon entreprise web et eu des projets avec des clients comme le Théâtre d’Aujourd’hui. Puis suite à mon bac, je me suis lancé à mon compte. J’ai travaillé comme motion designer en habillage télé pour Bazzo.Tv, Mange Ta Ville, NYTM magazine, MTV… En parallèle je faisais beaucoup d’illustrations tangibles “dans l’espace”. Avec cette approche j’ai travaillé en édition. Des visuels pour des couvertures de livres ou de magazines comme le Computer Arts ou IdN. Depuis maintenant 10 ans, je me spécialise plutôt en réalisation de publicité. J’ai réalisé des projets pour Google, Apple, Samsung. Un peu de vidéoclips aussi comme Katy Perry ou localement pour Valaire, Pierre Lapointe ou Ariane Moffat. 
+En parallèle je me garde un peu de temps pour des projets d’arts visuels.
+              </p>
+
+              <h3 data-i18n="julien-h3-emploi">Emploi actuel</h3>
+              <p data-i18n="julien-emploi">
+               Réalisateur pour ma société Vallée Duhamel. C’est un travail où il y a beaucoup de pitch, donc beaucoup de temps passé en conception et idéation afin d’obtenir le projet. Une fois qu’on gagne un projet, c’est toute la partie préproduction qui inclut de développer la narration du projet, les dialogues, la conception de décors, le stylisme des personnages, etc. Puis lors du tournage il s’agit de diriger les comédiens, d’établir avec le/la directeur/trice de la photographie le découpage des plans, le type d’éclairage, etc. Suite à ça il y a la postproduction. Donc de travailler avec des studios pour tout ce qui est compositing, animation 3D au besoin, colorisation, puis son et musique.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Axel -->
+        <article id="grad-axel" class="grad-panel">
+          <div class="two-cols">
+            <div class="col col-photo">
+              <img src="img/axel.webp" alt="Portrait d’Axel" class="rounded-img" />
+            </div>
+            <div class="col col-text">
+              <h2 data-i18n="axel-name">Axel</h2>
+              <p class="grad-meta" data-i18n="axel-meta1">Obtention DEC en multimédia : En 2004</p>
+              <p class="grad-meta" data-i18n="axel-meta2">
+                Lieu de stage : Axial Développement, au bureau de Gatineau
+                (aujourd’hui nommé Axial)
+              </p>
+
+              <h3 data-i18n="axel-h3-parcours">Parcours professionnel</h3>
+              <p data-i18n="axel-parcours">
+                Comme j’avais des aptitudes en HTML, CSS et en graphisme, j’ai commencé mon parcours en me spécialisant dans le développement de sites web. En 2003, j’ai intégré une équipe qui était petite à ses débuts (3 personnes) chez Axial en tant qu’intégrateur multimédia. À ce moment, je m’occupais principalement de la façade de sites statiques (front-end). Peu après, les CMS à base PHP sont devenus des incontournables et j’ai dû apprendre un nouveau langage de programmation afin de m’adapter à la technologie (à son lancement, le PHP ne faisait pas partie du programme de TIM). Par la suite, les notions de SEO, les sites adaptatifs et réactifs, les statistiques analytiques et les réseaux sociaux ont émergé et m’ont ouvert une nouvelle opportunité de poste dans l’entreprise. C’était tout nouveau, sans formation locale; il a beaucoup fallu apprendre par soi-même en consultant des ressources sur le web. Évoluant avec ces nouveaux concepts, j’ai occupé un poste de stratège web pendant quelques années avant de reprendre mon poste d’intégrateur multimédia. Entre-temps, je suis retourné aux études à temps partiel à l’UQO en 2014 pour compléter un certificat en TI. J’ai quitté ma position d’intégrateur en 2016 pour aller relever de nouveaux défis au Musée des beaux-arts du Canada en tant que webmestre. Encore une fois, j’ai intégré une petite équipe de trois personnes : un designer, un développeur back-end et un rédacteur.
+              </p>
+
+              <h3 data-i18n="axel-h3-emploi">Emploi actuel</h3>
+              <p data-i18n="axel-emploi">
+                Le poste que j’occupe actuellement possède des tâches très diverses, et comme je fais partie d’une équipe très restreinte, je suis parfois appelé à effectuer des tâches urgentes ou critiques en l’absence d’un collègue afin de minimiser tout impact négatif pour le public. Mes tâches fréquentes sont la mise à jour du contenu du site web du musée, la préparation d’images ou d’infographies pour accompagner les textes, l’ajout ou l’amélioration de fonctionnalités, de la mise en page ou du design du CMS, la supervision et le support auprès des contributeurs de contenu sur le site, la création, la gestion et l’envoie d’infolettres, la collecte, l’analyse de données statistiques et la rédaction de rapports, et finalement, conseiller et éduquer les différentes équipes à travers les départements sur les possibilités de présentation de leur contenu sur le web ou expliquer comment celui-ci est consommé par les utilisateurs.
+              </p>
+            </div>
+          </div>
+        </article>
+
+        <!-- Maxime -->
+        <article id="grad-maxime" class="grad-panel">
+          <div class="two-cols">
+            <div class="col col-photo">
+              <img src="img/maxime.webp" alt="Portrait de Maxime" class="rounded-img" />
+            </div>
+            <div class="col col-text">
+              <h2 data-i18n="maxime-name">Maxime</h2>
+              <p class="grad-meta" data-i18n="maxime-meta1">Obtention DEC en multimédia : En 2015</p>
+              <p class="grad-meta" data-i18n="maxime-meta2">
+                Lieu de stage : Département des communications du Cégep de l’Outaouais
+              </p>
+
+              <h3 data-i18n="maxime-h3-parcours">Parcours professionnel</h3>
+              <ul class="grad-list">
+                <li data-i18n="maxime-li1">Designer (pigiste) : 2014 – 2016</li>
+                <li data-i18n="maxime-li2">Designer (Orkestra) : 2016 – 2021</li>
+                <li data-i18n="maxime-li3">Photographe événementiel (pigiste) : 2019 – à ce jour</li>
+                <li data-i18n="maxime-li4">Lead designer publicitaire (Orkestra) : 2021 – 2022</li>
+              </ul>
+
+              <h3 data-i18n="maxime-h3-emploi">Emploi actuel</h3>
+              <p data-i18n="maxime-emploi">
+                Technicienne en marketing événementiel (Casino Lac Leamy) depuis 2022.
+              </p>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer-text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chatbot-title">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">
+          <span data-i18n="chatbot-welcome">
+            Salut ! Pose-moi une question sur le programme TIM ou nos diplômés 😄
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+          data-i18n-placeholder="chatbot-placeholder"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- JS INTÉGRÉ -->
+  <script>
+    // =========================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =========================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || "fr";
+
+      if (auth) {
+        // Texte du lien connexion quand connecté
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =========================
+    // 1. DICTIONNAIRE DE TRADUCTION
+    // =========================
+    const translations = {
+      fr: {
+        "page-title": "Diplômés – Technique d’intégration multimédia",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Accueil",
+        "nav-program": "Programme",
+        "nav-grads": "Diplômés",
+        "nav-faq": "FAQ",
+        "nav-contact": "Nous joindre",
+        "nav-login": "Connexion",
+
+        "hero-title": "Nos diplômés",
+        "hero-intro": "Après le DEC en intégration multimédia, nos finissant·es travaillent en vidéo, design, web, jeux, évènementiel et plus. Clique sur un portrait pour découvrir son parcours.",
+
+        "tab-anne": "Anne Sophie",
+        "tab-julien": "Julien",
+        "tab-axel": "Axel",
+        "tab-maxime": "Maxime",
+
+        "anne-name": "Anne Sophie",
+        "anne-meta1": "Obtention DEC en multimédia : Mai 2019",
+        "anne-meta2": "Lieu de stage : École de la fonction publique du Canada",
+        "anne-h3-parcours": "Parcours professionnel",
+        "anne-parcours": "J’ai fait mon stage à l’École de la fonction publique du Canada de février à mai 2019. L’employeur m’a ensuite donné un contrat « casual » pour l’été et puis finalement le 30 septembre 2019 j’ai eu ma permanence comme employé temps plein dans la même équipe. Je suis encore dans cette équipe depuis et j’adore mon travail! Je vais aussi présentement à l’Université du Québec en Outaouais à temps partiel. J’ai commencé en septembre 2021 et je fais un baccalauréat avec majeure en communication et mineure en pratiques administratives. Je voulais simplement approfondir mes compétences dans mon domaine qui est très centré sur la communication et aussi m’ouvrir davantage d’opportunité pour ma carrière. (Autre détails: le gouvernement me paye mes études)",
+        "anne-h3-emploi": "Emploi actuel",
+        "anne-emploi1": "Depuis mon entrée au sein de l’École de la fonction publique du Canada, je suis vidéaste (éditrice vidéo) en tant que GT-3. Mes tâches consistent à faire des montages vidéo à partir de clips filmés lors de tournages soit des événements ou des entrevues. Je dois aussi créer des vidéos Motion Graphics ainsi qu’enregistrer et éditer des podcasts. Je crée des produits multimédias pour la promotion de nos événements et de nos cours en ligne. Les vidéos sont ensuite publiés sur plusieurs plateformes comme le site web de l’École; les réseaux sociaux comme Twitter, Linkdln, YouTube; et sur notre plateforme d’apprentissage en ligne.",
+        "anne-emploi2": "Depuis seulement une semaine, je suis réalisatrice par intérim pour une durée d’un an (IS-4). C’est-à-dire que je remplace une de nos réalisatrices qui est en congé pour un an. Je devrais donc retourner à mon rôle de vidéaste sauf si une autre position dans ce poste s’ouvre dans notre équipe. C’est en fait le rôle que je voulais obtenir après mes années d’études! Mes tâches sont beaucoup moins techniques que lorsque j’étais vidéaste. C’est beaucoup de gestion. En effet, mes tâches consistent à avoir des rencontres avec les clients pour comprendre davantage quel produit ils aimeraient que l’on produise; être en contact au fur et à mesure que leur projet avance; être présente pour les enregistrements virtuels et en personne; s’assurer de transmettre les commentaires des clients à l’éditeur assigné et que le tout soit fait correctement; donner mes commentaires sur le vidéo ou podcast à l’éditeur et puis finalement livré le produit final. Dans mes tâches, il y a aussi l’écriture d’un storyboard si nécessaire et puis donner des conseils aux clients sur leur projet pour s’assurer que le but voulu sera bien atteint avec le produit demandé.",
+
+        "julien-name": "Julien",
+        "julien-meta1": "Obtention DEC en multimédia : En 2003",
+        "julien-meta2": "Lieu de stage : Petite boite de multimédia dans le vieux Hull qui n’existe plus présentement",
+        "julien-h3-parcours": "Parcours professionnel",
+        "julien-parcours": "Durant mon bac en design graphique à l’UQAM j’ai travaillé comme designer de sites web pour Maison d’Aujourd’hui. J’ai débuté mon entreprise web et eu des projets avec des clients comme le Théâtre d’Aujourd’hui. Puis suite à mon bac, je me suis lancé à mon compte. J’ai travaillé comme motion designer en habillage télé pour Bazzo.Tv, Mange Ta Ville, NYTM magazine, MTV… En parallèle je faisais beaucoup d’illustrations tangibles “dans l’espace”. Avec cette approche j’ai travaillé en édition. Des visuels pour des couvertures de livres ou de magazines comme le Computer Arts ou IdN. Depuis maintenant 10 ans, je me spécialise plutôt en réalisation de publicité. J’ai réalisé des projets pour Google, Apple, Samsung. Un peu de vidéoclips aussi comme Katy Perry ou localement pour Valaire, Pierre Lapointe ou Ariane Moffat. En parallèle je me garde un peu de temps pour des projets d’arts visuels.",
+        "julien-h3-emploi": "Emploi actuel",
+        "julien-emploi": "Réalisateur pour ma société Vallée Duhamel. C’est un travail où il y a beaucoup de pitch, donc beaucoup de temps passé en conception et idéation afin d’obtenir le projet. Une fois qu’on gagne un projet, c’est toute la partie préproduction qui inclut de développer la narration du projet, les dialogues, la conception de décors, le stylisme des personnages, etc. Puis lors du tournage il s’agit de diriger les comédiens, d’établir avec le/la directeur/trice de la photographie le découpage des plans, le type d’éclairage, etc. Suite à ça il y a la postproduction. Donc de travailler avec des studios pour tout ce qui est compositing, animation 3D au besoin, colorisation, puis son et musique.",
+
+        "axel-name": "Axel",
+        "axel-meta1": "Obtention DEC en multimédia : En 2004",
+        "axel-meta2": "Lieu de stage : Axial Développement, au bureau de Gatineau (aujourd’hui nommé Axial)",
+        "axel-h3-parcours": "Parcours professionnel",
+        "axel-parcours": "Comme j’avais des aptitudes en HTML, CSS et en graphisme, j’ai commencé mon parcours en me spécialisant dans le développement de sites web. En 2003, j’ai intégré une équipe qui était petite à ses débuts (3 personnes) chez Axial en tant qu’intégrateur multimédia. À ce moment, je m’occupais principalement de la façade de sites statiques (front-end). Peu après, les CMS à base PHP sont devenus des incontournables et j’ai dû apprendre un nouveau langage de programmation afin de m’adapter à la technologie (à son lancement, le PHP ne faisait pas partie du programme de TIM). Par la suite, les notions de SEO, les sites adaptatifs et réactifs, les statistiques analytiques et les réseaux sociaux ont émergé et m’ont ouvert une nouvelle opportunité de poste dans l’entreprise. C’était tout nouveau, sans formation locale; il a beaucoup fallu apprendre par soi-même en consultant des ressources sur le web. Évoluant avec ces nouveaux concepts, j’ai occupé un poste de stratège web pendant quelques années avant de reprendre mon poste d’intégrateur multimédia. Entre-temps, je suis retourné aux études à temps partiel à l’UQO en 2014 pour compléter un certificat en TI. J’ai quitté ma position d’intégrateur en 2016 pour aller relever de nouveaux défis au Musée des beaux-arts du Canada en tant que webmestre. Encore une fois, j’ai intégré une petite équipe de trois personnes : un designer, un développeur back-end et un rédacteur.",
+        "axel-h3-emploi": "Emploi actuel",
+        "axel-emploi": "Le poste que j’occupe actuellement possède des tâches très diverses, et comme je fais partie d’une équipe très restreinte, je suis parfois appelé à effectuer des tâches urgentes ou critiques en l’absence d’un collègue afin de minimiser tout impact négatif pour le public. Mes tâches fréquentes sont la mise à jour du contenu du site web du musée, la préparation d’images ou d’infographies pour accompagner les textes, l’ajout ou l’amélioration de fonctionnalités, de la mise en page ou du design du CMS, la supervision et le support auprès des contributeurs de contenu sur le site, la création, la gestion et l’envoie d’infolettres, la collecte, l’analyse de données statistiques et la rédaction de rapports, et finalement, conseiller et éduquer les différentes équipes à travers les départements sur les possibilités de présentation de leur contenu sur le web ou expliquer comment celui-ci est consommé par les utilisateurs.",
+
+        "maxime-name": "Maxime",
+        "maxime-meta1": "Obtention DEC en multimédia : En 2015",
+        "maxime-meta2": "Lieu de stage : Département des communications du Cégep de l’Outaouais",
+        "maxime-h3-parcours": "Parcours professionnel",
+        "maxime-li1": "Designer (pigiste) : 2014 – 2016",
+        "maxime-li2": "Designer (Orkestra) : 2016 – 2021",
+        "maxime-li3": "Photographe événementiel (pigiste) : 2019 – à ce jour",
+        "maxime-li4": "Lead designer publicitaire (Orkestra) : 2021 – 2022",
+        "maxime-h3-emploi": "Emploi actuel",
+        "maxime-emploi": "Technicienne en marketing événementiel (Casino Lac Leamy) depuis 2022.",
+
+        "footer-text": "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        "chatbot-title": "Assistant TIM",
+        "chatbot-welcome": "Salut ! Pose-moi une question sur le programme TIM ou nos diplômés 😄",
+        "chatbot-placeholder": "Écris ton message…",
+        "chatbot-answer": "Merci pour ta question! Sur le vrai site, un conseiller ou un chatbot plus avancé pourrait te donner des infos détaillées sur les parcours de nos diplômés et les carrières possibles après TIM."
+      },
+      en: {
+        "page-title": "Graduates – Multimedia Integration Technology",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Home",
+        "nav-program": "Program",
+        "nav-grads": "Graduates",
+        "nav-faq": "FAQ",
+        "nav-contact": "Contact us",
+        "nav-login": "Login",
+
+        "hero-title": "Our graduates",
+        "hero-intro": "After the Multimedia Integration Technology DEC, our graduates work in video, design, web, games, events and more. Click on a portrait to discover their journey.",
+
+        "tab-anne": "Anne Sophie",
+        "tab-julien": "Julien",
+        "tab-axel": "Axel",
+        "tab-maxime": "Maxime",
+
+        "anne-name": "Anne Sophie",
+        "anne-meta1": "DEC in Multimedia completed: May 2019",
+        "anne-meta2": "Internship: Canada School of Public Service",
+        "anne-h3-parcours": "Career path",
+        "anne-parcours": "I did my internship at the Canada School of Public Service from February to May 2019. The employer then offered me a casual contract for the summer and, finally, on September 30, 2019, I obtained a permanent full-time position with the same team. I am still with this team today and I love my job! I am also currently studying part-time at the Université du Québec en Outaouais. I started in September 2021 and I’m doing a bachelor’s degree with a major in communication and a minor in administrative practices. I simply wanted to deepen my skills in my field, which is very focused on communication, and open up more opportunities for my career. (Bonus detail: the government pays for my studies.)",
+        "anne-h3-emploi": "Current job",
+        "anne-emploi1": "Since joining the Canada School of Public Service, I have been working as a video editor (videographer) as a GT-3. My tasks include editing video from footage shot during events or interviews. I also create motion graphics videos and record and edit podcasts. I produce multimedia content to promote our events and online courses. The videos are then published on several platforms such as the School’s website; social media like Twitter, LinkedIn, YouTube; and on our online learning platform.",
+        "anne-emploi2": "For just a week now, I’ve been Acting Producer for a one-year term (IS-4). That means I’m replacing one of our producers who is on leave for a year. I should go back to my videographer role afterwards unless another producer position opens up on our team. This is actually the role I was aiming for when I finished my studies! My tasks are much less technical than when I was a videographer. It’s a lot of project management. I meet with clients to understand the product they want us to create; I stay in touch as the project moves forward; I attend virtual and in-person recordings; I make sure client feedback is passed on to the assigned editor and applied correctly; I give my own feedback on the video or podcast and finally deliver the finished product. I also write storyboards when needed and advise clients on their project to make sure the final product meets their goals.",
+
+        "julien-name": "Julien",
+        "julien-meta1": "DEC in Multimedia completed: 2003",
+        "julien-meta2": "Internship: Small multimedia studio in Old Hull (no longer in business)",
+        "julien-h3-parcours": "Career path",
+        "julien-parcours": "During my bachelor’s in graphic design at UQAM, I worked as a web designer for Maison d’Aujourd’hui. I started my own web business and worked with clients such as Théâtre d’Aujourd’hui. After my degree, I went fully freelance. I worked as a motion designer for TV show graphics on Bazzo.tv, Mange Ta Ville, NYTM magazine, MTV and more. At the same time, I did a lot of tangible, “in-space” illustration work. With that approach, I worked in publishing, creating visuals for book and magazine covers such as Computer Arts and IdN. For the last 10 years, I’ve mainly focused on directing ads. I’ve directed projects for Google, Apple, Samsung, and some music videos too, like for Katy Perry and locally for Valaire, Pierre Lapointe and Ariane Moffatt. I also keep time aside for personal visual art projects.",
+        "julien-h3-emploi": "Current job",
+        "julien-emploi": "I’m a director at my studio Vallée Duhamel. There’s a lot of pitching in this job, so I spend a lot of time on concept development and ideation to win projects. Once we get a project, it’s all about pre-production: developing the story, writing dialogues, designing sets, styling characters, etc. On set, I direct the actors and work with the director of photography to decide the shot list, framing, type of lighting, and so on. After that comes post-production: working with studios on compositing, 3D animation when needed, color grading, and finally sound and music.",
+
+        "axel-name": "Axel",
+        "axel-meta1": "DEC in Multimedia completed: 2004",
+        "axel-meta2": "Internship: Axial Développement, Gatineau office (now called Axial)",
+        "axel-h3-parcours": "Career path",
+        "axel-parcours": "Since I had skills in HTML, CSS and graphic design, I started out specializing in website development. In 2003, I joined a small team of three people at Axial as a multimedia integrator. At that time, I mainly worked on the front-end of static websites. Shortly after, PHP-based CMS platforms became the norm and I had to learn a new programming language to keep up with the technology (when I studied in TIM, PHP wasn’t in the curriculum). Later, SEO, responsive websites, analytics and social media emerged and opened up a new role for me in the company. It was all very new and there was no local training; I had to learn a lot on my own by reading resources online. As these concepts evolved, I worked as a web strategist for several years before returning to my role as multimedia integrator. Meanwhile, I went back to school part-time at UQO in 2014 to complete a certificate in IT. I left my integrator position in 2016 to take on new challenges at the National Gallery of Canada as webmaster. Again, I joined a small team of three: a designer, a back-end developer and a writer.",
+        "axel-h3-emploi": "Current job",
+        "axel-emploi": "My current position involves a very wide range of tasks, and because I’m part of a small team, I’m sometimes called upon to handle urgent or critical tasks when a colleague is away, to minimize negative impact on the public. My regular tasks include updating the museum’s website content, preparing images and infographics to accompany texts, adding or improving features, layout and CMS design, supervising and supporting content contributors, creating and sending newsletters, collecting and analyzing statistics and writing reports. I also advise and train teams across departments on how they can present their content online and explain how users actually consume it.",
+
+        "maxime-name": "Maxime",
+        "maxime-meta1": "DEC in Multimedia completed: 2015",
+        "maxime-meta2": "Internship: Communications Department, Cégep de l’Outaouais",
+        "maxime-h3-parcours": "Career path",
+        "maxime-li1": "Designer (freelance): 2014 – 2016",
+        "maxime-li2": "Designer (Orkestra): 2016 – 2021",
+        "maxime-li3": "Event photographer (freelance): 2019 – present",
+        "maxime-li4": "Lead advertising designer (Orkestra): 2021 – 2022",
+        "maxime-h3-emploi": "Current job",
+        "maxime-emploi": "Event marketing technician at Casino Lac-Leamy since 2022.",
+
+        "footer-text": "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        "chatbot-title": "TIM Assistant",
+        "chatbot-welcome": "Hi! Ask me a question about the TIM program or our graduates 😄",
+        "chatbot-placeholder": "Type your message…",
+        "chatbot-answer": "Thanks for your question! On the real site, an advisor or a more advanced chatbot could give you detailed information about our graduates’ paths and the careers you can pursue after TIM."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const elements = document.querySelectorAll("[data-i18n]");
+      elements.forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.innerHTML = text;
+        }
+      });
+
+      const placeholderEls = document.querySelectorAll("[data-i18n-placeholder]");
+      placeholderEls.forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const text = translations[currentLang][key];
+        if (text !== undefined) {
+          el.setAttribute("placeholder", text);
+        }
+      });
+
+      const titleEl = document.querySelector("title[data-i18n='page-title']");
+      if (titleEl) {
+        titleEl.innerHTML = translations[currentLang]["page-title"];
+      }
+
+      document.documentElement.lang = currentLang;
+
+      // Met à jour le header selon l'état de connexion + langue
+      applyAuthToHeader();
+    }
+
+    // ---- Bouton langue ----
+    const langBtn = document.getElementById("lang-toggle");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        currentLang = currentLang === "fr" ? "en" : "fr";
+        langBtn.textContent = currentLang === "fr" ? "FR / EN" : "EN / FR";
+        applyTranslations();
+      });
+    }
+
+    // appliquer FR au chargement (et auth)
+    applyTranslations();
+
+    // ---- Onglets diplômés ----
+    const tabs = document.querySelectorAll(".grad-tab");
+    const panels = document.querySelectorAll(".grad-panel");
+
+    function showPanel(targetId) {
+      panels.forEach(panel => {
+        if (panel.id === targetId) {
+          panel.classList.add("active");
+          panel.style.display = "block";
+        } else {
+          panel.classList.remove("active");
+          panel.style.display = "none";
+        }
+      });
+    }
+
+    tabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const targetId = tab.getAttribute("data-target");
+
+        tabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+
+        showPanel(targetId);
+      });
+    });
+
+    window.addEventListener("DOMContentLoaded", () => {
+      panels.forEach(panel => {
+        panel.style.display = panel.classList.contains("active") ? "block" : "none";
+      });
+    });
+
+    // ---- Chatbot ----
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function toggleChatbot(open) {
+      if (!chatbotWindow) return;
+      if (open === undefined) {
+        chatbotWindow.classList.toggle("open");
+      } else if (open) {
+        chatbotWindow.classList.add("open");
+      } else {
+        chatbotWindow.classList.remove("open");
+      }
+    }
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener("click", () => toggleChatbot());
+    }
+    if (chatbotClose) {
+      chatbotClose.addEventListener("click", () => toggleChatbot(false));
+    }
+
+    function addChatMessage(text, from = "bot") {
+      if (!chatbotBody) return;
+      const msg = document.createElement("div");
+      msg.className = "chatbot-msg " + from;
+      msg.textContent = text;
+      chatbotBody.appendChild(msg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    if (chatbotForm) {
+      chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatbotInput.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, "user");
+        chatbotInput.value = "";
+
+        setTimeout(() => {
+          const answer = translations[currentLang]["chatbot-answer"];
+          addChatMessage(answer, "bot");
+        }, 400);
+      });
+    }
+  </script>
+
+</body>
+</html>

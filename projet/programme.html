@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title data-i18n="page-title">Programme – Technique d’intégration multimédia</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- CSS INTÉGRÉ -->
+  <style>
+    /* ---------- BASE ---------- */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      color: #111827;
+      background: #f3f4f6;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- LAYOUT GÉNÉRAL ---------- */
+    .container {
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    .section {
+      padding: 3rem 0;
+      background: #f9fafb;
+    }
+
+    .section.alt {
+      background: #ffffff;
+    }
+
+    .two-cols {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .col {
+      min-width: 0;
+    }
+
+    .rounded-img {
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.22);
+    }
+
+    .section h2 {
+      font-size: 1.7rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .section-intro {
+      color: #4b5563;
+      max-width: 640px;
+      margin-bottom: 1.5rem;
+    }
+
+    .image-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 768px) {
+      .two-cols {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ---------- HEADER ---------- */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.9);
+      color: #f9fafb;
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.8rem;
+      line-height: 1.1;
+    }
+
+    .logo-main {
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      font-size: 1.2rem;
+    }
+
+    .logo-sub {
+      opacity: 0.75;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: 1.1rem;
+      font-size: 0.95rem;
+      align-items: center;
+    }
+
+    .main-nav a {
+      color: #e5e7eb;
+      padding-bottom: 0.2rem;
+      border-bottom: 2px solid transparent;
+    }
+
+    .main-nav a:hover {
+      border-color: rgba(248, 250, 252, 0.6);
+    }
+
+    .main-nav a.active {
+      border-color: #f97316;
+      color: #ffffff;
+      font-weight: 600;
+    }
+
+    .lang-btn {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+      padding: 0.25rem 0.8rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    @media (max-width: 768px) {
+      .main-nav {
+        display: none; /* pas de burger pour le TP */
+      }
+    }
+
+    /* ---------- HERO ---------- */
+    .hero {
+      position: relative;
+      padding: 4rem 0 3rem;
+      background-size: cover;
+      background-position: center;
+      color: #f9fafb;
+      overflow: hidden;
+    }
+
+    .hero-small {
+      padding: 3rem 0 2.5rem;
+    }
+
+    .hero-bg-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.95),
+        rgba(15, 23, 42, 0.7)
+      );
+      mix-blend-mode: multiply;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      max-width: 640px;
+      margin: 0 auto 1.5rem;
+      color: #e5e7eb;
+      font-size: 1rem;
+    }
+
+    /* ---------- BOUTONS ---------- */
+    .btn-primary,
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.7rem 1.4rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      gap: 0.45rem;
+      transition: transform 0.12s ease, box-shadow 0.12s ease,
+                  background 0.12s ease, color 0.12s ease;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      box-shadow: 0 12px 30px rgba(249, 115, 22, 0.5);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 35px rgba(249, 115, 22, 0.6);
+    }
+
+    .btn-secondary {
+      background: #111827;
+      color: #f9fafb;
+      box-shadow: 0 10px 25px rgba(15, 23, 42, 0.4);
+    }
+
+    .btn-secondary:hover {
+      background: #020617;
+      transform: translateY(-1px);
+    }
+
+    /* ---------- FAQ (accordéon <details>) ---------- */
+    .faq-accordion {
+      margin-top: 1.5rem;
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .faq-item {
+      border-radius: 0.9rem;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: #ffffff;
+      overflow: hidden;
+    }
+
+    .faq-item summary {
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-question {
+      padding: 0.85rem 1rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f9fafb;
+    }
+
+    .faq-question::after {
+      content: "+";
+      font-weight: 700;
+      margin-left: 0.75rem;
+    }
+
+    .faq-item[open] .faq-question {
+      background: #111827;
+      color: #f9fafb;
+    }
+
+    .faq-item[open] .faq-question::after {
+      content: "−";
+    }
+
+    .faq-answer {
+      padding: 0 1rem 0.8rem;
+      font-size: 0.9rem;
+      color: #4b5563;
+    }
+
+    .faq-answer p {
+      margin: 0.6rem 0 0;
+    }
+
+    /* ---------- FOOTER ---------- */
+    .site-footer {
+      padding: 1.5rem 0;
+      background: #020617;
+      color: #9ca3af;
+      font-size: 0.85rem;
+      text-align: center;
+    }
+
+    /* ---------- CHATBOT ---------- */
+    #chatbot {
+      position: fixed;
+      bottom: 1rem;
+      right: 1rem;
+      z-index: 50;
+      font-size: 0.9rem;
+    }
+
+    #chatbot-toggle {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      border: none;
+      background: linear-gradient(135deg, #f97316, #f59e0b);
+      color: #111827;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 15px 35px rgba(15,23,42,0.5);
+    }
+
+    #chatbot-window {
+      position: absolute;
+      bottom: 60px;
+      right: 0;
+      width: 280px;
+      max-height: 420px;
+      background: #ffffff;
+      border-radius: 1rem;
+      box-shadow: 0 18px 40px rgba(15,23,42,0.55);
+      display: none;
+      overflow: hidden;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      flex-direction: column;
+    }
+
+    #chatbot-window.open {
+      display: flex;
+    }
+
+    .chatbot-header {
+      padding: 0.55rem 0.9rem;
+      background: #111827;
+      color: #f9fafb;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.85rem;
+    }
+
+    .chatbot-header span {
+      font-weight: 600;
+    }
+
+    #chatbot-close {
+      border: none;
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    .chatbot-body {
+      padding: 0.6rem 0.7rem 0.4rem;
+      flex: 1;
+      overflow-y: auto;
+      background: #f3f4f6;
+      font-size: 0.8rem;
+    }
+
+    .chatbot-msg {
+      margin-bottom: 0.35rem;
+      padding: 0.35rem 0.55rem;
+      border-radius: 0.75rem;
+      max-width: 80%;
+      line-height: 1.35;
+    }
+
+    .chatbot-msg.bot {
+      background: #ffffff;
+      border: 1px solid rgba(148,163,184,0.8);
+      border-bottom-left-radius: 0.2rem;
+    }
+
+    .chatbot-msg.user {
+      margin-left: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-bottom-right-radius: 0.2rem;
+    }
+
+    #chatbot-form {
+      display: flex;
+      border-top: 1px solid rgba(148,163,184,0.8);
+    }
+
+    #chatbot-input {
+      flex: 1;
+      border: none;
+      padding: 0.45rem 0.55rem;
+      font-size: 0.8rem;
+      outline: none;
+    }
+
+    #chatbot-input::placeholder {
+      color: #9ca3af;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER COMMUN -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <div class="logo">
+        <span class="logo-main">TIM</span>
+        <span class="logo-sub" data-i18n="logo-sub">Cégep de l’Outaouais</span>
+      </div>
+
+      <nav class="main-nav">
+        <a href="index.html" data-i18n="nav-home">Accueil</a>
+        <a href="programme.html" class="active" data-i18n="nav-program">Programme</a>
+        <a href="diplomes.html" data-i18n="nav-grads">Diplômés</a>
+        <a href="faq.html" data-i18n="nav-faq">FAQ</a>
+        <a href="contact.html" data-i18n="nav-contact">Nous joindre</a>
+        <a href="connexion.html" id="nav-connexion-link" data-i18n="nav-login">Connexion</a>
+      </nav>
+
+      <button id="lang-toggle" class="lang-btn">FR / EN</button>
+    </div>
+  </header>
+
+  <!-- HERO PROGRAMME -->
+  <section class="hero hero-small" style="background-image: url('img/programmeTIM.png');">
+    <div class="hero-bg-overlay"></div>
+    <div class="container hero-content">
+      <h1 data-i18n="hero-title">Le programme d’intégration multimédia</h1>
+      <p data-i18n="hero-text">
+        Un DEC de 3 ans qui combine design, web, vidéo, animation, 3D,
+        programmation et interactivité.
+      </p>
+      <a href="#affiche" class="btn-primary" data-i18n="hero-cta">Voir l’affiche du programme</a>
+    </div>
+  </section>
+
+  <!-- AFFICHE DU PROGRAMME -->
+  <section class="section" id="affiche">
+    <div class="container two-cols">
+      <div class="col">
+        <img src="img/programmeTIM.png"
+             alt="Affiche du programme Intégration multimédia"
+             class="rounded-img" />
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="sec1-title">Un programme polyvalent et concret</h2>
+        <p data-i18n="sec1-p1">
+          La Technique d’intégration multimédia te forme à travailler avec
+          des outils professionnels pour créer des sites web, des expériences
+          interactives, des vidéos, des animations et des jeux.
+        </p>
+        <p data-i18n="sec1-p2">
+          Tu apprendras à planifier, concevoir, programmer, intégrer et livrer
+          des projets multimédias complets, en équipe, comme dans l’industrie.
+        </p>
+
+        <a href="https://cegepoutaouais.qc.ca/programmes/programmes-techniques/sciences-technologie-et-environnement/integration-multimedia/"
+           target="_blank" rel="noopener"
+           class="btn-secondary" data-i18n="sec1-cta">
+          Plus d’informations sur le site du Cégep
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGIGRAMME DU PROGRAMME (avec lien vers logigramme.html) -->
+  <section class="section alt" id="logigramme">
+    <div class="container">
+      <h2 data-i18n="logi-title">Structure du programme sur 3 ans</h2>
+      <p class="section-intro" data-i18n="logi-intro">
+        Voici un aperçu des cours répartis sur les 6 sessions du DEC
+        en Techniques d’intégration multimédia.
+      </p>
+
+      <div style="text-align:center; margin-bottom: 1.5rem;">
+        <a href="logigramme.html" class="btn-primary" data-i18n="logi-cta">
+          Voir le logigramme interactif complet
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ACCORDÉON INTERACTIF PAR SESSION -->
+  <section class="section">
+    <div class="container">
+      <h2 data-i18n="sessions-title">Les sessions en un coup d’œil</h2>
+      <p class="section-intro" data-i18n="sessions-intro">
+        Explore chaque session pour voir l’évolution du programme :
+        bases du multimédia, web, design, vidéo, programmation, projet final et stage.
+      </p>
+
+      <div class="faq-accordion">
+        <details class="faq-item" open>
+          <summary class="faq-question" data-i18n="s1-q">Session 1 – Bases du multimédia</summary>
+          <div class="faq-answer">
+            <p data-i18n="s1-a">
+              Découverte du multimédia, introduction aux logiciels de création,
+              bases en design graphique, images, environnement professionnel
+              et premiers projets d’intégration.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question" data-i18n="s2-q">Session 2 – Web, image et animation</summary>
+          <div class="faq-answer">
+            <p data-i18n="s2-a">
+              Approfondissement du design, intégration web, traitement de l’image,
+              animation de base et premiers projets interactifs plus complets.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question" data-i18n="s3-q">Session 3 – Vidéo, interactivité et 3D</summary>
+          <div class="faq-answer">
+            <p data-i18n="s3-a">
+              Tournage et montage vidéo, conception d’interfaces, animation avancée,
+              introduction à la 3D et projets multimédias intégrant plusieurs médias.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question" data-i18n="s4-q">Session 4 – Programmation et bases de données</summary>
+          <div class="faq-answer">
+            <p data-i18n="s4-a">
+              Programmation plus poussée, bases de données, typographie
+              et projet d’équipe qui mélange design, code et contenu dynamique.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question" data-i18n="s5-q">Session 5 – Production multimédia avancée</summary>
+          <div class="faq-answer">
+            <p data-i18n="s5-a">
+              Production numérique, programmation appliquée, projet intégré,
+              préparation au marché du travail et veille technologique.
+            </p>
+          </div>
+        </details>
+
+        <details class="faq-item">
+          <summary class="faq-question" data-i18n="s6-q">Session 6 – Stage en milieu de travail</summary>
+          <div class="faq-answer">
+            <p data-i18n="s6-a">
+              Un stage crédité dans une entreprise ou une organisation :
+              mise en pratique de toutes les compétences acquises
+              et premières expériences professionnelles concrètes.
+            </p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIENS UTILES -->
+  <section class="section alt">
+    <div class="container two-cols">
+      <div class="col">
+        <h2 data-i18n="links-questions-title">Encore des questions sur le programme&nbsp;?</h2>
+        <p data-i18n="links-questions-p">
+          Consulte la <strong>FAQ</strong> pour en savoir plus sur la 3D,
+          la programmation, la charge de travail et les possibilités d’emploi.
+        </p>
+        <a href="faq.html" class="btn-secondary" data-i18n="links-questions-cta">Aller à la FAQ</a>
+      </div>
+
+      <div class="col">
+        <h2 data-i18n="links-apply-title">Prêt à t’inscrire&nbsp;?</h2>
+        <p data-i18n="links-apply-p">
+          Tu peux communiquer directement avec le département ou les services
+          d’admission du Cégep pour connaître les prochaines dates d’inscription.
+        </p>
+        <a href="contact.html" class="btn-primary" data-i18n="links-apply-cta">Nous joindre</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <p data-i18n="footer-text">© Technique d’intégration multimédia – Cégep de l’Outaouais</p>
+    </div>
+  </footer>
+
+  <!-- CHATBOT -->
+  <div id="chatbot">
+    <button id="chatbot-toggle">💬</button>
+    <div id="chatbot-window">
+      <div class="chatbot-header">
+        <span data-i18n="chatbot-title">Assistant TIM</span>
+        <button id="chatbot-close">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbot-body">
+        <div class="chatbot-msg bot">
+          <span data-i18n="chatbot-welcome">
+            Salut ! Pose-moi une question sur le programme TIM 😄
+          </span>
+        </div>
+      </div>
+      <form id="chatbot-form">
+        <input
+          type="text"
+          id="chatbot-input"
+          placeholder="Écris ton message…"
+          autocomplete="off"
+          data-i18n-placeholder="chatbot-placeholder"
+        />
+      </form>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT INTÉGRÉ -->
+  <script>
+    // =========================
+    // 0. AUTH PARTAGÉE (simulation)
+    // =========================
+    const AUTH_KEY = "timAuth";
+
+    function loadAuth() {
+      try {
+        const raw = localStorage.getItem(AUTH_KEY);
+        if (!raw) return null;
+        return JSON.parse(raw);
+      } catch (e) {
+        return null;
+      }
+    }
+
+    function applyAuthToHeader() {
+      const auth = loadAuth();
+      const navLink = document.getElementById("nav-connexion-link");
+      const logoEl = document.querySelector(".logo");
+      if (!navLink) return;
+
+      const lang = document.documentElement.lang || (window.currentLang || "fr");
+
+      if (auth) {
+        // Texte du lien quand "connecté"
+        navLink.textContent = lang === "en" ? "My TIM space" : "Mon espace TIM";
+        navLink.href = "connexion.html";
+
+        // Badge sous le logo
+        if (logoEl) {
+          let badge = logoEl.querySelector(".auth-badge");
+          if (!badge) {
+            badge = document.createElement("div");
+            badge.className = "auth-badge";
+            badge.style.fontSize = "0.7rem";
+            badge.style.marginTop = "0.15rem";
+            badge.style.color = "#fbbf24";
+            logoEl.appendChild(badge);
+          }
+          const label =
+            auth.roleLabel ||
+            auth.role ||
+            auth.email ||
+            (lang === "en" ? "Connected" : "Connecté");
+          badge.textContent =
+            (lang === "en" ? "Signed in as: " : "Connecté comme : ") +
+            label;
+        }
+      } else {
+        // Pas connecté
+        navLink.textContent = lang === "en" ? "Login" : "Connexion";
+        navLink.href = "connexion.html";
+        const badge = document.querySelector(".logo .auth-badge");
+        if (badge) badge.remove();
+      }
+    }
+
+    // =========================
+    // 1. DICTIONNAIRE DE TRADUCTION
+    // =========================
+    const translations = {
+      fr: {
+        "page-title": "Programme – Technique d’intégration multimédia",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Accueil",
+        "nav-program": "Programme",
+        "nav-grads": "Diplômés",
+        "nav-faq": "FAQ",
+        "nav-contact": "Nous joindre",
+        "nav-login": "Connexion",
+
+        "hero-title": "Le programme d’intégration multimédia",
+        "hero-text": "Un DEC de 3 ans qui combine design, web, vidéo, animation, 3D, programmation et interactivité.",
+        "hero-cta": "Voir l’affiche du programme",
+
+        "sec1-title": "Un programme polyvalent et concret",
+        "sec1-p1": "La Technique d’intégration multimédia te forme à travailler avec des outils professionnels pour créer des sites web, des expériences interactives, des vidéos, des animations et des jeux.",
+        "sec1-p2": "Tu apprendras à planifier, concevoir, programmer, intégrer et livrer des projets multimédias complets, en équipe, comme dans l’industrie.",
+        "sec1-cta": "Plus d’informations sur le site du Cégep",
+
+        "logi-title": "Structure du programme sur 3 ans",
+        "logi-intro": "Voici un aperçu des cours répartis sur les 6 sessions du DEC en Techniques d’intégration multimédia.",
+        "logi-cta": "Voir le logigramme interactif complet",
+
+        "sessions-title": "Les sessions en un coup d’œil",
+        "sessions-intro": "Explore chaque session pour voir l’évolution du programme : bases du multimédia, web, design, vidéo, programmation, projet final et stage.",
+
+        "s1-q": "Session 1 – Bases du multimédia",
+        "s1-a": "Découverte du multimédia, introduction aux logiciels de création, bases en design graphique, images, environnement professionnel et premiers projets d’intégration.",
+
+        "s2-q": "Session 2 – Web, image et animation",
+        "s2-a": "Approfondissement du design, intégration web, traitement de l’image, animation de base et premiers projets interactifs plus complets.",
+
+        "s3-q": "Session 3 – Vidéo, interactivité et 3D",
+        "s3-a": "Tournage et montage vidéo, conception d’interfaces, animation avancée, introduction à la 3D et projets multimédias intégrant plusieurs médias.",
+
+        "s4-q": "Session 4 – Programmation et bases de données",
+        "s4-a": "Programmation plus poussée, bases de données, typographie et projet d’équipe qui mélange design, code et contenu dynamique.",
+
+        "s5-q": "Session 5 – Production multimédia avancée",
+        "s5-a": "Production numérique, programmation appliquée, projet intégré, préparation au marché du travail et veille technologique.",
+
+        "s6-q": "Session 6 – Stage en milieu de travail",
+        "s6-a": "Un stage crédité dans une entreprise ou une organisation : mise en pratique de toutes les compétences acquises et premières expériences professionnelles concrètes.",
+
+        "links-questions-title": "Encore des questions sur le programme&nbsp;?",
+        "links-questions-p": "Consulte la <strong>FAQ</strong> pour en savoir plus sur la 3D, la programmation, la charge de travail et les possibilités d’emploi.",
+        "links-questions-cta": "Aller à la FAQ",
+
+        "links-apply-title": "Prêt à t’inscrire&nbsp;?",
+        "links-apply-p": "Tu peux communiquer directement avec le département ou les services d’admission du Cégep pour connaître les prochaines dates d’inscription.",
+        "links-apply-cta": "Nous joindre",
+
+        "footer-text": "© Technique d’intégration multimédia – Cégep de l’Outaouais",
+
+        "chatbot-title": "Assistant TIM",
+        "chatbot-welcome": "Salut ! Pose-moi une question sur le programme TIM 😄",
+        "chatbot-placeholder": "Écris ton message…",
+        "chatbot-answer": "Merci pour ta question! Sur le vrai site, un conseiller TIM ou un chatbot plus avancé pourrait te donner des infos détaillées sur le programme, les cours et les débouchés."
+      },
+      en: {
+        "page-title": "Program – Multimedia Integration Technology",
+
+        "logo-sub": "Cégep de l’Outaouais",
+        "nav-home": "Home",
+        "nav-program": "Program",
+        "nav-grads": "Graduates",
+        "nav-faq": "FAQ",
+        "nav-contact": "Contact us",
+        "nav-login": "Login",
+
+        "hero-title": "The Multimedia Integration Program",
+        "hero-text": "A 3-year DEC that combines design, web, video, animation, 3D, programming and interactivity.",
+        "hero-cta": "View the program poster",
+
+        "sec1-title": "A versatile, hands-on program",
+        "sec1-p1": "The Multimedia Integration Technology program trains you to work with professional tools to create websites, interactive experiences, videos, animations and games.",
+        "sec1-p2": "You learn how to plan, design, code, integrate and deliver complete multimedia projects, as a team, just like in the industry.",
+        "sec1-cta": "More information on the Cégep website",
+
+        "logi-title": "Program structure over 3 years",
+        "logi-intro": "Here is an overview of the courses spread across the 6 semesters of the Multimedia Integration Technology DEC.",
+        "logi-cta": "See the full interactive flowchart",
+
+        "sessions-title": "Semesters at a glance",
+        "sessions-intro": "Explore each semester to see how the program evolves: multimedia basics, web, design, video, programming, final project and internship.",
+
+        "s1-q": "Semester 1 – Multimedia basics",
+        "s1-a": "Discover multimedia, learn the basics of creative software, graphic design, images, the professional environment and your first integration projects.",
+
+        "s2-q": "Semester 2 – Web, image and animation",
+        "s2-a": "Go further in design, web integration, image processing, basic animation and more complete interactive projects.",
+
+        "s3-q": "Semester 3 – Video, interactivity and 3D",
+        "s3-a": "Shooting and video editing, interface design, advanced animation, introduction to 3D and multimedia projects combining several media.",
+
+        "s4-q": "Semester 4 – Programming and databases",
+        "s4-a": "More advanced programming, databases, typography and a team project that combines design, code and dynamic content.",
+
+        "s5-q": "Semester 5 – Advanced multimedia production",
+        "s5-a": "Digital production, applied programming, integrated project, preparation for the job market and technology watch.",
+
+        "s6-q": "Semester 6 – Workplace internship",
+        "s6-a": "A credited internship in a company or organization: put all your skills into practice and gain your first concrete professional experience.",
+
+        "links-questions-title": "Still have questions about the program?",
+        "links-questions-p": "Check out the <strong>FAQ</strong> to learn more about 3D, programming, workload and job opportunities.",
+        "links-questions-cta": "Go to the FAQ",
+
+        "links-apply-title": "Ready to apply?",
+        "links-apply-p": "You can contact the department or the admissions office directly to find out the next application dates.",
+        "links-apply-cta": "Contact us",
+
+        "footer-text": "© Multimedia Integration Technology – Cégep de l’Outaouais",
+
+        "chatbot-title": "TIM Assistant",
+        "chatbot-welcome": "Hi! Ask me a question about the TIM program 😄",
+        "chatbot-placeholder": "Type your message…",
+        "chatbot-answer": "Thanks for your question! On the real site, a TIM advisor or a more advanced chatbot could give you detailed information about the program, the courses and career opportunities."
+      }
+    };
+
+    let currentLang = "fr";
+
+    function applyTranslations() {
+      const dict = translations[currentLang] || translations.fr;
+
+      // Textes data-i18n
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        const text = dict[key];
+        if (text !== undefined) {
+          el.innerHTML = text;
+        }
+      });
+
+      // Placeholders
+      document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        const text = dict[key];
+        if (text !== undefined) {
+          el.setAttribute("placeholder", text);
+        }
+      });
+
+      // Titre de la page
+      const titleEl = document.querySelector("title[data-i18n='page-title']");
+      if (titleEl && dict["page-title"]) {
+        titleEl.innerHTML = dict["page-title"];
+      }
+
+      // Attribut lang
+      document.documentElement.lang = currentLang === "fr" ? "fr" : "en";
+
+      // Bouton langue
+      const langBtn = document.getElementById("lang-toggle");
+      if (langBtn) {
+        langBtn.textContent = currentLang === "fr" ? "FR / EN" : "EN / FR";
+      }
+
+      // Appliquer l'état de connexion avec la bonne langue
+      applyAuthToHeader();
+    }
+
+    // ---- Bouton langue ----
+    const langBtn = document.getElementById("lang-toggle");
+    if (langBtn) {
+      langBtn.addEventListener("click", () => {
+        currentLang = currentLang === "fr" ? "en" : "fr";
+        applyTranslations();
+      });
+    }
+
+    // appliquer FR au chargement
+    applyTranslations();
+
+    // ---- Scroll doux pour les liens internes (#affiche, #logigramme) ----
+    document.querySelectorAll('a[href^="#"]').forEach(link => {
+      link.addEventListener("click", (e) => {
+        const targetId = link.getAttribute("href");
+        if (targetId && targetId.startsWith("#")) {
+          const el = document.querySelector(targetId);
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }
+      });
+    });
+
+    // ---- Chatbot ----
+    const chatbotToggle = document.getElementById("chatbot-toggle");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const chatbotClose = document.getElementById("chatbot-close");
+    const chatbotForm = document.getElementById("chatbot-form");
+    const chatbotInput = document.getElementById("chatbot-input");
+    const chatbotBody = document.getElementById("chatbot-body");
+
+    function toggleChatbot(open) {
+      if (!chatbotWindow) return;
+      if (open === undefined) {
+        chatbotWindow.classList.toggle("open");
+      } else if (open) {
+        chatbotWindow.classList.add("open");
+      } else {
+        chatbotWindow.classList.remove("open");
+      }
+    }
+
+    if (chatbotToggle) {
+      chatbotToggle.addEventListener("click", () => toggleChatbot());
+    }
+    if (chatbotClose) {
+      chatbotClose.addEventListener("click", () => toggleChatbot(false));
+    }
+
+    function addChatMessage(text, from = "bot") {
+      if (!chatbotBody) return;
+      const msg = document.createElement("div");
+      msg.className = "chatbot-msg " + from;
+      msg.textContent = text;
+      chatbotBody.appendChild(msg);
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    if (chatbotForm) {
+      chatbotForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const text = chatbotInput.value.trim();
+        if (!text) return;
+
+        addChatMessage(text, "user");
+        chatbotInput.value = "";
+
+        setTimeout(() => {
+          const answer =
+            (translations[currentLang] && translations[currentLang]["chatbot-answer"]) ||
+            translations.fr["chatbot-answer"];
+          addChatMessage(answer, "bot");
+        }, 400);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -275,6 +275,20 @@
       background: #000;
     }
 
+    /* lien sous la vidéo */
+    .video-link {
+      max-width: 800px;
+      margin: 0.75rem auto 0;
+      text-align: center;
+      font-size: 0.9rem;
+    }
+
+    .video-link a {
+      color: #f97316;
+      text-decoration: underline;
+      font-weight: 500;
+    }
+
     /* ---------- FOOTER ---------- */
     .site-footer {
       padding: 1.5rem 0;
@@ -443,6 +457,13 @@
         <video controls poster="img/face.png">
           <source src="img/video.mp4" type="video/mp4" />
         </video>
+      </div>
+
+      <!-- Lien YouTube juste en dessous de la vidéo -->
+      <div class="video-link">
+        <a href="https://www.youtube.com/watch?v=rrN4TJ6E8Bk" target="_blank" rel="noopener">
+          Voir la vidéo sur YouTube
+        </a>
       </div>
     </div>
   </section>
@@ -968,5 +989,3 @@
   </script>
 </body>
 </html>
-
-
